@@ -33,6 +33,9 @@ const TaskSchema = mongoose.Schema({
   type:Boolean,
   default:false
  },
+ reminderDate:{
+    type:Date,
+ },
  tasks:{
   type:Array,
   default:[]

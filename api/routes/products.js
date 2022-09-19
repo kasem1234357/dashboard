@@ -11,8 +11,7 @@ router.post('/',async(req,res)=>{
  }
 })
 // update product 
-router.put('/update/:id', async(req,res)=>{
-   
+router.put('/update/:id',async(req,res)=>{
    try {
     const product = await Product.findById(req.params.id);
       await product.updateOne({ $set: req.body });
@@ -32,7 +31,7 @@ router.get('/:id', async(req,res)=>{
  }
 })
 //get all products 
-router.get('/all',async(req,res)=>{
+router.get('/',async(req,res)=>{
  try {
    const allProducts = await Product.find()
    res.status(200).json(allProducts)
@@ -41,7 +40,7 @@ router.get('/all',async(req,res)=>{
  }
 })
 //delete products
-router.delete('/:id',(req,res)=>{
+router.delete('/:id',async(req,res)=>{
  try {
    const product = await Product.findById(req.params.id)
    await product.deleteOne();

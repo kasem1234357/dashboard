@@ -1,4 +1,5 @@
 const { Timestamp } = require('mongodb');
+const { default: mongoose } = require('mongoose');
 const mongooose = require('mongoose');
 const ProductSchema = mongooose.Schema({
  title:{
