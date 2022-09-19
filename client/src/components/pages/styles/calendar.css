@@ -41,8 +41,14 @@
     color: #7a8195;
     position: relative;
 }
-.days--box .days:hover{
+.days--box .days:hover,.days--box .days.active-reminder{
    background: #3a445e ;
+}
+.active-reminder-day{
+   background: #2f78ff;
+   padding: 10px;
+   color: #fff;
+   border-radius: 50%;
 }
 .prev--days,.next--days{
    opacity: 0.5;

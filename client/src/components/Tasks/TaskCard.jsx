@@ -1,16 +1,16 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
-import { data } from '../Data/data'
 function TaskCard(props) {
-  const {colorProgress,tagColor,tag ,date,progress,tasks,title,...otherProps} = props
+  const {progressColor,tagColor,tag ,date,desc,progress,tasks,title,number,...otherProps} = props
+  console.log(progress,tasks.length,Math.floor((progress /(tasks?.length ) )*100))
   const navigate = useNavigate()
   
   return (
-    <div className='TaskCard' onClick={()=>navigate('task/1',{ state: { dataInfo:props} })}>
+    <div className='TaskCard' onClick={()=>navigate(`task/${number}`,{ state: { dataInfo:props} })}>
       <div className="TaskCard__header flex">
         <div className="TaskCard__header__title">
-          <h4>softwere development</h4>
-          <span>design pattren</span>
+          <h4>{title}</h4>
+          <span>{desc[0].substring(0,30)}</span>
         </div>
       </div>
       <div className="TaskCard__progress">
@@ -19,7 +19,7 @@ function TaskCard(props) {
            <span> 7/10</span>
          </div>
          <div className="TaskCard__progress__progressArea">
-             <div className="TaskCard__progress__progressBar" style={{background:`${colorProgress}`,width:`${Math.floor((progress /(tasks?.length ) )*100)}%`}}></div>
+             <div className="TaskCard__progress__progressBar" style={{background:`${progressColor}`,width:`${Math.floor((progress /(tasks?.length ) )*100)}%`}}></div>
          </div> 
       </div>
       <div className="TaskCard__footer flex">

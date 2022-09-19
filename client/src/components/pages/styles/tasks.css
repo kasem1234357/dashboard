@@ -32,7 +32,7 @@
 display: flex;
  padding: 10px 15px 10px 15px ;
  font-weight: 400;
- 
+ position: relative;
 }
 .task__mainBox__controls ul li svg {
  margin-right: 5px;
@@ -216,20 +216,21 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
     padding: 10px;
     overflow: hidden;
 }
-.task--close{
-    position: absolute;
-    top: 12px;
-    right: 12px;
-}
-.single--Task h1 {
+.single--Task .titleInput {
     font-size: 60px;
     color: #fff;
+    background: none;
+    outline: none;
+    border: none;
     padding-bottom: 5px;
 }
-.single--Task p{
+.single--Task .descArea{
     font-size: 16px;
     color: #7a8195;
     padding-bottom: 10px;
+    background: none;
+    outline: none;
+    border: none;
 }
 .single--task--container{
     overflow: auto;
@@ -323,4 +324,63 @@ width: min-content;
 }
 .add--task{
     color: #7a8195;
+}
+.single--Task__navbar{
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid #3a445ed7;
+}
+.single--Task__navbar select{
+    background: #2472fc;
+    padding: 5px 10px;
+    color: #ffffff;
+    outline: none;
+    border-radius: 7px;
+    font-size: 17px;
+    border: none;
+}
+.single--Task__navbar div{
+    align-items: center;
+    gap: 10px;
+}
+.react-calendar.calendar-task-box {
+    background: #171c30;
+    color: #fff;
+    top: 1px;
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 50%);
+    border: none;
+    position: absolute;
+}
+.react-calendar.calendar-task-box .react-calendar__navigation button{
+    color: #aab3cd;
+    font-size: 17px;
+}
+.react-calendar__navigation button:enabled:hover, .react-calendar__navigation button:enabled:focus {
+    background: #3a445e ;
+}
+.react-calendar__tile:enabled:hover, .react-calendar__tile:enabled:focus {
+    background: #3a445e ;
+}
+.react-calendar.calendar-task-box button{
+    color: #fff;
+}
+.react-calendar__tile--now {
+    background: none;
+}
+.react-calendar__tile--now abbr {
+    padding: 10px;
+    background: rgb(195, 62, 206);
+    border-radius: 50%;
+}
+.react-calendar.calendar-task-box .react-calendar__month-view__days__day--weekend {
+    color: #d10000;
+}
+.react-calendar.calendar-task-box .react-calendar__month-view__days__day--neighboringMonth {
+    color: #757575;
+}
+.react-calendar.calendar-task-box .react-calendar__month-view__weekdays__weekday {
+    padding: 0.5em;
+    color: #0db8d3;
 }

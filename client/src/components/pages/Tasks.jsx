@@ -1,10 +1,32 @@
 import React from 'react'
+import { useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 import { TasksData } from '../Data/mainData'
 import { Add, Board } from '../icons/SvgIcons'
 import TaskCard from '../Tasks/TaskCard'
 import './styles/tasks.css'
+import { useFetsh } from '../hooks/useFetsh'
+import { useEffect } from 'react'
+import FilterBox from '../utils/FilterBox'
+import SortBox from '../utils/SortBox'
+
 
 function Tasks() {
+  const navigate = useNavigate()
+  const [tasksData,setTasks] = useState([])
+  const [filterData,setFilterData]=useState([])
+  const [filterModel,setFilterModel]=useState(false)
+  const [sortModel,setSortModel]=useState(false)
+    const filter =(method,filterText)=>{
+      const data = tasksData.filter(task => task[method].includes(filterText))
+      setFilterData(data)
+    }
+  const {isLoading,error} = useFetsh('get','api/tasks',setTasks);
+  useEffect(()=>{
+     setFilterData(tasksData)
+  },[tasksData])
+  if (isLoading) return <h1>Loading ....</h1>
+  if (error) return <h2>some thing wrong</h2>
   return (
     <div className='Task'>
       <div className="task__navbar flex">
@@ -23,8 +45,21 @@ function Tasks() {
           </div>
           <div className="view--settings primary--dark--text">
             <ul>
-              <li>Filter</li>
-              <li>Sort</li>
+              
+              <li > 
+                {filterModel && <FilterBox filter={filter} methods={['title','tag']}/>}
+              
+              <span onClick={()=>{
+                setSortModel(false)
+                setFilterModel(!filterModel)
+              }}>Filter</span> 
+              </li>
+              <li onClick={()=>{
+                setFilterModel(false)
+                setSortModel(!sortModel)
+              }}>
+                {sortModel && <SortBox/>}
+                Sort</li>
               
               <li className='colored--btn'>New Template</li>
             </ul>
@@ -34,22 +69,21 @@ function Tasks() {
             <div className="boardBox  ">
               <div className="boardBox__header flex">
                 <h4>To do <span>(3)</span></h4>
-                <div className='flex'><Add width='25px' color={'#3a445e'}/> <span>Add new task</span></div>
+                <div className='flex' onClick={()=>navigate(`task/${tasksData.length +1}`,{ state: { dataInfo:null, type:"New",state:'To do'} })}><Add width='25px' color={'#3a445e'}/> <span>Add new task</span></div>
               </div>
               <div className="boardBox__main">
               <div className="boardBox__box flex">
-                {TasksData.map(task=>{
-                  const {id,tag,progress,progressColor,tagColor,tasks,...info} = task
+                {filterData?.map((task,index)=>{
+                  if (task.state === 'To do'){
+                    const {id,tag,progress,progressColor,tagColor,tasks,...info} = task
                   
-                  return(
-                    <TaskCard key={id} colorProgress={progressColor} tagColor={tagColor} tag={tag} date={'30 Aug 2022'} progress={progress} tasks={tasks} {...info}/>
-                  )
+                    return(
+                      <TaskCard key={id} progressColor={progressColor} tagColor={tagColor} tag={tag} date={'30 Aug 2022'} progress={progress} tasks={tasks} {...info} taskId={id} number={index +1}/>
+                    )
+                  }
+                  return null
                 })}
                 
-                <TaskCard colorProgress={'#7d00fa'} tagColor={'#e58415'} tag={"Work"} date={'8 Aug 2022'}/>
-                <TaskCard colorProgress={'#7d00fa'} tagColor={'#e58415'} tag={"Work"}/>
-                <TaskCard colorProgress={'#00d4fa'} tagColor={'#a315e5'} tag={"Sport"} date={'8 Aug 2022'}/>
-                <TaskCard colorProgress={'#00fa68'} tagColor={'#d9234b'} tag={"Learn"} date={'29 sep 2022'}/>
               </div>
               <div className="dragArea">
               drag your task here
@@ -60,14 +94,20 @@ function Tasks() {
             <div className="boardBox  ">
               <div className="boardBox__header flex">
                 <h4>In progresss <span>(4)</span></h4>
-                <div className='flex'><Add width='25px' color={'#3a445e'}/> <span>Add new task</span></div>
+                <div className='flex'  onClick={()=>navigate(`task/${tasksData.length +1}`,{ state: { dataInfo:null, type:"New",state:'in progress'} })}><Add width='25px' color={'#3a445e'}/> <span>Add new task</span></div>
               </div>
               <div className="boardBox__main">
               <div className="boardBox__box flex">
-              <TaskCard colorProgress={'#00d4fa'} tagColor={'#a315e5'} tag={"Sport"}/>
-              <TaskCard colorProgress={'#00d4fa'} tagColor={'#a315e5'} tag={"Sport"}/>
-              <TaskCard colorProgress={'#7d00fa'} tagColor={'#e58415'} tag={"Work"}/>
-                <TaskCard colorProgress={'#00fa68'} tagColor={'#d9234b'} tag={"Learn"}/>
+              {filterData?.map((task,index)=>{
+                  if (task.state === 'in progress'){
+                    const {id,tag,progress,progressColor,tagColor,tasks,...info} = task
+                  
+                    return(
+                      <TaskCard key={id} progressColor={progressColor} tagColor={tagColor} tag={tag} date={'30 Aug 2022'} progress={progress} tasks={tasks} {...info} taskId={id} number={index + 1} />
+                    )
+                  }
+                  return null
+                })}
               </div>
               <div className="dragArea">
                 drag your task here
@@ -78,14 +118,20 @@ function Tasks() {
             <div className="boardBox  ">
               <div className="boardBox__header flex">
                 <h4>Done <span>(3)</span></h4>
-                <div className='flex'><Add width='25px' color={'#3a445e'}/> <span>Add new task</span></div>
+                <div className='flex'  onClick={()=>navigate(`task/${tasksData.length +1}`,{ state: { dataInfo:null, type:"New",state:'done'} })}><Add width='25px' color={'#3a445e'}/> <span>Add new task</span></div>
               </div>
               <div className="boardBox__main">
               <div className="boardBox__box flex">
-              <TaskCard colorProgress={'#00fa68'} tagColor={'#d9234b'} tag={"Learn"}/>
-              <TaskCard colorProgress={'#00fa68'} tagColor={'#d9234b'} tag={"Learn"}/>
-              <TaskCard colorProgress={'#00fa68'} tagColor={'#d9234b'} tag={"Learn"}/>
-                
+              {filterData?.map((task,index)=>{
+                  if (task.state === 'done'){
+                    const {id,tag,progress,progressColor,tagColor,tasks,...info} = task
+                  
+                    return(
+                      <TaskCard key={id} progressColor={progressColor} tagColor={tagColor} tag={tag} date={'30 Aug 2022'} progress={progress} tasks={tasks} {...info} taskId={id} number={index + 1}  />
+                    )
+                  }
+                 return null
+                })}
               </div>
               <div className="dragArea">
               drag your task here

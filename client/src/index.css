@@ -57,3 +57,53 @@ body{
  border: 2px solid #343a5c;
 
 }
+.filterBox,.sortBox {
+ position: absolute;
+ top: 34px;
+ width: 165px;
+ /* left: -100px; */
+ translate: -38%;
+ padding: 10px;
+ border-radius: 8px;
+
+ box-shadow: 0px 0px 30px rgb(0 0 0 / 50%);
+ background: #2f374f;
+ z-index: 10000;
+}
+.filterBox::before,.sortBox::before {
+ content: '';
+ position: absolute;
+ width: 25px;
+ height: 25px;
+ rotate: 45deg;
+ top: -3px;
+ left: 41%;
+ /* translate: -50%; */
+ z-index: -1;
+ background: #2f374f;
+}
+.filterBox input{
+ width: 100%;
+ padding: 5px;
+
+ margin-top: 10px;
+ font-size: 17px;
+ border-radius: 7px;
+ color: #d7d7d7;
+ outline: none;
+ border: none;
+ background: #171c30;
+
+
+}
+.filterBox select{
+ margin-top: 10px;
+ width: 100%;
+ background: #171c30;
+ padding: 5px;
+ color: #d7d7d7;
+ outline: none;
+ font-size: 17px;
+ border: none;
+ box-shadow: 0px 0px 10px rgb(0 0 0 / 50%);
+}

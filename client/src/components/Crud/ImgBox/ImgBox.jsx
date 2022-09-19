@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 
 function ImgBox({imgUrl}) {
- const [imgData,setImgData]=useState( '')
+ const [imgData,setImgData]=useState('')
  useEffect(()=>{
  setImgData(imgUrl)
  
@@ -11,12 +11,16 @@ function ImgBox({imgUrl}) {
  
   return (
    <div className="addImg">
-    {imgData === ('' || undefined)?(
+    {(imgData === '')?(
      <>
         <label className='addImg--icon' htmlFor='addImg'><h1>+</h1></label>
      <input className='img--file' type="file" name="" id="addImg" onChange={(e)=>{
-       console.log(e)
-      setImgData(e.target.value)}} />
+       console.warn(e.target.files)
+       const files = e.target.files
+	    const formData = new FormData()
+       formData.append('img', files[0])
+       console.log(formData);
+      }} />
      </>
     ):<img src={imgData || ''} alt="" srcset="" style={{zIndex:1000}} />}
      

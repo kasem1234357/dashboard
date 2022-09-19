@@ -10,6 +10,7 @@ function CalendarBox() {
  const [data,setData]=useState({
    year: new Date().getFullYear(),
    month: new Date().getMonth(),
+   day: new Date().getDay(),
  })
  const [startDays,setStartDays]= useState(1)
  const [length,setLength]= useState(31);
@@ -49,7 +50,9 @@ function CalendarBox() {
           if(index+1<startDays)return ( <DaysBox className={'prev--days days'} key={index} number={previosLength-(startDays-2) + index}/>)
 
           if((index-startDays)+2>length)return(<DaysBox key={index} className='next--days days'  number={(index)-length}/>)
-          
+          if(((index+1-startDays)+1) === new Date().getDate()&& data.year === new Date().getFullYear() && data.month === new Date().getMonth()){
+            return  <DaysBox active={true}  key={index} className='days' number={(index+1-startDays)+1}/>
+          }
           return  <DaysBox  key={index} className='days' number={(index+1-startDays)+1}/>
           
       })}
