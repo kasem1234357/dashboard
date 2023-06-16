@@ -51,7 +51,15 @@ router.put('/update/:id',async(req,res)=>{
   
  }
 })
-
+//
+router.get('/calendar/tasks',async(req,res)=>{
+  try {
+    const tasks = await Tasks.find({remainder:true})
+    res.status(200).json(tasks)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+})
 
 
 

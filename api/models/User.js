@@ -22,4 +22,4 @@ password: {
   min: 6,
 },
 },{ timestamps: true })
-module.exports = mongoose.model('User',UserSchema)
+module.exports = mongoose.model('DashUser',UserSchema)

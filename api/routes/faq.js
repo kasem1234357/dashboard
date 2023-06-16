@@ -17,7 +17,7 @@ router.get('/',async(req,res)=>{
    const faqs = await Faq.find();
    res.status(200).json(faqs)
  } catch (error) {
-  
+  res.status(500).json(error)
  }
 })
 
