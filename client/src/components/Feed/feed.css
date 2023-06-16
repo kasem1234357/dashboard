@@ -34,9 +34,11 @@
 }
 .bar--chart1{
  flex: 1.75;
+ min-width: 320px;
 }
 .radear--chart1{
  flex: 1;
+ min-width: 320px;
 }
 .feed__content__Box2{
   min-height: 100px;

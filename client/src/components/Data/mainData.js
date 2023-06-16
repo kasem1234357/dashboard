@@ -69,6 +69,12 @@ export const products =[
   desc:'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium ab qui porro nostrum voluptatum reiciendis, facere molestias dolore mollitia. Ad eius cupiditate delectus neque velit, quis iste dolorem provident placeat.',
   
  },
+
+
+ 
+
+
+
  {
   id:2,
   title:'T-shirt',

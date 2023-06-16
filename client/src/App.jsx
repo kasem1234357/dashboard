@@ -1,23 +1,44 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import Feed from './components/Feed/Feed'
 import Navbar from './components/Navbar/Navbar'
 import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
 import {Route,Routes} from 'react-router-dom'
-import Login from './components/login/Login'
+import { ToastContainer, toast } from "react-toastify";
+import Account from './components/pages/Account'
+import "./components/utils/notificationConfig.js"
 const queryClient = new QueryClient()
 function App() {
+  const handleKeyPress = useCallback((event) => {
+    if (event.shiftKey && event.keyCode === 78) {
+      console.log("Hello");
+    }
+    console.log(`Key pressed: ${event.key}`);
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+    
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+
   return (
     <QueryClientProvider client={queryClient}>
     <div className='App flex'>
        <Routes>
-         <Route  path='/login' element={<Login />}/>
+         
+         <Route  path='/login' element={<Account />}/>
          <Route path ='*' element={<>
           <Navbar/>
       <Feed/>
          </>}/>
       
        </Routes>
-      
+       <ToastContainer/>
     </div>
     </QueryClientProvider>
   )

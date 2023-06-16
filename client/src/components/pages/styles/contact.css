@@ -30,7 +30,7 @@
 .contact__content{
  width: 100%;
  padding: 20px;
-
+ max-height: 80vh;
  align-items: center;
  justify-content: space-between;
  --gap:1rem;
@@ -165,4 +165,17 @@ background: #262C46;
     padding: 10px;
     line-height: 22px;
     color: #7a8195;
+}
+.email__bts__box{
+    justify-content: space-between;
+}
+.email--btns {
+    margin: 10px 0;
+    padding: 7px 15px;
+    background: #2c3250;
+    color: #d7d7d7;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
 }

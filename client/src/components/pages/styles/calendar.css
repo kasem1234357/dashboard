@@ -44,22 +44,29 @@
 .days--box .days:hover,.days--box .days.active-reminder{
    background: #3a445e ;
 }
-.active-reminder-day{
+.active-reminder-day {
    background: #2f78ff;
-   padding: 10px;
+   width: 30px;
+   height: 30px;
+   display: grid;
+   place-items: center;
    color: #fff;
-   border-radius: 50%;
+   border-radius: 100%;
 }
 .prev--days,.next--days{
    opacity: 0.5;
 }
-.reminder--color{
-   border:2.5px solid #2f78ff;
-   width: 100%;
+.reminder--color h4{
+    color: #d7d7d7;
+}
+.end--progress--calendar{
    position: absolute;
-   top: 0;
-   left: 0;
-   height: 100px;
+   width: 90%;
+   height: 5px;
+   border-radius: 20px;
+   left: 5%;
+   background: #2f78ff;
+   bottom: 20px;
 }
 .triangle{
    width: 0;
@@ -72,4 +79,23 @@
     border-width: 10px;
     border-right: 10px solid transparent;
     border-bottom: 10px solid transparent;
+}
+.calendar  select {
+   margin-top: 10px;
+   width: 150px;
+   background: #434f6e;
+   padding: 5px;
+   color: #d7d7d7;
+   outline: none;
+   font-size: 17px;
+   border: none;
+   box-shadow: 0px 0px 10px rgb(0 0 0 / 50%);
+}
+.calendar__navbar{
+   justify-content: space-between;
+   align-items: center;
+}
+.calendar__navbar h2{
+   letter-spacing: 2px;
+   font-size: 30px;
 }

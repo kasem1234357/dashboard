@@ -5,11 +5,12 @@ import { useEffect } from 'react';
 import Calendar from 'react-calendar'
 import { useState } from 'react';
 import 'react-calendar/dist/Calendar.css';
-import {  NavLink, useLocation} from 'react-router-dom'
+import {  NavLink, useLocation, useNavigate} from 'react-router-dom'
 import { Add, Close } from '../icons/SvgIcons';
 function Task() {
-  const [value, onChange] = useState('');
+  const navigate = useNavigate()
   const location = useLocation();
+  const color=['#d9234b','#9c6644','#8338ec','#3a5a40',"#277da1"]
   const defaultData = {
     title:"",
     state:location?.state.state,
@@ -18,17 +19,26 @@ function Task() {
     tag:'general',
     progressColor:'#00d4fa',
     tagColor:'#d9234b',
-    remainder:false
+    remainder:location?.state.reminder?true:false,
+    reminderDate: location?.state.reminder||""
   }
   const data = location?.state.dataInfo
+  // console.log(data);
   const [type,setType]=useState(location?.state.type)
   const [cacheData,setCacheData]=useState( defaultData)
-  const [tasks,setTasks] = useState([])
+  const [showModel,setShowModel]=useState(false)
+  const [showTagBox,setShowtagBox]=useState(false)
+  const [showColors,setShowColors]=useState(false)
+  const [tasks,setTasks] = useState([]);
+  const [value, onChange] = useState('');
   useEffect(()=>{
+       
     if(data !== null){
       setCacheData(data)
+        onChange(new Date(data.reminderDate.split('-').join(', ')))
       setTasks(data.tasks)
     }
+
   },[])
   const toggleTask =(i,state)=>{
     setCacheData(prev =>{
@@ -58,6 +68,15 @@ function Task() {
     }
 
   }  
+  const deleteTask =()=>{
+     try {
+      axios.delete(`http://localhost:8800/api/tasks/${cacheData._id}`).then(()=>{
+       navigate('/tasks')
+      })
+     } catch (error) {
+         console.log(error);
+     } 
+  }
   const save = ()=>{
     try {
       console.log(Math.floor((cacheData.progress /(tasks.length) )));
@@ -87,25 +106,34 @@ useEffect(()=>{
     } catch (error) {
       console.log(error)
     }
-  
+    if(cacheData.reminderDate !== ''){
+      console.log(cacheData);
+      onChange(new Date(cacheData.reminderDate.split('-').join(', ')))
+    }
+   
     
 },[cacheData,type,tasks])  
     
   return (
     <div className="single--Task">
       <div className="single--Task__navbar flex">
-      <select name="" id="" onChange={(e)=>{
+        <div className='flex'>
+        <select name="" id="" onChange={(e)=>{
         setCacheData(prev =>{
           prev.state =e.target.value
           return prev
         })
       }}>
-        <option value="To do">To do</option>
-        <option value="in progress">in progress</option>
-        <option value="done">done</option>
+        <option  selected ={cacheData.state ==="To do"?true:false} value="To do">To do</option>
+        <option selected ={cacheData.state ==="in progress"?true:false} value="in progress">in progress</option>
+        <option selected ={cacheData.state ==="done"?true:false} value="done">done</option>
       </select>
+      <div className="tag--box" style={{background:cacheData.tagColor}}> {cacheData.tag}</div>
+        </div>
+      
       <div className='flex'>
-      <button onClick={save}>save</button>
+     
+      <button className='task--save--btn' onClick={save}>save</button>
       <NavLink to='/tasks' className={"task--close"} > <Close  width='25px' color='#d7d7d7' /></NavLink>
       </div>
 
@@ -137,9 +165,42 @@ useEffect(()=>{
       })}
       
       </div>
-      <div>
-      <Calendar className={'calendar-task-box'} onChange={onChange} value={value} />
+      <div className=' single-task-controll '>
+      <div 
+      className={`task--save--btn tag-btn ${showTagBox ?"active":""}`}>
+        {showTagBox ? (<div className={`tagBox flex`}>
+          <input value={cacheData.tag} onChange={(e)=>{
+            setCacheData(prev =>({...prev,tag:e.target.value}))
+          }} className='tagBox__input' type="text" />
+          <div onClick={()=>setShowColors(!showColors)} className='tag--circle--color--main' style ={{background:cacheData.tagColor}}></div>
+          {showColors? color.filter(col => col !== cacheData.tagColor).map((colorHex,index) =>{
+            return (
+              <div onClick={()=>{
+                setCacheData(prev =>({...prev,tagColor:colorHex}))
+              }} key={index} className='tag--circle--color' style={{background:colorHex,right:-((index+1) * 30)}}></div>
+            )
+          }):null}
+
+          </div>):null}
+        
+        
+        <span onClick={()=>setShowtagBox(!showTagBox)}>Add tag <Add width={'30px'} color={"#d7d7d7"} viewBox={'-2 -2 28 28'}/></span> </div>
+      <div className='task--calendar flex'>
+      <button onClick={()=>setShowModel(!showModel)} className={`task--calendar--btn ${value !== '' && 'active'}`}>
+        <span></span>
+<svg width={"30px"} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill='#FFFFFF'><path d="M19.5 4c-.3 0-.5.2-.5.5V5h-2v-.5c0-.3-.2-.5-.5-.5s-.5.2-.5.5V5h-2v-.5c0-.3-.2-.5-.5-.5s-.5.2-.5.5V5h-2v-.5c0-.3-.2-.5-.5-.5s-.5.2-.5.5V5H8v-.5c0-.3-.2-.5-.5-.5s-.5.2-.5.5V5H5v-.5c0-.3-.2-.5-.5-.5s-.5.2-.5.5V19c0 .6.4 1 1 1h14c.6 0 1-.4 1-1V4.5c0-.3-.2-.5-.5-.5zM9 18H5v-3h4v3zm0-4H5v-3h4v3zm5 4h-4v-3h4v3zm0-4h-4v-3h4v3zm5 4h-4v-3h4v3zm0-4h-4v-3h4v3zm0-5H5V8h14v1z"></path></g></svg>
+</button>
+{showModel && <Calendar  className={'calendar-task-box'} onChange={(value, event) =>{
+   setCacheData(prev =>({...prev,reminderDate:`${new Date(value).getFullYear()}-${new Date(value).getMonth()+1}-${new Date(value).getDate()}`,remainder:true}))
+  return value
+ }} value={value} />}
+       
+      <button className='task--save--btn' onClick={deleteTask} >delete</button> 
       </div>
+    
+      </div>
+     
+
       
     </div>
   )

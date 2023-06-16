@@ -9,7 +9,8 @@ import TableBox from '../DashBoard/Table/table'
 
 function DashBoard() {
   return (
-   <div className='feed'>
+    <>
+        <div className='feed'>
    <div className="feed__text">
      <h2>Hello, Kasem Alolo</h2>
      <span> this is your Dashboard</span>
@@ -36,9 +37,12 @@ function DashBoard() {
      </div>
      <CirculerChart color={'#df8c1f'} progress={80}/>
      </div>
-     <TableBox/>
+    
    </div>
  </div>
+ 
+    </>
+  
   )
 }
 

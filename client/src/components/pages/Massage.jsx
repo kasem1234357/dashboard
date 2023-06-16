@@ -1,16 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { massageData } from '../Data/massageData'
 import { BackArrow, Delete, Download, Print, ReturnBack } from '../icons/SvgIcons'
 import Massage from '../Massages/Massage/Massage'
+import MassegeArea from '../Massages/MassegeArea/MassegeArea'
+import MassegeLabel from '../Massages/MassegeArea/MassegeLabel'
 import "./styles/massage.css"
 function MassagePage() {
+  const [showList,setShowList] = useState(true)
   return (
     <div className='massage flex'>
      <div className="massage__navbar flex">
-      
+      <div className="massage__navbar__search">
+        <input type="text" placeholder='search...'/>
+      </div>
      </div>
      <div className="massage__content flex">
-     <div className="massage__list secondary--bg">
+     <div className={`massage__list ${showList?"active":""} secondary--bg`}>
       <div className="massage__list__searchBox flex">
         <div className="massage__list__selectBox flex">
         <select name="" id="">
@@ -36,8 +41,8 @@ function MassagePage() {
      </div>
      <div className="massage__viewBox secondary--bg flex">
       <div className="massage__viewBox__editBox">
-        <ReturnBack className = 'svg--icon' color='#0DB8D3'/>
-        <div className="tools">
+        <ReturnBack className = 'svg--icon massege-arrow' color='#0DB8D3' onClick={()=>setShowList(!showList)}/>
+        <div className="tools flex">
         <BackArrow className = 'svg--icon' color='#0DB8D3'/>
        <Download className = 'svg--icon' color='#0DB8D3'/>
        <Print className = 'svg--icon' color='#0DB8D3'/>
@@ -45,9 +50,12 @@ function MassagePage() {
         </div>
        
       </div>
+      <div className="massage__viewBox__massegeBox ">
+        <MassegeLabel {...massageData[0]}/>
+        <MassegeArea/>
+      </div>
      </div>
      </div>
-     
     </div>
   )
 }

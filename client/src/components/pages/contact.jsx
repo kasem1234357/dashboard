@@ -1,9 +1,30 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useEffect } from 'react';
+import { faqs } from '../Data/mainData';
 import { Add } from '../icons/SvgIcons'
 import ContactImage from './111.svg'
 import './styles/contact.css'
-function contact() {
+function Contact() {
+  const [faq,setFaq] = useState([]);
+  const [massage,setMassage] = useState({
+    title:'',
+    type:'1',
+    text:''
+  })
+  const sendEmail=(user="jan doe")=>{
 
+      axios.post('http://localhost:8800/api/contact',{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
+  }
+  useEffect(()=>{
+    try {
+       axios.get('http://localhost:8800/api/faq').then(res => {
+         setFaq(res.data)
+       })
+    } catch (error) {
+      
+    }
+  },[])
   return (
     <div className='contact '>
       <div className="contact__header">
@@ -14,11 +35,11 @@ function contact() {
       <div className="contact__form">
        <div className="contact__form__controls flex">
          <div className="form--box form__title">
-           <input type="text" placeholder='put your title' />
+           <input type="text" value={massage.title} placeholder='put your title' onChange={(e)=>setMassage(prev => ({...prev,title:e.target.value}))} />
          </div>
          <div className="form--box form__type flex">
          <div className="massage__list__selectBox flex">
-        <select name="" id="">
+        <select value={massage.type} name="" id="" onChange={(e)=>setMassage(prev => ({...prev,type:e.target.value}))}>
            <option value="1">Problem</option>
            <option value="2">Issue</option>
            <option value="3">Quesition</option>
@@ -28,58 +49,42 @@ function contact() {
         </div>
          </div>
        </div>
-       <textarea className='form--textarea' name="" id="" cols="30" rows="10" placeholder='start writing here'></textarea>
+       <textarea value={massage.text} className='form--textarea' name="" id="" cols="30" rows="10" placeholder='start writing here' onChange={(e)=>setMassage(prev => ({...prev,text:e.target.value}))}></textarea>
+       <div className='flex email__bts__box '>
+       <button className='email--btns' onClick={()=>{
+        setMassage({
+          title:'',
+          type:'1',
+          text:''
+        })
+       }}>reset</button>
+       <button onClick={()=>sendEmail()} className='email--btns'>send</button>
+       </div>
+       
      </div>
      <div className="contact__image">
        <img src={ContactImage} alt="" srcset="" />
      </div>
+     
       </div>
+      
       <h3 className='contact__faq__title'>common quesition</h3>
       <div className="contact__faq">
-        
-        <div className="faq">
-          <div className="faq__title flex">
-            <h4>quesition 1</h4>
-            <Add width='30px' color="none" stroke="#d7d7d7" strokeWidth="2px"/>
-            
-          </div>
-          <div className="faq__answer">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ducimus error aperiam blanditiis sunt fuga odit molestias porro quis similique, ratione pariatur ipsam cupiditate explicabo dolore. Odio molestias molestiae facilis!</p>
-            </div>
-        </div>
-        <div className="faq">
-        <div className="faq__title flex">
-            <h4>quesition 1</h4>
-            <Add width='30px' color="none" stroke="#d7d7d7" strokeWidth="2px"/>
-            
-          </div>
-          {/* <div className="faq__answer">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ducimus error aperiam blanditiis sunt fuga odit molestias porro quis similique, ratione pariatur ipsam cupiditate explicabo dolore. Odio molestias molestiae facilis!</p>
-            </div> */}
-        </div>
-        <div className="faq">
-        <div className="faq__title flex">
-            <h4>quesition 1</h4>
-            <Add width='30px' color="none" stroke="#d7d7d7" strokeWidth="2px"/>
-            
-          </div>
-          {/* <div className="faq__answer">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ducimus error aperiam blanditiis sunt fuga odit molestias porro quis similique, ratione pariatur ipsam cupiditate explicabo dolore. Odio molestias molestiae facilis!</p>
-            </div> */}
-        </div>
-        <div className="faq">
-        <div className="faq__title flex">
-            <h4>quesition 1</h4>
-            <Add width='30px' color="none" stroke="#d7d7d7" strokeWidth="2px"/>
-            
-          </div>
-          {/* <div className="faq__answer">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ducimus error aperiam blanditiis sunt fuga odit molestias porro quis similique, ratione pariatur ipsam cupiditate explicabo dolore. Odio molestias molestiae facilis!</p>
-            </div> */}
-        </div>
+         {faq?.map(faq =>(
+             <div className="faq" key={faq._id}>
+             <div className="faq__title flex">
+               <h4>{faq.title}</h4>
+               <Add width='30px' color="none" stroke="#d7d7d7" strokeWidth="2px"/>
+               
+             </div>
+             <div className="faq__answer">
+               <p>{faq.answer}</p>
+               </div>
+           </div>
+         ))}
       </div>
     </div>
   )
 }
 
-export default contact
+export default Contact

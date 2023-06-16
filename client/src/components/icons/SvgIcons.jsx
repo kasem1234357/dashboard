@@ -63,11 +63,11 @@ export const BackArrow =(props)=>{
 export const Delete = (props) =>{
   const {color,...otherProps} = props
  return (
- <svg {...otherProps}  viewBox="0 0 32 32" enableBackground="new 0 0 32 32" id="Stock_cut" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+ <svg {...otherProps} color={color} viewBox="0 0 32 32" enableBackground="new 0 0 32 32" id="Stock_cut" version="1.1" xmlns="http://www.w3.org/2000/svg" >
   <desc/>
   <g>
    <g>
-    <line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="16" x2="16" y1="0" y2="6"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="16" x2="16" y1="8" y2="10"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="12" x2="12" y1="8" y2="2"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="20" x2="20" y1="8" y2="2"/></g><polygon fill="none" points="25,13 7,13 9,31    23,31  " stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="4" x2="28" y1="13" y2="13"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="13" x2="13" y1="31" y2="16"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="19" x2="19" y1="31" y2="16"/></g></svg>)
+    <line fill="none" stroke={'inherit'} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="16" x2="16" y1="0" y2="6"/><line fill="none" stroke={'inherit'} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="16" x2="16" y1="8" y2="10"/><line fill="none" stroke={'inherit'} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="12" x2="12" y1="8" y2="2"/><line fill="none" stroke={'inherit'} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="20" x2="20" y1="8" y2="2"/></g><polygon fill="none" points="25,13 7,13 9,31    23,31  " stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="4" x2="28" y1="13" y2="13"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="13" x2="13" y1="31" y2="16"/><line fill="none" stroke={color} strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2" x1="19" x2="19" y1="31" y2="16"/></g></svg>)
 }
 export const ReturnBack = (props)=>{
  const {color,...otherProps}=props
@@ -86,9 +86,9 @@ export const ReturnBack = (props)=>{
  )
 }
 export const Add = (props)=>{
-  const {color,...otherProps}=props
+  const {color,viewBox,...otherProps}=props
   return (
-  <svg {...otherProps} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28"><g fill={color || ''}><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm4 10h-3v3.13c0 .48-.39.88-.88.88h-.25c-.48-.01-.87-.4-.87-.88V13H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7.88c0-.49.39-.88.88-.88h.25c.48 0 .87.39.87.88V11h3c.55 0 1 .45 1 1s-.45 1-1 1z"></path></g></svg>
+  <svg {...otherProps} xmlns="http://www.w3.org/2000/svg" viewBox={viewBox ||"0 0 28 28"}><g fill={color || ''}><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm4 10h-3v3.13c0 .48-.39.88-.88.88h-.25c-.48-.01-.87-.4-.87-.88V13H8c-.55 0-1-.45-1-1s.45-1 1-1h3V7.88c0-.49.39-.88.88-.88h.25c.48 0 .87.39.87.88V11h3c.55 0 1 .45 1 1s-.45 1-1 1z"></path></g></svg>
   )
   
 }
@@ -107,7 +107,7 @@ export const Bulb = (props)=>{
 export const Sort = (props)=>{
   const {color,...otherProps}=props
   return (
-  <svg {...otherProps} fill={color || ''} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+  <svg {...otherProps} fill={color || 'none'} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
 	 viewBox="0 0 512 512" style={{enableBackground:"new 0 0 512 512;"}} >
 <g>
 	<g>
@@ -160,5 +160,25 @@ export const Close = (props)=>{
   return ( 
 <svg {...otherProps} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill={color || ''}><path d="M19.5 4.5c-.8-.8-2.2-.8-3 0L12 9 7.5 4.5c-.8-.8-2.2-.8-3 0-.8.8-.8 2.2 0 3L9 12l-4.5 4.5c-.8.8-.8 2.2 0 3 .8.8 2.2.8 3 0L12 15l4.5 4.5c.8.8 2.2.8 3 0 .8-.8.8-2.2 0-3L15 12l4.5-4.5c.8-.8.8-2.2 0-3z"></path></g></svg>
 
+  )
+}
+export const Drag =(props)=>{
+  const {color,...otherProps}=props
+  return (
+    <svg {...otherProps} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill={color || ''}><path d="M22 8l-6-6c-.5.5-1 1-.5 2L8 9.5C7 9 6 9 5 10l4 4-5 5-2 3 3-2 5-5 4 4c1-1 1-2 .5-3L20 8.5c1 .5 1.5 0 2-.5z"></path></g></svg>
+
+  )
+}
+export const Sheets = (props)=>{
+  const {color,...otherProps}=props
+  return (
+    <svg {...otherProps} viewBox="0 0 20 20">
+							<path fill={color || ''} d="M17.222,5.041l-4.443-4.414c-0.152-0.151-0.356-0.235-0.571-0.235h-8.86c-0.444,0-0.807,0.361-0.807,0.808v17.602c0,0.448,0.363,0.808,0.807,0.808h13.303c0.448,0,0.808-0.36,0.808-0.808V5.615C17.459,5.399,17.373,5.192,17.222,5.041zM15.843,17.993H4.157V2.007h7.72l3.966,3.942V17.993z"></path>
+							<path fill={color || ''} d="M5.112,7.3c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808c0-0.447-0.363-0.808-0.808-0.808H5.92C5.475,6.492,5.112,6.853,5.112,7.3z"></path>
+							<path fill={color || ''} d="M5.92,5.331h4.342c0.445,0,0.808-0.361,0.808-0.808c0-0.446-0.363-0.808-0.808-0.808H5.92c-0.444,0-0.808,0.361-0.808,0.808C5.112,4.97,5.475,5.331,5.92,5.331z"></path>
+							<path fill={color || ''} d="M13.997,9.218H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,9.58,14.442,9.218,13.997,9.218z"></path>
+							<path fill={color || ''} d="M13.997,11.944H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.446,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,12.306,14.442,11.944,13.997,11.944z"></path>
+							<path fill={color || ''} d="M13.997,14.67H5.92c-0.444,0-0.808,0.361-0.808,0.808c0,0.447,0.363,0.808,0.808,0.808h8.077c0.445,0,0.808-0.361,0.808-0.808C14.805,15.032,14.442,14.67,13.997,14.67z"></path>
+						</svg>
   )
 }

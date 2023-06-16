@@ -33,11 +33,11 @@ useEffect(()=>{
       <div className="colorBox__images flex">
           <div className='colorBox__images__box flex '>
             <h3>Front</h3>
-            <ImgBox data={{}}/>
+            <ImgBox imgUrl={data.frontImg} name="frontImg" updateFn = {setColorData}/>
             </div>
           <div  className='colorBox__images__box flex'>
             <h3>Back</h3>
-          <ImgBox data={{}}/>
+          <ImgBox imgUrl={data.backImg} name="backImg"  updateFn = {setColorData}/>
             </div>
          </div>
          <div className="colorBox__controlls flex">

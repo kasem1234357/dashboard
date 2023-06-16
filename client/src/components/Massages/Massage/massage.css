@@ -1,11 +1,15 @@
 .massage--box{
- gap: 1rem;
- padding: 15px 40px 15px 5px;
+ gap: 1rem ;
+ padding: 15px 20px 15px 5px;
  border-bottom: 2px solid #3a445e;
  line-height: 1.3rem;
+ cursor: pointer;
 }
-.massage--box:hover{
+.massage__list  .massage--box:hover{
  background: #3a445e ;
+}
+.Massage__image{
+ min-width: 90px;
 }
 .Massage__image img {
  width: 50px;
@@ -28,4 +32,31 @@
 }
 .massage--active{
  background: #3a445e ;
+}
+.massage__viewBox__massegeBox .massage--box {
+ padding: 15px 40px 15px 5px;
+ border-bottom: none;
+ /* border-bottom: 2px solid #3a445e; */
+ box-shadow: 0px 3px 4px 3px rgb(0 0 0 / 22%);
+ line-height: 1.3rem;
+ align-items: center;
+}
+.massage__viewBox__massegeBox .Massage__content__sender {
+ font-size: 25px;
+}
+.massage__viewBox__massegeBox .Massage__content {
+ --gap: 10px;
+}
+.massage__viewBox__massegeBox .massage--box{
+ gap:0
+}
+
+.Massege__Area img {
+ object-position: center;
+ width: 95%;
+ margin-inline: auto;
+ margin-block: 12px;
+ display: block;
+ object-fit: cover;
+ border-radius: 6px;
 }

@@ -19,6 +19,7 @@
    margin-left: 10px;
    border: none;
    border-radius: 5px;
+   cursor: pointer;
    background: #262c46;
    color: #ffffff;
 
@@ -139,7 +140,7 @@
 }
 .settings--profile--dragArea{
    margin: 10px;
-   min-height: 200px;
+   min-height: 175px;
    border: 2px dashed #7a8195;
    display: grid;
    place-items: center;
@@ -154,10 +155,27 @@
    position: relative;
    padding-bottom: 15px;
 }
-.settings__content__others--row input {
+.settings__content__others--row input[type=checkbox] {
    position: absolute;
    width: 0;
    height: 0;
+}
+.settings__content__others--row input[type=text] {
+   width: 100%;
+   padding: 5px 10px;
+   background: #171c30;
+   border: none;
+   outline: none;
+}
+.settings__content__others--row.flex button {
+   padding: 10px 10px;
+   /* margin-left: 10px; */
+   border: none;
+   border-radius: 5px;
+   background: #171c30;
+   color: #d7d7d7;
+   font-weight:bold ;
+   cursor: pointer;
 }
 .settings__content__others--row label {
    height: 27.5px;

@@ -12,29 +12,67 @@ function Add() {
     count:0,
     price:0,
     barCode:'',
-    profileImg:'',
-    otherImg:[],
+    profileImg:{id:0,url:""},
+    otherImg:[{id:0,url:""},{id:1,url:""},{id:2,url:""}],
     coupon:'',
     couponPersent:0,
     type:'',
     tags:[],
     desc:'',
-    colors:[]
+    colors:[],
   }
   const location = useLocation()
   const data =location?.state.dataInfo 
   const [type,setType]= useState(location?.state.type)
   console.log(type)
   const [newData,setNewData]=useState(defaultProduct)
+  const [images,setImages]=useState([])
   useEffect(()=>{
       if(data !== null){
         setNewData(data)
       }
   },[])
-  const save =(e)=>{
-    e.preventDefault()
-    try {
+  const uploadImg = (index,count)=>{
+    console.log(index);
+    console.log(count);
+     if(count === 0){
+      console.log(newData);
+      console.log("image uploaded")
+      uploadDetails();
+      return 0;
+     }
+
+     try {
+      console.log(images);
+      axios.post('http://localhost:8800/api/products/images',images[index]).then(res =>{
+          setNewData(prev =>{
+            if(res.data.type === "otherImg") {
+              // console.log(prev[res.data.type][(res.data.index) -1]);
+              prev[res.data.type][(res.data.index) -1].url =res.data.url.secure_url
+            }
+            if(res.data.type === "profileImg"){prev[res.data.type].url =res.data.url.secure_url}
+            // console.log(prev);
+            return prev
+          }) 
+          
+          console.log(`image ${index} uploaded`)
+          // console.log(res.data
+          //   );
+            index++
+            count--
+            // console.log(count);
+             uploadImg(index++,count--); 
+      })
+      
+     } catch (error) {
+        console.log("tttt")
+     }
+    
+  }
+  const uploadDetails =()=>{
+     try {
        if(type === 'New'){
+        console.log(newData);
        axios.post('http://localhost:8800/api/products/',newData).then((res)=>{
          setNewData(data =>({...data,...res.data}))
         setType('update')
@@ -43,10 +81,16 @@ function Add() {
        return
       }
       axios.put(`http://localhost:8800/api/products/update/${newData._id}`,newData).then((res)=>{
+        
          setNewData(data =>({...data,...res.data}))})
     } catch (error) {
        console.log(error)
     }
+  }
+  const save =(e)=>{
+    e.preventDefault()
+    console.log(images);
+    uploadImg(0,images.length) 
   }
   return (
     <div className='flex addProduct'>
@@ -54,17 +98,17 @@ function Add() {
       <div className="addProduct__images flex">
         <div className="addProduct__images__box flex">
         <div className="addProduct__images__main ">
-          <ImgBox imgUrl={newData?.profileImg}/>
+          <ImgBox imgUrl={images[0]?.url || ""} updateFn ={setImages} name={"profileImg-0"}/>
          </div>
          <div className="addProduct__images__others flex">
           <div className='addProduct__images__others__box '>
-            <ImgBox imgUrl={newData?.profileImg}/>
+            <ImgBox imgUrl={images[1]?.url|| ""} updateFn ={setImages} name={"otherImg-1"} />
             </div>
           <div  className='addProduct__images__others__box '>
-          <ImgBox imgUrl={newData?.profileImg}/>
+          <ImgBox imgUrl={images[2]?.url || ""} updateFn ={setImages} name={"otherImg-2"} />
             </div>
           <div  className='addProduct__images__others__box '>
-         <ImgBox imgUrl={newData?.profileImg}/>
+         <ImgBox imgUrl={images[3]?.url || ""} updateFn ={setImages} name={"otherImg-3"} />
           </div>
          </div>
         </div>

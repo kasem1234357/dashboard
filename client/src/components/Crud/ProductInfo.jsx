@@ -74,7 +74,8 @@ function ProductInfo({data,setNewData,save}) {
       <div className="ProductInfo--box ProductInfo__color flex">
       <div className="ProductInfo--label"><h3>Colors</h3></div>
        <div className="ProductInfo--input flex">
-       {data.colors?.map(color =>{
+        
+       {data.colors !== [] && data.colors?.map(color =>{
             return (
                   <div key={color.id} className='addColor' htmlFor="color" style={{background:color.hex}} onClick={()=>{
                     setShowModel(true)

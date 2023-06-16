@@ -333,11 +333,11 @@ width: min-content;
     border-bottom: 5px solid #3a445ed7;
 }
 .single--Task__navbar select{
-    background: #2472fc;
+    background: #434f6e;
     padding: 5px 10px;
-    color: #ffffff;
+    color: #fff;
     outline: none;
-    border-radius: 7px;
+    border-radius: 4px;
     font-size: 17px;
     border: none;
 }
@@ -348,7 +348,8 @@ width: min-content;
 .react-calendar.calendar-task-box {
     background: #171c30;
     color: #fff;
-    top: 1px;
+    bottom: 50px;
+    z-index: 1000;
     box-shadow: 0px 0px 16px rgb(0 0 0 / 50%);
     border: none;
     position: absolute;
@@ -383,4 +384,101 @@ width: min-content;
 .react-calendar.calendar-task-box .react-calendar__month-view__weekdays__weekday {
     padding: 0.5em;
     color: #0db8d3;
+}
+.task--save--btn{
+    padding: 10px 15px;
+    color: #fff;
+    background: #7d00fa;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+}
+.task--calendar--btn{
+    border: none;
+    outline: none;
+    padding: 5px;
+    border-radius: 50%;
+    background: #3e4772;
+    width: min-content;
+    position: relative;
+    opacity: 0.4;
+   
+}
+
+.task--calendar--btn.active{
+   opacity: 1;
+   
+}
+.task--calendar {
+   position: relative;
+   justify-content: space-between;
+   align-items: center;
+}
+.single-task-controll{
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+div.task--save--btn.tag-btn {
+    /* margin: 5
+px
+; */
+    margin-bottom: 10px;
+    background: #3f51b5;
+    display: inline-block;
+    padding: 5px;
+    position: relative;
+}
+div.task--save--btn.tag-btn span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tagBox{
+    position: absolute;
+    left: 105px;
+    box-shadow: 4px 4px 16px rgba(0,0,0,0.5);
+    background: #37405a;
+    align-items: center;
+    padding: 0 5px;
+}
+.tag--box{
+    border-radius: 4px;
+    padding: 5px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+.task--save--btn.tag-btn.active::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    background: #37405a;
+    right: -26px;
+    transform: rotate(45deg);
+}
+input.tagBox__input {
+    position: relative;
+    width: 120px;
+    left: 5px;
+    z-index: 10000;
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+}
+.tag--circle--color--main{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.tag--circle--color{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
 }
