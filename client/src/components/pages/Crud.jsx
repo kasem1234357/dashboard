@@ -1,16 +1,17 @@
 /* eslint-disable react/jsx-pascal-case */
 import React from "react";
 import { AddProductIcon, Sheets, Sort } from "../icons/SvgIcons";
+import {utils,writeFile} from "xlsx";
 import { useNavigate } from "react-router-dom";
 import "./styles/crud.css";
 import FilterBox from "../utils/FilterBox";
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import Crud_Table_products from "../Crud/crudTable/Crud_Table_products";
 import Crud_Header from "../Crud/crudTable/Crud_Header";
 import Crud_Table_sales from "../Crud/crudTable/Crud_Table_sales";
 import Crud_Table_users from "../Crud/crudTable/Crud_Table_users";
+import {dataProduct} from '../Data/dt'
 const titles = (type = "products") => {
   const titles = {
     users: ["profile", "username", "budget", "amount", "waiting", "contact"],
@@ -36,6 +37,12 @@ function Crud() {
     type: "products",
     data: titles(),
   });
+  const  generateExcelFile=(data)=>{
+    const worksheet = utils.json_to_sheet(data);
+    const workbook = utils.book_new();
+    utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    writeFile(workbook, "DataSheet.xlsx");
+  }
   const filter = (method, filterText) => {
     const data = itemsData.filter((task) => task[method].includes(filterText));
     setFilterProducts(data);
@@ -44,9 +51,11 @@ function Crud() {
     const Els = [];
     switch (currentTitle.type) {
       case "products":
-        for (let i = 0; i < 13; i++) {
-          Els.push(<Crud_Table_products data={null} />);
-        }
+        {filterProducts?.map((product) => {
+          
+            Els.push(<Crud_Table_products key={product._id} data={product}/>)
+
+        })}
         break;
       case "sales":
         for (let i = 0; i < 13; i++) {
@@ -70,7 +79,8 @@ function Crud() {
     return Els;
   };
   useEffect(() => {
-    setFilterProducts(itemsData);
+    //setFilterProducts(itemsData);
+    setFilterProducts(dataProduct)
   }, [itemsData]);
   useEffect(() => {
     try {
@@ -108,7 +118,9 @@ function Crud() {
             </select>
             <div className="crud__table__header--controls flex">
               <button>
-                <Sheets width={"20px"} color={"#d7d7d7"} />
+                <Sheets width={"20px"} color={"#d7d7d7"} onClick={()=>{
+                  generateExcelFile(dataProduct)
+                }}/>
               </button>
               <button>
                 {showModel && (
@@ -137,32 +149,7 @@ function Crud() {
         <div className="crud__rows">
           {renderEl()}
 
-          {filterProducts?.map((product) => {
-            const { title, profileImg, count, price, coupon, _id } = product;
-            return (
-              <div className="crud__table__row  flex" key={_id}>
-                <div className="products--box product--image">
-                  <img src={profileImg} alt="" srcset="" />
-                </div>
-                <div className="products--box product--Name">{title}</div>
-                <div className="products--box product--price">{price}$</div>
-                <div className="products--box product--count">{count}</div>
-                <div className="products--box product--copon">{coupon}</div>
-                <div className="products--box product--controls">
-                  <button
-                    onClick={() =>
-                      navigate(`product/${_id}`, {
-                        state: { dataInfo: product, type: "update" },
-                      })
-                    }
-                  >
-                    Update
-                  </button>
-                  <button className="delete--product--btn">Delete</button>
-                </div>
-              </div>
-            );
-          })}
+         
         </div>
       </div>
     </div>

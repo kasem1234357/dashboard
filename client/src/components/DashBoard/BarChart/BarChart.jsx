@@ -65,9 +65,9 @@ function BarChart() {
       backgroundColor : gradient(chart.ctx,"#00D5FF",'#01F0D1'), 
       borderColor: "transparent",
       borderWidth: 4,
-      data: data('mg',Labels),
+      data: data('totalSales',Labels),
       parsing: {
-                yAxisKey: 'mg'
+                yAxisKey: 'totalSales'
              }
   },
   {
@@ -77,9 +77,9 @@ function BarChart() {
       backgroundColor :gradient(chart.ctx,'#F699D0','#FEC2A0'), // Put the gradient here as a fill color
      borderColor : "transparent",
      borderWidth: 4,
-     data:data('cogs',Labels),
+     data:data('totalSubscribing',Labels),
      parsing: {
-                yAxisKey: 'cogs'
+                yAxisKey: 'totalSubscribing'
              }
   },         
   {
@@ -89,9 +89,9 @@ function BarChart() {
      backgroundColor : gradient(chart.ctx,'#704FD3','#C5B4F5'), // Put the gradient here as a fill color
      borderColor : "transparent",
      borderWidth: 4,
-     data:data('net',Labels),
+     data:data('totalLikes',Labels),
      parsing: {
-                yAxisKey: 'net'
+                yAxisKey: 'totalLikes'
             }
   },
 ]

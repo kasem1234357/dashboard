@@ -12,7 +12,7 @@ function Add() {
     count:0,
     price:0,
     barCode:'',
-    profileImg:{id:0,url:""},
+    profileImg:'',
     otherImg:[{id:0,url:""},{id:1,url:""},{id:2,url:""}],
     coupon:'',
     couponPersent:0,
@@ -30,6 +30,7 @@ function Add() {
   useEffect(()=>{
       if(data !== null){
         setNewData(data)
+        console.log(data);
       }
   },[])
   const uploadImg = (index,count)=>{
@@ -98,17 +99,17 @@ function Add() {
       <div className="addProduct__images flex">
         <div className="addProduct__images__box flex">
         <div className="addProduct__images__main ">
-          <ImgBox imgUrl={images[0]?.url || ""} updateFn ={setImages} name={"profileImg-0"}/>
+          <ImgBox imgUrl={images[0]?.url || newData.profileImg || ''} updateFn ={setImages} name={"profileImg-0"}/>
          </div>
          <div className="addProduct__images__others flex">
           <div className='addProduct__images__others__box '>
-            <ImgBox imgUrl={images[1]?.url|| ""} updateFn ={setImages} name={"otherImg-1"} />
+            <ImgBox imgUrl={images[1]?.url||  newData.otherImg[0]?.url || ""} updateFn ={setImages} name={"otherImg-1"} />
             </div>
           <div  className='addProduct__images__others__box '>
-          <ImgBox imgUrl={images[2]?.url || ""} updateFn ={setImages} name={"otherImg-2"} />
+          <ImgBox imgUrl={images[2]?.url ||newData.otherImg[1]?.url || ""} updateFn ={setImages} name={"otherImg-2"} />
             </div>
           <div  className='addProduct__images__others__box '>
-         <ImgBox imgUrl={images[3]?.url || ""} updateFn ={setImages} name={"otherImg-3"} />
+         <ImgBox imgUrl={images[3]?.url || newData.otherImg[2]?.url || ""} updateFn ={setImages} name={"otherImg-3"} />
           </div>
          </div>
         </div>

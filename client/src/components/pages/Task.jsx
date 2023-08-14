@@ -89,7 +89,7 @@ function Task() {
          })
         setType('update')
       }
-      else{ axios.put(`http://localhost:8800/api/tasks/update/${cacheData._id}`,cacheData)
+      else{ axios.put(`http://localhost:8800/api/tasks/update/${cacheData._id || location?.state.dataInfo._id}`,cacheData)
       }
        
     } catch (error) {
@@ -98,10 +98,12 @@ function Task() {
      
   }
 useEffect(()=>{
+ 
     try {
-       if(type !== 'New'){
-        axios.put(`http://localhost:8800/api/tasks/update/${cacheData._id}`,cacheData).then(res =>console.log(res.data))
-        
+      console.log(type);
+       if(type !=='New'){
+        console.log("bug");
+         save()
        }
     } catch (error) {
       console.log(error)
@@ -133,7 +135,7 @@ useEffect(()=>{
       
       <div className='flex'>
      
-      <button className='task--save--btn' onClick={save}>save</button>
+      <button className='task--save--btn' onClick={()=>save()}>save</button>
       <NavLink to='/tasks' className={"task--close"} > <Close  width='25px' color='#d7d7d7' /></NavLink>
       </div>
 

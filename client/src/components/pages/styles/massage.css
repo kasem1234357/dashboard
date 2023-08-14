@@ -1,3 +1,35 @@
+.ck.ck-toolbar{
+    background: #3a445e !important;
+    border: none;
+}
+.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all {
+ color: #ede7e7;
+}
+.ck.ck-button:not(.ck-disabled):hover, a.ck.ck-button:not(.ck-disabled):hover {
+    background: #171c30;
+}
+.ck.ck-editor__main>.ck-editor__editable{
+    background: #3a445e;
+}
+.ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+    border-color: #171c30;
+    border-inline: 0px;
+}
+.ck.ck-media-form{
+    background: #171c30;
+}
+.ck.ck-input{
+    background: #3a445e;
+}
+.ck.ck-input:focus{
+    box-shadow: none;
+}
+.ck.ck-labeled-field-view>.ck.ck-labeled-field-view__input-wrapper>.ck.ck-label {
+  background: #3e5186;
+}
+.ck.ck-content.ck-editor__editable{
+    color: #ede7e7;
+}
 .massage{
 flex-direction: column;
  width: 100%;
@@ -146,4 +178,18 @@ background: #262C46;
  background: #343a5c;
  padding-inline: 10px;
  outline: none;
+}
+button.send-massage-btn {
+    display: grid;
+    place-items: center;
+    background: #343a5c;
+    border: none;
+    outline: none;
+    margin: 5px;
+    border-radius: 50%;
+    padding: 5px;
+    margin-left: auto;
+}
+button.send-massage-btn:hover{
+    background: #3e5186;
 }
