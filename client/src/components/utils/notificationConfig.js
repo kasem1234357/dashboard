@@ -1,10 +1,8 @@
-
 import observable from "./notification";
-import {  toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function handleClick(data) {
-  
   observable.notify(data);
 }
 export function handlelogin() {
@@ -21,7 +19,7 @@ function toastify(data) {
     closeButton: true,
     autoClose: 2000,
     theme: "dark",
-    className:"toast"
+    className: "toast",
   });
 }
 
