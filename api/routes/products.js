@@ -1,12 +1,13 @@
 const router = require("express").Router();
-const Product = require('../models/Product')
-const dotenv = require('dotenv');
-const cloudinary = require('cloudinary').v2;
+const { getProducts } = require("../controller/client");
+const Product = require("../models/Product");
+const dotenv = require("dotenv");
+const cloudinary = require("cloudinary").v2;
 dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
-  api_key:process.env.CLOUNDERY_API_KEY ,
-  api_secret: process.env.CLOUNDERY_API_SECRET 
+  api_key: process.env.CLOUNDERY_API_KEY,
+  api_secret: process.env.CLOUNDERY_API_SECRET,
 });
 // const cloudinaryImageUploadMethod = file => {
 //   let url =""
@@ -19,29 +20,34 @@ cloudinary.config({
 //   });
 //   return url
 // }
-const cloudinaryUpload = async(file) =>{
-  return cloudinary.uploader.upload(file,  function(error, result) {
-    if (error) {
-      console.error(error);
-      throw Error("Error")
-    } else {
-      return result.secure_url;
+const cloudinaryUpload = async (file) => {
+  console.log(file);
+  return cloudinary.uploader.upload(
+    file,
+    { timeout: 60000 },
+    function (error, result) {
+      if (error) {
+        console.error(error);
+        throw Error("Error");
+      } else {
+        return result.secure_url;
+      }
     }
-  });
-}
-router.post("/images",async(req,res)=>{
-  const {imgData,type,index} = req.body
+  );
+};
+router.post("/images", async (req, res) => {
+  const { imgData, type, index } = req.body;
   try {
     let imgUrl = await cloudinaryUpload(imgData);
     res.status(200).json({
       type,
       index,
-      url:imgUrl})
+      url: imgUrl,
+    });
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json(error);
   }
-  
-})
+});
 // const upload = async (req, res, next) => {
 //   try {
 //     const { profileImg, otherImg, ...others } = req.body;
@@ -61,41 +67,42 @@ router.post("/images",async(req,res)=>{
 //     console.log(error);
 //     next(error);
 //   }
-// }; 
+// };
 // add product
-router.post('/',async(req,res)=>{
-const newProduct = new Product(req.body)
-console.log("the line is 33",newProduct);
-  //  
- try {
-  const savedProduct = await newProduct.save()
-  console.log(savedProduct)
-  res.status(200).json("savedProduct")
- } catch (error) {
-   res.status(500).json({massege:error})
- }
-})
-// update product 
-router.put('/update/:id',async(req,res)=>{
-   try {
+router.post("/", async (req, res) => {
+  const newProduct = new Product(req.body);
+  console.log("the line is 33", newProduct);
+  //
+  try {
+    const savedProduct = await newProduct.save();
+    console.log(savedProduct);
+    res.status(200).json("savedProduct");
+  } catch (error) {
+    res.status(500).json({ massege: error });
+  }
+});
+// update product
+router.put("/update/:id", async (req, res) => {
+  try {
     const product = await Product.findById(req.params.id);
-      await product.updateOne({ $set: req.body });
-      res.status(200).json("the product has been updated");
-
-   } catch (error) {
-     res.status(500).json(error)
-   }
-})
+    await product.updateOne({ $set: req.body });
+    res.status(200).json("the product has been updated");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 // get product
-router.get('/:id', async(req,res)=>{
- try {
-    const product = await Product.findById(req.params.id)
-    res.status(200).json(product)
- } catch (error) {
-  res.status(500).json(error)
- }
-})
-//get all products 
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+//get all products
+//====================================================//
+/*
 router.get('/',async(req,res)=>{
  try {
    const allProducts = await Product.find()
@@ -104,15 +111,18 @@ router.get('/',async(req,res)=>{
   res.status(500).json(error)
  }
 })
+*/
+//==================================================//
+router.get("/", getProducts);
 //delete products
-router.delete('/:id',async(req,res)=>{
- try {
-   const product = await Product.findById(req.params.id)
-   await product.deleteOne();
-   res.status(200).json('the product has been deleted ')
- } catch (error) {
-  res.status(500).json(error)
- } 
-})
+router.delete("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    await product.deleteOne();
+    res.status(200).json("the product has been deleted ");
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
-module.exports =router
+module.exports = router;
