@@ -70,7 +70,7 @@ function Task() {
     try {
       
       axios
-        .delete(`${process.env.REACT_APP_BACKEND_URL}api/tasks/${cacheData._id}`)
+        .delete(`https://dashbord-1-0-0.onrender.com/api/tasks/${cacheData._id}`)
         .then(() => {
           navigate("/tasks");
         });
@@ -90,14 +90,14 @@ function Task() {
       }
       if (type === "New") {
         axios
-          .post(`${process.env.REACT_APP_BACKEND_URL}api/tasks/`, cacheData)
+          .post(`https://dashbord-1-0-0.onrender.com/api/tasks/`, cacheData)
           .then((res) => {
             setCacheData(res.data);
           });
         setType("update");
       } else {
         axios.put(
-          `${process.env.REACT_APP_BACKEND_URL}api/tasks/update/${
+          `https://dashbord-1-0-0.onrender.com/api/tasks/update/${
             cacheData._id || location?.state.dataInfo._id
           }`,
           cacheData
