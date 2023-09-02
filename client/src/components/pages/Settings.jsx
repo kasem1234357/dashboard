@@ -35,7 +35,7 @@ function Settings() {
     try {
       
       if(validateUser(user.username,user.email,pass,checkPass,isPassChange)){
-        axios.put(`${process.env.REACT_APP_BACKEND_URL}api/users/${ID}`,isPassChange?{...user,password:pass}:user).then(()=>{
+        axios.put(`https://dashbord-1-0-0.onrender.com/api/users/${ID}`,isPassChange?{...user,password:pass}:user).then(()=>{
           handleClick({type:"warn",msg:"user data updated"})
         })
       }
