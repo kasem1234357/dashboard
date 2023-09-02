@@ -24,7 +24,7 @@ function Register() {
         email:values.email,
         password:values.password
       });
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}api/auth/register`,{
+      axios.post(`https://dashbord-1-0-0.onrender.com/api/auth/register`,{
         userName:values.username,
         email:values.email,
         password:values.password,
