@@ -4,7 +4,6 @@ import logo from './profile.jpg'
 import axios from 'axios'
 import { Bulb } from '../icons/SvgIcons'
 import { useState } from 'react'
-import { useEffect } from 'react'
 import { useSelector,useDispatch} from 'react-redux'
 import InviteCode from '../utils/InviteCode'
 import { handleClick } from '../utils/notificationConfig'
@@ -15,10 +14,14 @@ function Settings() {
   const dispatch = useDispatch()
   const notification = useSelector(state =>state.user.notification)
   const isDarkMode = useSelector(state =>state.user.darkMode)
-  const ID = useSelector(state => state.user.user?._id)
-  const [user,setUser] = useState(useSelector(state => {
-    const {email,username} =state.user.user
-    return ({email,username} )} ))
+  const ID = useSelector(state => state.user?.user?._id)
+  const user = useSelector(state => {
+    if(state.user?.user){
+      const {email,username} =state.user?.user
+      return ({email,username} )
+    }
+    return null
+    } )
  
   const [pass,setpass] =useState("")
   const [isPassChange,setIsPassChange] = useState(false)

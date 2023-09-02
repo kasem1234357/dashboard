@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import {  useSelector } from 'react-redux'
+import React, { useState } from 'react'
+// import {  useSelector } from 'react-redux'
 import Login from '../form/Login'
 import Register from '../form/Register'
 // import {  logUser } from '../features/slices/userSlice'
-import {  useNavigate } from 'react-router-dom'
-import { useLayoutEffect } from 'react'
+// import {  useNavigate } from 'react-router-dom'
 function Account() {
- const navigate = useNavigate()
+//  const navigate = useNavigate()
  const [login,setLogin]=useState(true)
- const [user,setUser] = useState(useSelector(state => state.user))
+//  const [user,setUser] = useState(useSelector(state => state.user))
 
 //  const dispatch = useDispatch()
 //  useEffect(() => { 

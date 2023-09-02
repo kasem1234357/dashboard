@@ -38,7 +38,6 @@ function Task() {
         onChange(new Date(data.reminderDate.split('-').join(', ')))
       setTasks(data.tasks)
     }
-
   },[])
   const toggleTask =(i,state)=>{
     setCacheData(prev =>{
@@ -79,10 +78,14 @@ function Task() {
   }
   const save = ()=>{
     try {
-      console.log(Math.floor((cacheData.progress /(tasks.length) )));
+      console.log((cacheData.progress /(tasks.length) ));
       if(Math.floor((cacheData.progress /(tasks.length) )) === 1){
         setCacheData(prev => ({...prev,state:'done'}))
-         }   
+         }else if((cacheData.progress /(tasks.length) ) > 0 ){
+          setCacheData(prev => ({...prev,state:'in progress'}))
+         } else{
+          setCacheData(prev => ({...prev,state:'To do'}))
+         }  
       if( type ==="New"){
          axios.post(`http://localhost:8800/api/tasks/`,cacheData).then(res =>{
            setCacheData(res.data)
@@ -114,7 +117,7 @@ useEffect(()=>{
     }
    
     
-},[cacheData,type,tasks])  
+},[cacheData.state,cacheData.progress,cacheData.tasks,cacheData.tag,type,tasks])  
     
   return (
     <div className="single--Task">

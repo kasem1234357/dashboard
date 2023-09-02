@@ -51,10 +51,9 @@ function Crud() {
     const Els = [];
     switch (currentTitle.type) {
       case "products":
-        {filterProducts?.map((product) => {
-          
+        // eslint-disable-next-line
+        {filterProducts?.forEach((product) => {
             Els.push(<Crud_Table_products key={product._id} data={product}/>)
-
         })}
         break;
       case "sales":
@@ -147,6 +146,7 @@ function Crud() {
           <Crud_Header titles={currentTitle.data} />
         </div>
         <div className="crud__rows">
+          {console.log(renderEl())}
           {renderEl()}
 
          
