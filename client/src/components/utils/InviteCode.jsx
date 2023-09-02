@@ -19,7 +19,7 @@ function InviteCode() {
  const activation = ()=>{
   if(randomKey){
     try {
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}api/invite`,{inviteCode:randomKey})
+      axios.post(`https://dashbord-1-0-0.onrender.com/api/invite`,{inviteCode:randomKey})
       handleClick({type:"success",msg:"your invite code work now"})
     } catch (error) {
       console.log(error);
