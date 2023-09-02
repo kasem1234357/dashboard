@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { log } = require("console");
 const DashUser = require('../models/User')
 const crypto = require("crypto");
 function hashPassword(password) {
@@ -27,8 +28,16 @@ router.put('/:id',async(req,res)=>{
 router.get('/:id',async(req,res)=>{
   try {
     const user = await DashUser.findById(req.params.id);
-    const {password,...clientData} = user
-    res.status(200).json(clientData)
+    // console.log(await DashUser.find());
+    // console.log(req.params.id);
+    if(user){
+      console.log("hi");
+      const {password,...clientData} = user
+      res.status(200).json(clientData)
+    }else{
+      res.status(404).send({msg:"user not found"})
+    }
+   
   } catch (error) {
      console.log(error);
   }
