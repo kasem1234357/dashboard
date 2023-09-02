@@ -11,8 +11,8 @@ const initialState = {
 }
 
 // Generates pending, fulfilled and rejected action types
-const LOG_URL =`${process.env.REACT_APP_BACKEND_URL}api/auth/login`
-const GET_USER = `${process.env.REACT_APP_BACKEND_URL}api/users/`
+const LOG_URL =`https://dashbord-1-0-0.onrender.com/api/auth/login`
+const GET_USER = `https://dashbord-1-0-0.onrender.com/api/users/`
 export const logUser = createAsyncThunk('user/checkUser', async (initialUser) => {
  const response = await axios.post(LOG_URL, initialUser)
  return response.data
