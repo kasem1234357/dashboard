@@ -14,11 +14,11 @@ function Contact() {
   })
   const sendEmail=(user="jan doe")=>{
 
-      axios.post(`${process.env.REACT_APP_BACKEND_URL}api/contact`,{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
+      axios.post(`https://dashbord-1-0-0.onrender.com/api/contact`,{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
   }
   useEffect(()=>{
     try {
-       axios.get(`${process.env.REACT_APP_BACKEND_URL}api/faq`).then(res => {
+       axios.get(`https://dashbord-1-0-0.onrender.com/api/faq`).then(res => {
          setFaq(res.data)
        })
     } catch (error) {
