@@ -40,7 +40,7 @@ function Tasks() {
         return updated
       })
       try {
-        axios.put(`${process.env.REACT_APP_BACKEND_URL}api/tasks/update/${draggableEl.id}`,{
+        axios.put(`https://dashbord-1-0-0.onrender.com/api/tasks/update/${draggableEl.id}`,{
           ...filterData[draggableEl.number],state:dropType
         }).then(res =>{
           console.log(res.data);
