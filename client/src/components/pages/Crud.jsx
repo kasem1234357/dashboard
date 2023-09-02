@@ -83,7 +83,7 @@ function Crud() {
   }, [itemsData]);
   useEffect(() => {
     try {
-      axios.get(`${process.env.REACT_APP_BACKEND_URL}api/products/`).then((res) => {
+      axios.get(`https://dashbord-1-0-0.onrender.com/api/products/`).then((res) => {
         setItemsData(res.data);
       });
     } catch (error) {
