@@ -40,7 +40,7 @@ function Tasks() {
         return updated
       })
       try {
-        axios.put(`http://localhost:8800/api/tasks/update/${draggableEl.id}`,{
+        axios.put(`${process.env.REACT_APP_BACKEND_URL}api/tasks/update/${draggableEl.id}`,{
           ...filterData[draggableEl.number],state:dropType
         }).then(res =>{
           console.log(res.data);

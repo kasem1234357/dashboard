@@ -83,7 +83,7 @@ function Crud() {
   }, [itemsData]);
   useEffect(() => {
     try {
-      axios.get("http://localhost:8800/api/products/").then((res) => {
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}api/products/`).then((res) => {
         setItemsData(res.data);
       });
     } catch (error) {

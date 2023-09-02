@@ -14,11 +14,11 @@ function Contact() {
   })
   const sendEmail=(user="jan doe")=>{
 
-      axios.post('http://localhost:8800/api/contact',{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}api/contact`,{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
   }
   useEffect(()=>{
     try {
-       axios.get('http://localhost:8800/api/faq').then(res => {
+       axios.get(`${process.env.REACT_APP_BACKEND_URL}api/faq`).then(res => {
          setFaq(res.data)
        })
     } catch (error) {

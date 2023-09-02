@@ -67,7 +67,7 @@ function Add() {
       console.log(images);
       setShowModel(true);
       axios
-        .post("http://localhost:8800/api/products/images", images[index])
+        .post(`${process.env.REACT_APP_BACKEND_URL}api/products/images`, images[index])
         .then((res) => {
           console.log(res.data);
           setNewData((prev) => {
@@ -104,7 +104,7 @@ function Add() {
       if (type === "New") {
         console.log(newData);
         axios
-          .post("http://localhost:8800/api/products/", newData)
+          .post(`${process.env.REACT_APP_BACKEND_URL}api/products/`, newData)
           .then((res) => {
             setNewData((data) => ({ ...data, ...res.data }));
             setType("update");
@@ -119,7 +119,7 @@ function Add() {
       }
       axios
         .put(
-          `http://localhost:8800/api/products/update/${newData._id}`,
+          `${process.env.REACT_APP_BACKEND_URL}api/products/update/${newData._id}`,
           newData
         )
         .then((res) => {

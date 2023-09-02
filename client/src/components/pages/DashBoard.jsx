@@ -5,7 +5,7 @@ import { rateData } from '../Data/rateData'
 import LineCharts from '../DashBoard/LineCharts/LineCharts'
 import RadarChart from '../DashBoard/RaderCharts/RadarChart'
 import RateBox from '../DashBoard/rateBox/RateBox'
-
+import Table from '../DashBoard/Table/table'
 function DashBoard() {
   return (
     <>
@@ -36,7 +36,7 @@ function DashBoard() {
      </div>
      <CirculerChart color={'#df8c1f'} progress={80}/>
      </div>
-    
+    <Table/>
    </div>
  </div>
  

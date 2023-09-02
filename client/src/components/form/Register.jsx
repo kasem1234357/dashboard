@@ -24,7 +24,7 @@ function Register() {
         email:values.email,
         password:values.password
       });
-      axios.post('http://localhost:8800/api/auth/register',{
+      axios.post(`${process.env.REACT_APP_BACKEND_URL}api/auth/register`,{
         userName:values.username,
         email:values.email,
         password:values.password,

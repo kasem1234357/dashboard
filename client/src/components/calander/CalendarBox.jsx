@@ -45,7 +45,7 @@ function CalendarBox({ month, year }) {
   useEffect(() => {
     try {
       axios
-        .get(`http://localhost:8800/api/tasks/calendar/tasks`)
+        .get(`${process.env.REACT_APP_BACKEND_URL}api/tasks/calendar/tasks`)
         .then((res) => {
           setTaskData(res.data);
         });

@@ -35,7 +35,7 @@ function Settings() {
     try {
       
       if(validateUser(user.username,user.email,pass,checkPass,isPassChange)){
-        axios.put(`http://localhost:8800/api/users/${ID}`,isPassChange?{...user,password:pass}:user).then(()=>{
+        axios.put(`${process.env.REACT_APP_BACKEND_URL}api/users/${ID}`,isPassChange?{...user,password:pass}:user).then(()=>{
           handleClick({type:"warn",msg:"user data updated"})
         })
       }
