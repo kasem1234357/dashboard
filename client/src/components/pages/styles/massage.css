@@ -3,32 +3,32 @@
     border: none;
 }
 .ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all {
- color: #ede7e7;
+ color: #ede7e7 !important;
 }
 .ck.ck-button:not(.ck-disabled):hover, a.ck.ck-button:not(.ck-disabled):hover {
-    background: #171c30;
+    background: #171c30 !important;
 }
 .ck.ck-editor__main>.ck-editor__editable{
-    background: #3a445e;
+    background: #3a445e !important;
 }
 .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-    border-color: #171c30;
-    border-inline: 0px;
+    border-color: #171c30 !important;
+    border-inline: 0px !important;
 }
 .ck.ck-media-form{
-    background: #171c30;
+    background: #171c30 !important;
 }
 .ck.ck-input{
-    background: #3a445e;
+    background: #3a445e !important;
 }
 .ck.ck-input:focus{
-    box-shadow: none;
+    box-shadow: none !important;
 }
 .ck.ck-labeled-field-view>.ck.ck-labeled-field-view__input-wrapper>.ck.ck-label {
-  background: #3e5186;
+  background: #3e5186 !important;
 }
 .ck.ck-content.ck-editor__editable{
-    color: #ede7e7;
+    color: #ede7e7 !important;
 }
 .massage{
 flex-direction: column;
