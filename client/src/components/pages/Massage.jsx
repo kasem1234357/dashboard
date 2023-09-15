@@ -64,7 +64,7 @@ function MassagePage() {
         <MassegeLabel {...massageData[0]}/>
         <MassegeArea setPrintContent={setPrintContent}/>
         <CKEditor editor={ ClassicEditor }
-                    data="<p>Hello from CKEditor 100!</p>"
+                    data="<p>write your message here</p>"
                     onReady={ editor => {
                         // You can store the "editor" and use when it is needed.
                         console.log( 'Editor is ready to use!', editor );
