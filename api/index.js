@@ -27,11 +27,13 @@ const connectDB = () => {
       useNewUrlParser: true,
     },
     () => {
-      console.log("done");
+      app.listen(8800, () => {
+        console.log("Backend server is running!");
+      });
     }
   );
 };
-connectDB();
+
 app.use(cors(corsOptions));
 app.use(express.json());
 
@@ -44,6 +46,4 @@ app.use("/api/contact", contactRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/invite", inviteRoute);
-app.listen(8800, () => {
-  console.log("Backend server is running!");
-});
+connectDB();

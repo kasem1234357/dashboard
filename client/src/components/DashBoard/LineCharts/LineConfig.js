@@ -74,14 +74,14 @@ export const data ={
  datasets: [
    {
     tension: 0.4,
-     label: 'Dataset 1',
+     label: 'units',
      data: [10,50,100,50,60,70,10,40,55],
      borderColor: '#0DB8D3',
      backgroundColor: '#0DB8D3',
      yAxisID: 'y',
    },
    {
-    label: 'Dataset 2',
+    label: 'budget',
     data: [100,20,100,20,60,70,10,30,55],
     borderColor: '#C33ECE',
     backgroundColor: '#C33ECE',
@@ -89,7 +89,7 @@ export const data ={
     tension: 0.4,
   },
   {
-   label: 'Dataset 3',
+   label: 'sales',
    data: [50,20,50,20,100,70,10,30,55],
    borderColor: '#d9234b',
    backgroundColor: '#d9234b',

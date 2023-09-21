@@ -6,14 +6,10 @@ import {Route,Routes} from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import Account from './components/pages/Account'
 import "./components/utils/notificationConfig.js"
+import { handleKeyPress } from './components/utils/handleKeyPress'
 const queryClient = new QueryClient()
 function App() {
-  const handleKeyPress = useCallback((event) => {
-    if (event.shiftKey && event.keyCode === 78) {
-      console.log("Hello");
-    }
-    console.log(`Key pressed: ${event.key}`);
-  }, []);
+  
 
   useEffect(() => {
     // attach the event listener
