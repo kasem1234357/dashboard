@@ -7,6 +7,7 @@ const initialState = {
  id:"",
  notification:true,
  darkMode:true,
+ taskNumber:1,
  error : null //loading || success || failure 
 }
 
