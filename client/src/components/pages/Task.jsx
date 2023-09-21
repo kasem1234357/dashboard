@@ -4,10 +4,14 @@ import { useRef } from "react";
 import { useEffect } from "react";
 import Calendar from "react-calendar";
 import { useState } from "react";
+import { useDispatch,useSelector} from 'react-redux'
 import "react-calendar/dist/Calendar.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Add, Close } from "../icons/SvgIcons";
+import { updateTaskNumber } from "../features/slices/userSlice";
 function Task() {
+  const dispatch = useDispatch()
+  const taskNumber = useSelector(state =>state.user.taskNumber)
   const navigate = useNavigate();
   const location = useLocation();
   const color = ["#d9234b", "#9c6644", "#8338ec", "#3a5a40", "#277da1"];
@@ -72,6 +76,7 @@ function Task() {
       axios
         .delete(`https://dashbord-1-0-0.onrender.com/api/tasks/${cacheData._id}`)
         .then(() => {
+          dispatch(updateTaskNumber(taskNumber - 1))
           navigate("/tasks");
         });
     } catch (error) {
@@ -93,8 +98,11 @@ function Task() {
           .post(`https://dashbord-1-0-0.onrender.com/api/tasks/`, cacheData)
           .then((res) => {
             setCacheData(res.data);
+            dispatch(updateTaskNumber(taskNumber + 1))
           });
+
         setType("update");
+        
       } else {
         axios.put(
           `https://dashbord-1-0-0.onrender.com/api/tasks/update/${

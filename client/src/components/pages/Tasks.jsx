@@ -32,9 +32,6 @@ function Tasks() {
       }
       return 0
      }
-  const getTasks=(data)=>{
-    setTasks(data)
-  }
   const {isLoading,error} = useFetsh('get','api/tasks',setTasks);
   const dropEvent=()=>{
       setFilterData(prev =>{

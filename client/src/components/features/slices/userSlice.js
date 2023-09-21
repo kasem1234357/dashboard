@@ -43,6 +43,9 @@ export const userSlice = createSlice({
         state.darkMode = !state.darkMode
         const msg = state.darkMode?"dark mode activated":"light mode activated"
         observable.notify({type:"info",msg});
+     },
+     updateTaskNumber:(state,action)=>{
+      state.taskNumber = action.payload
      }
   },
   extraReducers(builder){
@@ -53,7 +56,7 @@ export const userSlice = createSlice({
    .addCase(logUser.fulfilled, (state, action)=>{
     state.status = 'succeeded'
     state.user = action.payload
-    
+    state.taskNumber=action.payload.user.taskNumber
     localStorage.setItem('user', JSON.stringify(action.payload?._id || ""));
    })
    .addCase(logUser.rejected, (state, action) => {
@@ -65,6 +68,7 @@ export const userSlice = createSlice({
  .addCase(getUser.fulfilled, (state, action)=>{
   state.status = 'succeeded'
   state.user = action.payload
+  state.taskNumber=action.payload.user.taskNumber
   console.log("h3")
   state.id = action.payload?._id || ""
   
@@ -78,5 +82,5 @@ export const userSlice = createSlice({
   }
  })
  export const getStatus = (state)=> state.users.status
- export const {addUser,toggleNotification,toggleDarkMode} = userSlice.actions;
+ export const {addUser,toggleNotification,toggleDarkMode,updateTaskNumber} = userSlice.actions;
  export default userSlice.reducer
