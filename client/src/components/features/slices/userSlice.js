@@ -21,7 +21,7 @@ export const logUser = createAsyncThunk('user/checkUser', async (initialUser) =>
 export const getUser = createAsyncThunk("user/getUser",async (userId)=>{
     console.log(userId);
     const response = await axios.get(`${GET_USER}${userId.userId}`)
- return response.data._doc
+ return ({...response.data._doc,taskNumber:response.data.taskNumber})
 })
 export const userSlice = createSlice({
   name:"user",
