@@ -56,7 +56,7 @@ export const userSlice = createSlice({
    .addCase(logUser.fulfilled, (state, action)=>{
     state.status = 'succeeded'
     state.user = action.payload
-    state.taskNumber=action.payload.user.taskNumber
+   //  state.taskNumber=action.payload.user.taskNumber
     localStorage.setItem('user', JSON.stringify(action.payload?._id || ""));
    })
    .addCase(logUser.rejected, (state, action) => {
@@ -68,7 +68,7 @@ export const userSlice = createSlice({
  .addCase(getUser.fulfilled, (state, action)=>{
   state.status = 'succeeded'
   state.user = action.payload
-  state.taskNumber=action.payload.user.taskNumber
+//   state.taskNumber=action.payload.user.taskNumber
   console.log("h3")
   state.id = action.payload?._id || ""
   
