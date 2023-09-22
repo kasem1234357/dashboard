@@ -7,6 +7,11 @@ export const handleKeyPress = (event,navigate) => {
     const productNumber = store.getState().user.productNumber
     if(event.ctrlKey){
         event.preventDefault()
+        if(event.shiftKey){
+            if(event.keyCode === 80){
+                navigate(`crud/product/${productNumber +1}`,{ state: { dataInfo: null, type: "New" }})
+            }
+        }
         switch (event.keyCode) {
              case 71:navigate(`tasks/task/${tasknumber +1}`,{ state: { dataInfo:null, type:"New",state:'To do'} })
                 break;
@@ -17,11 +22,7 @@ export const handleKeyPress = (event,navigate) => {
               case 121:store.dispatch(toggleNotification())
             default:return null
         }
-        if(event.shiftKey){
-            if(event.keyCode === 80){
-                navigate(`crud/product/${productNumber +1}`,{ state: { dataInfo: null, type: "New" }})
-            }
-        }
+        
     }
    
     // if (event.shiftKey && event.keyCode === 78) {
