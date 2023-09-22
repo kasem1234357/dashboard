@@ -8,6 +8,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import UploadingBox from "../uploadBox/UploadingBox";
 import { handleClick } from "../../utils/notificationConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { updateProductNumber } from "../../features/slices/userSlice";
+const dispatch = useDispatch()
+  const productNumber = useSelector(state =>state.user.productNumber)
 //======================================================================//
 //*************************default product data**********************  *//
 const defaultProduct = {
@@ -110,6 +114,7 @@ function Add() {
             setType("update");
             setUploadingProgress((prev) => prev + 1);
             handleClick({ type: "success", msg: "deatails uploaded" });
+            dispatch(updateProductNumber(productNumber+1))
             setShowModel(false);
           }).catch(err =>{
             setShowModel(false);

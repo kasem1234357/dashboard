@@ -101,7 +101,7 @@ function Settings() {
                   CTRL
                 </div>
                 <div className="icon">
-                  N
+                  G
                 </div>
                 </div>
                 <span>Add new task</span>

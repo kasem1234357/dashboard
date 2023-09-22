@@ -1,13 +1,26 @@
+import store from "../../store";
+import { toggleNotification, updateDarkMode } from "../features/slices/userSlice";
 
-export const handleKeyPress = (event) => {
-    if(event.shiftKey){
+export const handleKeyPress = (event,navigate) => {
+    
+    const tasknumber = store.getState().user.taskNumber
+    const productNumber = store.getState().user.productNumber
+    if(event.ctrlKey){
+        event.preventDefault()
         switch (event.keyCode) {
-            case 78:console.log(`Key pressed: ${event.key}`);
-                
+             case 71:navigate(`tasks/task/${tasknumber +1}`,{ state: { dataInfo:null, type:"New",state:'To do'} })
                 break;
-        
-            default:
-                break;
+              case 68:store.dispatch(updateDarkMode(true))
+              break;
+              case 76:store.dispatch(updateDarkMode(false))
+              break;
+              case 121:store.dispatch(toggleNotification())
+            default:return null
+        }
+        if(event.shiftKey){
+            if(event.keyCode === 80){
+                navigate(`crud/product/${productNumber +1}`,{ state: { dataInfo: null, type: "New" }})
+            }
         }
     }
    

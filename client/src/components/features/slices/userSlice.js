@@ -8,6 +8,7 @@ const initialState = {
  notification:true,
  darkMode:true,
  taskNumber:1,
+ productNumber:1,
  error : null //loading || success || failure 
 }
 
@@ -21,7 +22,7 @@ export const logUser = createAsyncThunk('user/checkUser', async (initialUser) =>
 export const getUser = createAsyncThunk("user/getUser",async (userId)=>{
     console.log(userId);
     const response = await axios.get(`${GET_USER}${userId.userId}`)
- return ({...response.data._doc,taskNumber:response.data.taskNumber})
+ return ({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const userSlice = createSlice({
   name:"user",
@@ -39,6 +40,11 @@ export const userSlice = createSlice({
         const msg = state.notification?"activated now":"unactivated now"
         observable.notify({type:"info",msg});
      },
+     updateDarkMode:(state,action)=>{
+      state.darkMode = action.payload
+      const msg = action.payload?"dark mode activated":"light mode activated"
+        observable.notify({type:"info",msg});
+   },
      toggleDarkMode:(state)=>{
         state.darkMode = !state.darkMode
         const msg = state.darkMode?"dark mode activated":"light mode activated"
@@ -46,6 +52,9 @@ export const userSlice = createSlice({
      },
      updateTaskNumber:(state,action)=>{
       state.taskNumber = action.payload
+     },
+     updateProductNumber:(state,action)=>{
+      state.productNumber = action.payload
      }
   },
   extraReducers(builder){
@@ -57,6 +66,7 @@ export const userSlice = createSlice({
     state.status = 'succeeded'
     state.user = action.payload
     state.taskNumber=action.payload.taskNumber
+    state.productNumber=action.payload.productNumber
     localStorage.setItem('user', JSON.stringify(action.payload?._id || ""));
    })
    .addCase(logUser.rejected, (state, action) => {
@@ -69,6 +79,7 @@ export const userSlice = createSlice({
   state.status = 'succeeded'
   state.user = action.payload
   state.taskNumber=action.payload.taskNumber
+  state.productNumber=action.payload.productNumber
   console.log("h3")
   state.id = action.payload?._id || ""
   
@@ -82,5 +93,5 @@ export const userSlice = createSlice({
   }
  })
  export const getStatus = (state)=> state.users.status
- export const {addUser,toggleNotification,toggleDarkMode,updateTaskNumber} = userSlice.actions;
+ export const {addUser,toggleNotification,toggleDarkMode,updateTaskNumber,updateProductNumber,updateDarkMode} = userSlice.actions;
  export default userSlice.reducer
