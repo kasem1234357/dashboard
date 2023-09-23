@@ -2,7 +2,7 @@ import store from "../../store";
 import { toggleNotification, updateDarkMode } from "../features/slices/userSlice";
 
 export const handleKeyPress = (event,navigate) => {
-    
+    console.log(event);
     const tasknumber = store.getState().user.taskNumber
     const productNumber = store.getState().user.productNumber
     if(event.ctrlKey){
