@@ -3,6 +3,7 @@ const User = require("../models/User");
 const InviteCode = require("../models/InviteCode")
 const passport = require('passport');
 const crypto = require("crypto");
+const Sessions = require("../models/Sessions");
 // const isAuth = require('./authMiddleware').isAuth;
 // const isAdmin = require('./authMiddleware').isAdmin;
 /*============================================================*/
@@ -47,6 +48,7 @@ router.post("/register", async (req, res) => {
     });
     //save user and respond
     const user = await newUser.save();
+
     res.status(200).json(user);
    }
   //  console.log(checkEmail)
@@ -60,8 +62,6 @@ router.post("/register", async (req, res) => {
 
 //LOGIN
  router.post("/login", async (req, res) => {
-  
- 
  try {
   const user = await User.findOne({ email: req.body.email });
   let validPassword = ""
@@ -75,6 +75,13 @@ router.post("/register", async (req, res) => {
   res.status(401).json("wrong password")
   }
   else{
+    const newSession =  new Sessions({sessionID:user._id,userName:user.username})
+    const session = await newSession.save();
+    let now = new Date();
+let time = now.getTime();
+time += 3600 * 1000;
+now.setTime(time);
+    res.cookie('sessionID',session._id,{expires:now.toUTCString()})
     res.status(200).json(user)
   }
    

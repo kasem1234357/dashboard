@@ -1,5 +1,10 @@
-module.exports.isAuth = (req, res, next) => {
- if (req.isAuthenticated()) {
+const Sessions = require("../models/Sessions");
+
+module.exports.isAuth = async(req, res, next) => {
+     const listOfcookies =req.headers.cookie.split(' ')
+     const session = listOfcookies[0].split('=')
+     const isSessionFound = await Sessions.findOne({sessionID:session}) 
+ if (isSessionFound) {
      next();
  } else {
      res.status(401).json({ msg: 'You are not authorized to view this resource' });
