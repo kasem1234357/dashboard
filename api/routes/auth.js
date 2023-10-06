@@ -4,6 +4,8 @@ const InviteCode = require("../models/InviteCode")
 const crypto = require("crypto");
 const Sessions = require("../models/Sessions");
 const { log } = require("console");
+const Tasks = require("../models/Tasks");
+const Product = require("../models/Product");
 // const isAuth = require('./authMiddleware').isAuth;
 // const isAdmin = require('./authMiddleware').isAdmin;
 /*============================================================*/
@@ -85,8 +87,11 @@ router.post("/register", async (req, res) => {
 let time = now.getTime();
 time += 3600 * 1000;
 now.setTime(time);
+const {password,...clientData} = user
+      const taskNumber = await Tasks.count()
+      const productNumber = await Product.count()
     res.set().cookie('sessionID',checkSession.sessionID,{expires:now})
-    res.status(200).json({checkSession,user,currentSession})
+    res.status(200).json({...clientData,taskNumber,productNumber})
   }
    
  } catch (err) {

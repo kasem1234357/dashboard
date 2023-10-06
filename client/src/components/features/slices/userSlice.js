@@ -16,8 +16,8 @@ const initialState = {
 const LOG_URL =`https://dashbord-1-0-0.onrender.com/api/auth/login`
 const GET_USER = `https://dashbord-1-0-0.onrender.com/api/users/`
 export const logUser = createAsyncThunk('user/checkUser', async (initialUser) => {
- const response = await axios.post(LOG_URL, initialUser)
- return response.data
+ const response = await axios.post(LOG_URL, initialUser.initialUser)
+ return({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const getUser = createAsyncThunk("user/getUser",async (userId)=>{
     console.log(userId);
@@ -67,6 +67,7 @@ export const userSlice = createSlice({
     state.user = action.payload
     state.taskNumber=action.payload.taskNumber
     state.productNumber=action.payload.productNumber
+    state.id = action.payload?._id || ""
     localStorage.setItem('user', JSON.stringify(action.payload?._id || ""));
    })
    .addCase(logUser.rejected, (state, action) => {
