@@ -13,15 +13,16 @@ const initialState = {
 }
 
 // Generates pending, fulfilled and rejected action types
-const LOG_URL =`https://dashbord-1-0-0.onrender.com/api/auth/login`
-const GET_USER = `https://dashbord-1-0-0.onrender.com/api/users/`
+const LOG_URL =`https://dashboard-magic.vercel.app/api/auth/login`
+const GET_USER = `https://dashboard-magic.vercel.app/api/users/`
 export const logUser = createAsyncThunk('user/checkUser', async (initialUser) => {
- const response = await axios.post(LOG_URL, initialUser.initialUser)
+ const response = await axios.post(LOG_URL, initialUser.initialUser,{withCredentials:true})
+//  console.log(response.headers);
  return({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const getUser = createAsyncThunk("user/getUser",async (userId)=>{
     console.log(userId);
-    const response = await axios.get(`${GET_USER}${userId.userId}`)
+    const response = await axios.get(`${GET_USER}${userId.userId}`,{withCredentials:true})
  return ({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const userSlice = createSlice({

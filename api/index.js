@@ -12,14 +12,22 @@ const inviteRoute = require("./routes/invite");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const app = express();
+const corsOptions = {
+  origin: ['http://localhost:3000/','https://dashboard-magic.vercel.app/'],
+  // Specify the allowed origin(s) here
+  Credentials:true,
+  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept,',
+};
+app.use(cors(corsOptions));
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+  });
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 dotenv.config();
-const corsOptions = {
-  origin: '*', // Specify the allowed origin(s) here
-  methods: 'GET,HEAD,OPTIONS,POST,PUT,DELETE',
-  allowedHeaders: 'Origin, Content-Type, X-Requested-With, Accept, Authorization',
-};
+
 const connectDB = () => {
   mongoose.connect(
     process.env.MONGO_URL,
@@ -34,7 +42,7 @@ const connectDB = () => {
   );
 };
 
-app.use(cors(corsOptions));
+
 app.use(express.json());
 
 /* -------------- PASSPORT AUTHENTICATION ----------------*/

@@ -77,6 +77,7 @@ router.post("/register", async (req, res) => {
   res.status(401).json("wrong password")
   }
   else{
+    log(req.cookies)
     let checkSession = await Sessions.findOne({userName:user.username})
     if(!checkSession){
       const newSession =  new Sessions({sessionID:user._id,userName:user.username})
@@ -85,12 +86,16 @@ router.post("/register", async (req, res) => {
     }
     let now = new Date();
 let time = now.getTime();
-time += 3600 * 1000;
+time += 3600 * 1000 * 24;
 now.setTime(time);
 const {password,...clientData} = user
       const taskNumber = await Tasks.count()
       const productNumber = await Product.count()
-    res.set().cookie('sessionID',checkSession.sessionID,{expires:now})
+      res.cookie('sessionID',`${checkSession.sessionID}`,{
+        httpOnly:true,
+        secure:true,
+        sameSite:'strict'
+    })
     res.status(200).json({...clientData,taskNumber,productNumber})
   }
    

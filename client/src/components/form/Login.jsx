@@ -27,7 +27,7 @@ function Login() {
   }
   useEffect(()=>{
     if(status ===  'succeeded'){handleClick({type:'success',msg:"user log in"})
-    Navigate('/')
+    
   } 
    
   
