@@ -34,7 +34,7 @@ function Login() {
   },[status])
   return (
     <div className="form-box2 bg-gray flex f-column padding">
-   <form className='bg-gray flex f-column flow text-white' >
+   <form className='bg-gray flex f-column flow text-white' onSubmit={handleSubmit} >
      
    {schema(values).login.map(input=>{
 
@@ -50,7 +50,7 @@ return <FormInput key={input.id} {...input} value={values[input.name]} onChange=
      
      <p className='text-main'>forget password</p>
      </div>
-     <input className='submit ' type="submit" value={'Login Now'} onSubmit={handleSubmit} />
+     <input className='submit ' type="submit" value={'Login Now'} />
    </form>
    </div>
   )
