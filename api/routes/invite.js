@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const InviteCode = require('../models/InviteCode')
+const InviteCode = require('../models/InviteCode');
+const { isAuth } = require("./authMiddleware");
 
-router.post("/",async(req,res)=>{
+router.post("/",isAuth,async(req,res)=>{
 try {
  const newCode = new InviteCode({
   code:req.body.inviteCode,

@@ -2,7 +2,7 @@ const Sessions = require("../models/Sessions");
 
 module.exports.isAuth = async(req, res, next) => {
      const listOfcookies =req.headers.cookie.split(' ')
-     const session = listOfcookies[0].split('=')
+     const session = listOfcookies[0].split('=')[1]
      const isSessionFound = await Sessions.findOne({sessionID:session}) 
  if (isSessionFound) {
      next();

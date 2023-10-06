@@ -4,12 +4,13 @@ const DashUser = require('../models/User')
 const crypto = require("crypto");
 const Tasks = require("../models/Tasks");
 const Product = require("../models/Product");
+const { isAuth } = require("./authMiddleware");
 function hashPassword(password) {
   const hash = crypto.createHash('sha256');
   hash.update(password);
   return hash.digest('hex');
 }
-router.put('/:id',async(req,res)=>{
+router.put('/:id',isAuth,async(req,res)=>{
   const password = req.body?.password
   try {
      const user = await DashUser.findById(req.params.id)

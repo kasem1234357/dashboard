@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { getProducts } = require("../controller/client");
 const Product = require("../models/Product");
 const dotenv = require("dotenv");
+const { isAuth } = require("./authMiddleware");
 const cloudinary = require("cloudinary").v2;
 dotenv.config();
 cloudinary.config({
@@ -69,7 +70,7 @@ router.post("/images", async (req, res) => {
 //   }
 // };
 // add product
-router.post("/", async (req, res) => {
+router.post("/",isAuth, async (req, res) => {
   const newProduct = new Product(req.body);
   console.log("the line is 33", newProduct);
   //
@@ -82,7 +83,7 @@ router.post("/", async (req, res) => {
   }
 });
 // update product
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id",isAuth, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     await product.updateOne({ $set: req.body });
@@ -92,7 +93,7 @@ router.put("/update/:id", async (req, res) => {
   }
 });
 // get product
-router.get("/:id", async (req, res) => {
+router.get("/:id",isAuth, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -113,7 +114,7 @@ router.get('/',async(req,res)=>{
 })
 */
 //==================================================//
-router.get("/", getProducts);
+router.get("/",isAuth, getProducts);
 //delete products
 router.delete("/:id", async (req, res) => {
   try {

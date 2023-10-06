@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const InviteCode = require("../models/InviteCode")
-const passport = require('passport');
 const crypto = require("crypto");
 const Sessions = require("../models/Sessions");
+const { log } = require("console");
 // const isAuth = require('./authMiddleware').isAuth;
 // const isAdmin = require('./authMiddleware').isAdmin;
 /*============================================================*/
@@ -75,18 +75,22 @@ router.post("/register", async (req, res) => {
   res.status(401).json("wrong password")
   }
   else{
-    const newSession =  new Sessions({sessionID:user._id,userName:user.username})
-    const session = await newSession.save();
+    let checkSession = await Sessions.findOne({userName:user.username})
+    if(!checkSession){
+      const newSession =  new Sessions({sessionID:user._id,userName:user.username})
+      const session = await newSession.save();
+        checkSession = session
+    }
     let now = new Date();
 let time = now.getTime();
 time += 3600 * 1000;
 now.setTime(time);
-    res.set().cookie('sessionID',session._id,{expires:now.toUTCString()})
-    res.status(200).json(user)
+    res.set().cookie('sessionID',checkSession.sessionID,{expires:now})
+    res.status(200).json({checkSession,user,currentSession})
   }
    
  } catch (err) {
-  
+  console.log(err);
    res.status(404).send('no user exists in db to update')
  }
 });
