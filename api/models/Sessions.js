@@ -12,5 +12,5 @@ const SessionSchema =new mongoose.Schema({
  },
  
 })
-userSchema.index({ "createdAt": 1 }, { expireAfterSeconds: 3600 });
+SessionSchema.index({ "createdAt": 1 }, { expireAfterSeconds: 60 });
 module.exports = mongoose.model('Session',SessionSchema)
