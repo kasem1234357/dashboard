@@ -7,6 +7,7 @@ import FormInput from './FormInput'
 import {schema} from '../utils/validateSchema'
 import './form.css'
 import { logUser } from '../features/slices/userSlice';
+import { handleClick } from '../utils/notificationConfig';
 function Login() {
   const Navigate = useNavigate()
   const dispatch = useDispatch()
