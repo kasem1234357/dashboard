@@ -81,7 +81,7 @@ router.post("/register", async (req, res) => {
 let time = now.getTime();
 time += 3600 * 1000;
 now.setTime(time);
-    res.cookie('sessionID',session._id,{expires:now.toUTCString()})
+    res.set().cookie('sessionID',session._id,{expires:now.toUTCString()})
     res.status(200).json(user)
   }
    
