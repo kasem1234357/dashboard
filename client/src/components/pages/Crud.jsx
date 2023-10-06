@@ -11,6 +11,7 @@ import Crud_Table_products from "../Crud/crudTable/Crud_Table_products";
 import Crud_Header from "../Crud/crudTable/Crud_Header";
 import Crud_Table_sales from "../Crud/crudTable/Crud_Table_sales";
 import Crud_Table_users from "../Crud/crudTable/Crud_Table_users";
+import axiosConfig from '../../axiosConfig'
 import {dataProduct} from '../Data/dt'
 const titles = (type = "products") => {
   const titles = {
@@ -83,7 +84,7 @@ function Crud() {
   }, [itemsData]);
   useEffect(() => {
     try {
-      axios.get(`https://dashbord-1-0-0.onrender.com/api/products/`).then((res) => {
+      axiosConfig.get(`/api/products/`).then((res) => {
         setItemsData(res.data);
       });
     } catch (error) {

@@ -10,7 +10,7 @@ import UploadingBox from "../uploadBox/UploadingBox";
 import { handleClick } from "../../utils/notificationConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProductNumber } from "../../features/slices/userSlice";
-
+import axiosConfig from '../../../axiosConfig'
 //======================================================================//
 //*************************default product data**********************  *//
 const defaultProduct = {
@@ -70,8 +70,8 @@ function Add() {
     try {
       console.log(images);
       setShowModel(true);
-      axios
-        .post(`https://dashbord-1-0-0.onrender.com/api/products/images`, images[index])
+      axiosConfig
+        .post(`/api/products/images`, images[index])
         .then((res) => {
           console.log(res.data);
           setNewData((prev) => {
@@ -107,8 +107,8 @@ function Add() {
     try {
       if (type === "New") {
         console.log(newData);
-        axios
-          .post(`https://dashbord-1-0-0.onrender.com/api/products/`, newData)
+        axiosConfig
+          .post(`/api/products/`, newData)
           .then((res) => {
             setNewData((data) => ({ ...data, ...res.data }));
             setType("update");
@@ -122,9 +122,9 @@ function Add() {
           });
         return;
       }
-      axios
+      axiosConfig
         .put(
-          `https://dashbord-1-0-0.onrender.com/api/products/update/${newData._id}`,
+          `/api/products/update/${newData._id}`,
           newData
         )
         .then((res) => {

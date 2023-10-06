@@ -9,7 +9,7 @@ import InviteCode from '../utils/InviteCode'
 import { handleClick } from '../utils/notificationConfig'
 import { validateUser } from '../utils/updateValidation'
 import { toggleDarkMode, toggleNotification } from '../features/slices/userSlice'
-
+import axiosConfig from '../../axiosConfig'
 function Settings() {
   const dispatch = useDispatch()
   const notification = useSelector(state =>state.user.notification)
@@ -35,7 +35,7 @@ function Settings() {
     try {
       
       if(validateUser(user.username,user.email,pass,checkPass,isPassChange)){
-        axios.put(`https://dashbord-1-0-0.onrender.com/api/users/${ID}`,isPassChange?{...user,password:pass}:user).then(()=>{
+        axiosConfig.put(`/api/users/${ID}`,isPassChange?{...user,password:pass}:user).then(()=>{
           handleClick({type:"warn",msg:"user data updated"})
         })
       }

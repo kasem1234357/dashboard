@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-
+import axiosConfig from '../../axiosConfig'
 import DaysBox from "./DaysBox";
 import axios from "axios";
 function CalendarBox({ month, year }) {
@@ -44,8 +44,8 @@ function CalendarBox({ month, year }) {
   }, [taskData, month, year]);
   useEffect(() => {
     try {
-      axios
-        .get(`https://dashbord-1-0-0.onrender.com/api/tasks/calendar/tasks`)
+      axiosConfig
+        .get(`/api/tasks/calendar/tasks`)
         .then((res) => {
           setTaskData(res.data);
         });

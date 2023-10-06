@@ -1,5 +1,5 @@
 import {createSlice,createAsyncThunk} from "@reduxjs/toolkit"
-import axios from "axios"
+import axiosConfig from '../../../axiosConfig'
 import observable from "../../utils/notification";
 const initialState = {
  user:null,
@@ -13,16 +13,16 @@ const initialState = {
 }
 
 // Generates pending, fulfilled and rejected action types
-const LOG_URL =`https://dashboard-magic.vercel.app/api/auth/login`
-const GET_USER = `https://dashboard-magic.vercel.app/api/users/`
+const LOG_URL =`/api/auth/login`
+const GET_USER = `/api/users/`
 export const logUser = createAsyncThunk('user/checkUser', async (initialUser) => {
- const response = await axios.post(LOG_URL, initialUser.initialUser,{withCredentials:true})
+ const response = await axiosConfig.post(LOG_URL, initialUser.initialUser)
 //  console.log(response.headers);
  return({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const getUser = createAsyncThunk("user/getUser",async (userId)=>{
     console.log(userId);
-    const response = await axios.get(`${GET_USER}${userId.userId}`,{withCredentials:true})
+    const response = await axiosConfig.get(`${GET_USER}${userId.userId}`)
  return ({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const userSlice = createSlice({

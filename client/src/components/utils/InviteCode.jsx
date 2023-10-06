@@ -1,6 +1,7 @@
 import React from 'react'
 import {useState} from "react"
 import axios from 'axios'
+import axiosConfig from '../../axiosConfig'
 import { handleClick } from './notificationConfig'
 function InviteCode() {
  const [randomKey,setRandomKey] = useState("")
@@ -19,7 +20,7 @@ function InviteCode() {
  const activation = ()=>{
   if(randomKey){
     try {
-      axios.post(`https://dashbord-1-0-0.onrender.com/api/invite`,{inviteCode:randomKey})
+      axiosConfig.post(`/api/invite`,{inviteCode:randomKey})
       handleClick({type:"success",msg:"your invite code work now"})
     } catch (error) {
       console.log(error);

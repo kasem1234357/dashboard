@@ -8,6 +8,7 @@ import { useFetsh } from "../hooks/useFetsh";
 import { useEffect } from "react";
 import FilterBox from "../utils/FilterBox";
 import SortBox from "../utils/SortBox";
+import axiosConfig from '../../axiosConfig'
 import axios from "axios";
 const currentDate = new Date().toLocaleDateString("en-US", {
   year: "numeric",
@@ -45,9 +46,9 @@ function Tasks() {
       return updated;
     });
     try {
-      axios
+      axiosConfig
         .put(
-          `https://dashbord-1-0-0.onrender.com/api/tasks/update/${draggableEl.id}`,
+          `/api/tasks/update/${draggableEl.id}`,
           {
             ...filterData[draggableEl.number],
             state: dropType,

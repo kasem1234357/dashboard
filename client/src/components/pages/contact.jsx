@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { faqs } from '../Data/mainData';
-import { Add } from '../icons/SvgIcons'
+import { Add } from '../icons/SvgIcons';
+import axiosConfig from '../../axiosConfig'
 import ContactImage from './111.svg'
 import './styles/contact.css'
 function Contact() {
@@ -14,11 +15,11 @@ function Contact() {
   })
   const sendEmail=(user="jan doe")=>{
 
-      axios.post(`https://dashbord-1-0-0.onrender.com/api/contact`,{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
+      axiosConfig.post(`/api/contact`,{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
   }
   useEffect(()=>{
     try {
-       axios.get(`https://dashbord-1-0-0.onrender.com/api/faq`).then(res => {
+       axiosConfig.get(`/api/faq`).then(res => {
          setFaq(res.data)
        })
     } catch (error) {

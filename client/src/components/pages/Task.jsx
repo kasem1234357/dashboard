@@ -9,6 +9,7 @@ import "react-calendar/dist/Calendar.css";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Add, Close } from "../icons/SvgIcons";
 import { updateTaskNumber } from "../features/slices/userSlice";
+import axiosConfig from '../../axiosConfig'
 function Task() {
   const dispatch = useDispatch()
   const taskNumber = useSelector(state =>state.user.taskNumber)
@@ -73,8 +74,8 @@ function Task() {
   const deleteTask = () => {
     try {
       
-      axios
-        .delete(`https://dashbord-1-0-0.onrender.com/api/tasks/${cacheData._id}`)
+      axiosConfig
+        .delete(`/api/tasks/${cacheData._id}`)
         .then(() => {
           dispatch(updateTaskNumber(taskNumber - 1))
           navigate("/tasks");
@@ -94,8 +95,8 @@ function Task() {
         setCacheData((prev) => ({ ...prev, state: "To do" }));
       }
       if (type === "New") {
-        axios
-          .post(`https://dashbord-1-0-0.onrender.com/api/tasks/`, cacheData)
+        axiosConfig
+          .post(`/api/tasks/`, cacheData)
           .then((res) => {
             setCacheData(res.data);
             dispatch(updateTaskNumber(taskNumber + 1))
@@ -104,8 +105,8 @@ function Task() {
         setType("update");
         
       } else {
-        axios.put(
-          `https://dashbord-1-0-0.onrender.com/api/tasks/update/${
+        axiosConfig.put(
+          `/api/tasks/update/${
             cacheData._id || location?.state.dataInfo._id
           }`,
           cacheData

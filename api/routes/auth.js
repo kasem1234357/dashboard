@@ -86,7 +86,7 @@ router.post("/register", async (req, res) => {
     }
     let now = new Date();
 let time = now.getTime();
-time += 3600 * 1000 * 24;
+time += 3600 * 1000 * 24 * 7;
 now.setTime(time);
 const {password,...clientData} = user
       const taskNumber = await Tasks.count()
@@ -94,7 +94,8 @@ const {password,...clientData} = user
       res.cookie('sessionID',`${checkSession.sessionID}`,{
         httpOnly:true,
         secure:true,
-        sameSite:'strict'
+        sameSite:'strict',
+        expires:new Date(now.toUTCString())
     })
     res.status(200).json({...clientData,taskNumber,productNumber})
   }

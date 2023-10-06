@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 import { schema } from '../utils/validateSchema';
+import axiosConfig from '../../axiosConfig'
 function Register() {
   const Navigate = useNavigate()
   const dispatch = useDispatch()
@@ -24,7 +25,7 @@ function Register() {
         email:values.email,
         password:values.password
       });
-      axios.post(`https://dashbord-1-0-0.onrender.com/api/auth/register`,{
+      axiosConfig.post(`https://dashbord-1-0-0.onrender.com/api/auth/register`,{
         userName:values.username,
         email:values.email,
         password:values.password,

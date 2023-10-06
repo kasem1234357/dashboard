@@ -12,14 +12,8 @@ const inviteRoute = require("./routes/invite");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const app = express();
-const corsOptions = {
-  origin: ['http://localhost:3000/','https://dashboard-magic.vercel.app/'],
-  // Specify the allowed origin(s) here
-  Credentials:true,
-  allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept,',
-};
-app.use(cors(corsOptions));
 app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin','https://dashboard-magic.vercel.app/')
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();

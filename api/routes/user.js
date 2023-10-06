@@ -31,10 +31,12 @@ router.put('/:id',isAuth,async(req,res)=>{
 router.get('/:id',async(req,res)=>{
   try {
     const user = await DashUser.findById(req.params.id);
+    // console.log(req.headers["cookie"].split(' '));
+    // log(req.headers)
     // console.log(await DashUser.find());
     // console.log(req.params.id);
     if(user){
-      console.log("hi");
+      // console.log("hi");
       const {password,...clientData} = user
       const taskNumber = await Tasks.count()
       const productNumber = await Product.count()
