@@ -26,9 +26,11 @@ function Login() {
     setValues({...values,[e.target.name]: e.target.value})
   }
   useEffect(()=>{
-    status ===  'succeeded'&& handleClick({type:'success',msg:"user log in"})
+    if(status ===  'succeeded'){handleClick({type:'success',msg:"user log in"})
     Navigate('/')
-
+  } 
+   
+  
   },[status])
   return (
     <div className="form-box2 bg-gray flex f-column padding">
