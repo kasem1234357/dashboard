@@ -17,7 +17,7 @@ const LOG_URL =`/api/auth/login`
 const GET_USER = `/api/users/`
 export const logUser = createAsyncThunk('user/checkUser', async (initialUser) => {
  const response = await axiosConfig.post(LOG_URL, initialUser.initialUser)
-//  console.log(response.headers);
+ console.log(response.headers);
  return({...response.data._doc,taskNumber:response.data.taskNumber,productNumber:response.data.productNumber})
 })
 export const getUser = createAsyncThunk("user/getUser",async (userId)=>{

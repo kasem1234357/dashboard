@@ -3,7 +3,8 @@ import axios from 'axios';
 const instance = axios.create({
 // .. where we make our configurations
     baseURL: 'https://dashbord-1-0-0.onrender.com', //https://dashbord-1-0-0.onrender.com
-    withCredentials:true
+    withCredentials:true,
+    
 });
 
 // Where you would set stuff like your 'Authorization' header, etc ...
