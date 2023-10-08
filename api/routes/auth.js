@@ -94,7 +94,7 @@ const {password,...clientData} = user
       res.cookie('sessionID',`${checkSession.sessionID}`,{
         httpOnly:true,
         secure:true,
-        sameSite:'strict',
+        sameSite:'none',
         expires:new Date(now.toUTCString())
     })
     res.status(200).json({...clientData,taskNumber,productNumber})
