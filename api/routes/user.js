@@ -10,7 +10,7 @@ function hashPassword(password) {
   hash.update(password);
   return hash.digest('hex');
 }
-router.put('/:id',isAuth,async(req,res)=>{
+router.put('/:id',async(req,res)=>{
   const password = req.body?.password
   try {
      const user = await DashUser.findById(req.params.id)

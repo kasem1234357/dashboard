@@ -70,7 +70,7 @@ router.post("/images", async (req, res) => {
 //   }
 // };
 // add product
-router.post("/",isAuth, async (req, res) => {
+router.post("/", async (req, res) => {
   const newProduct = new Product(req.body);
   console.log("the line is 33", newProduct);
   //
@@ -83,7 +83,7 @@ router.post("/",isAuth, async (req, res) => {
   }
 });
 // update product
-router.put("/update/:id",isAuth, async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     await product.updateOne({ $set: req.body });
@@ -93,7 +93,7 @@ router.put("/update/:id",isAuth, async (req, res) => {
   }
 });
 // get product
-router.get("/:id",isAuth, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -114,7 +114,7 @@ router.get('/',async(req,res)=>{
 })
 */
 //==================================================//
-router.get("/",isAuth, getProducts);
+router.get("/", getProducts);
 //delete products
 router.delete("/:id", async (req, res) => {
   try {

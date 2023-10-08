@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const nodemailer = require('nodemailer');
-const { isAuth } = require("./authMiddleware");
+// const nodemailer = require('nodemailer');
+// const { isAuth } = require("./authMiddleware");
 
-router.post('/',isAuth,async(req,res)=>{
+router.post('/',async(req,res)=>{
  const {title,text,type} = req.body
 
   console.log(title,text,type);
