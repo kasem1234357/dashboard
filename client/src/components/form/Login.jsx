@@ -1,18 +1,17 @@
-import axios from 'axios'
+
 import React, { useEffect, useState } from 'react'
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import FormInput from './FormInput'
-import {schema} from '../utils/validateSchema'
+import {schema} from '../../utils/validateSchema'
 import './form.css'
-import { logUser } from '../features/slices/userSlice';
-import { handleClick } from '../utils/notificationConfig';
+import axiosConfig from '../../configs/axiosConfig'
+import { handleClick } from '../../configs/notificationConfig';
+import { logUser } from '../../redux/actions/auth';
 function Login() {
   const Navigate = useNavigate()
   const dispatch = useDispatch()
   const status = useSelector(state =>state.user.status)
-  // const {setUserData} = useContext()
   const [values,setValues]=useState({
     email:'',
     password:''

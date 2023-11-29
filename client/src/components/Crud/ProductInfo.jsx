@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import ColorBox from "./ColorBox/ColorBox";
+import ColorBox from "../Boxes/colorBox/ColorBox";
 import "./productInfo.css";
 function ProductInfo({ data, setNewData, save }) {
   console.log(data);

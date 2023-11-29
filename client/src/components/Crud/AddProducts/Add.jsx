@@ -1,16 +1,15 @@
 import React from "react";
 import ProductInfo from "../ProductInfo";
 import "./add.css";
-import axios from "axios";
-import ImgBox from "../ImgBox/ImgBox";
+import ImgBox from "../../Boxes/imgBox/ImgBox";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
-import UploadingBox from "../uploadBox/UploadingBox";
-import { handleClick } from "../../utils/notificationConfig";
+import UploadingBox from "../../Boxes/uploadBox/UploadingBox";
+import { handleClick } from "../../../configs/notificationConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProductNumber } from "../../features/slices/userSlice";
-import axiosConfig from '../../../axiosConfig'
+import { updateProductNumber } from "../../../redux/slices/userSlice";
+import axiosConfig from '../../../configs/axiosConfig'
 //======================================================================//
 //*************************default product data**********************  *//
 const defaultProduct = {

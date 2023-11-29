@@ -1,8 +1,7 @@
 import React from 'react'
 import { AddProductIcon, Sort } from '../../icons/SvgIcons'
 import {useNavigate} from 'react-router-dom'
-import FilterBox from '../../utils/FilterBox'
-import axios from 'axios'
+import FilterBox from '../../Boxes/filtrerBox/FilterBox'
 import { useEffect } from 'react'
 import { useState } from 'react'
 function TableBox() {
