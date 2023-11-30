@@ -30,8 +30,9 @@ function MassagePage() {
   const inputRef = useRef('')
   const removeMassage = (date)=>{
     const newData = msgData.filter(data => data.date !==date);
-    setFilterData(newData)
+    setMsgData(newData)
     inputRef.current.value = ''
+    setCurrentMassage(newData[0])
   }
 useEffect(()=>{
    setFilterData(msgData)
