@@ -4,6 +4,7 @@ import { getUser } from "../../redux/actions/auth";
 import { Provider } from "react-redux";
 import store from "../../redux/store";
 import { ToastContainer } from "react-toastify";
+import '../../styles/loader_auth.css'
 const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
@@ -33,7 +34,7 @@ store.subscribe(()=>{
   }, [auth]);
 
 
-  return loading ? <span class="loader"></span>: PageContent;
+  return loading ? <div className="loading_auth"> <span className="loader_auth"></span> </div> : PageContent;
 };
 
 export default AuthProvider;
