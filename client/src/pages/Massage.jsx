@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { massageData } from "../components/Data/massageData";
 import {
   BackArrow,
@@ -26,6 +26,13 @@ function MassagePage() {
   const [printContent, setPrintContent] = useState("");
   const [msgData,setMsgData] = useState(massageData)
   const [filterData, setFilterData] = useState([]);
+  const [currentMassage,setCurrentMassage] = useState(massageData[0])
+  const inputRef = useRef('')
+  const removeMassage = (date)=>{
+    const newData = msgData.filter(data => data.date !==date);
+    setFilterData(newData)
+    inputRef.current.value = ''
+  }
 useEffect(()=>{
    setFilterData(msgData)
 },[msgData])
@@ -33,7 +40,7 @@ useEffect(()=>{
     <div className="massage flex">
       <div className="massage__navbar flex">
         <div className="massage__navbar__search">
-          <input type="text" placeholder="search..." onChange={(e)=>{
+          <input ref={inputRef} type="text" placeholder="search..." onChange={(e)=>{
                 filter(msgData,'sender',e.target.value,setFilterData)
           }}/>
         </div>
@@ -73,7 +80,7 @@ useEffect(()=>{
           </div>
           <div className="massage__box flex">
             {filterData?.map((massage, index) => (
-              <Massage key={index} {...massage} />
+              <Massage key={index} data={massage} setCurrentMassage={setCurrentMassage}  />
             ))}
           </div>
         </div>
@@ -94,11 +101,13 @@ useEffect(()=>{
                   convertToPDF(printContent);
                 }}
               />
-              <Delete className="svg--icon" color="#0DB8D3" />
+              <Delete className="svg--icon" color="#0DB8D3" onClick={()=>{
+                removeMassage(currentMassage.date)
+              }} />
             </div>
           </div>
           <div className="massage__viewBox__massegeBox ">
-            <MassegeLabel {...massageData[0]} />
+            <MassegeLabel {...currentMassage} />
             <MassegeArea setPrintContent={setPrintContent} />
             <CKEditor
               editor={ClassicEditor}

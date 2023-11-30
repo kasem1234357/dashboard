@@ -33,7 +33,7 @@ store.subscribe(()=>{
   }, [auth]);
 
 
-  return loading ? <h1>Loading...</h1> : PageContent;
+  return loading ? <span class="loader"></span>: PageContent;
 };
 
 export default AuthProvider;
