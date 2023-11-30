@@ -129,6 +129,7 @@ input:invalid[focused="true"] ~ .error{
     perspective: 1000px;
     border-radius: 50%;
     width: 48px;
+    margin-top: 200px;
     height: 48px;
     color: #fff;
   }
