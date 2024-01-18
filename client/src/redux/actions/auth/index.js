@@ -60,10 +60,10 @@ export const authExtraReducers = (builder)=>{
         console.log(action);
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        
         console.log(action.payload);
         state.user = action.payload;
-        state.auth =true
+        state.auth = true;
         state.loading = false
         state.taskNumber = action.payload.taskNumber;
         state.productNumber = action.payload.productNumber;
@@ -72,12 +72,15 @@ export const authExtraReducers = (builder)=>{
 
         console.log("h2");
         localStorage.setItem("user", JSON.stringify(state.id));
+        state.status = "succeeded";
       })
       .addCase(getUser.rejected, (state, action) => {
-        state.status = "failure";
+        
         state.auth = false
+        console.log('fuck you');
         state.loading = false
         state.error = action.error.message;
+        state.status = "failure";
       })
     )
 }
