@@ -20,7 +20,7 @@ store.subscribe(()=>{
   console.log('hello')
 });
   const PageContent = useMemo(() => {
-    return auth ? (
+    return !auth ? (
       <div className="App flex">
         <Provider store={store}>
         <Account />

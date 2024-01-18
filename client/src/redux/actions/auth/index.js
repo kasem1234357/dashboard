@@ -61,6 +61,7 @@ export const authExtraReducers = (builder)=>{
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = "succeeded";
+        console.log(action.payload);
         state.user = action.payload;
         state.auth =true
         state.loading = false
