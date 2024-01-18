@@ -5,6 +5,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store from "../../redux/store";
 import { ToastContainer } from "react-toastify";
 import '../../styles/loader_auth.css'
+import { getStatus } from "../../redux/slices/userSlice";
 const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem("user")
   const dispatch = useDispatch()
@@ -16,7 +17,7 @@ const AuthProvider = ({ children }) => {
   const loading = useSelector(state => state.user.loading)
   console.log(loading);
  loading && dispatch(getUser({ userId: userId }))
-//  const status = useSelector(state => state.user.status)
+ const status = useSelector(state => state.user.status)
  const auth = useSelector(state => state.user.auth)
 // store.subscribe(()=>{
 //   isLoading(store.getState().user.loading)
@@ -40,7 +41,7 @@ const AuthProvider = ({ children }) => {
   }, [auth]);
 
 
-  return loading ? <div className="loading_auth"> <span className="loader_auth"></span> </div> : PageContent;
+  return  status === 'loading'? <div className="loading_auth"> <span className="loader_auth"></span> </div> : PageContent;
 };
 
 export default AuthProvider;
