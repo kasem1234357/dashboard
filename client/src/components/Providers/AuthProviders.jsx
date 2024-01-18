@@ -11,20 +11,11 @@ const AuthProvider = ({ children }) => {
   ? JSON.parse(localStorage.getItem("user"))
   : null;
   const dispatch = useDispatch()
-  // const [loading,isLoading] = useState(store.getState().user.loading)
-  // const [auth,isAuth] = useState(store.getState().user.auth)
-  // const [ status,setStatus] = useState(store.getState().user.status)
   const loading = useSelector(state => state.user.loading)
   loading &&  dispatch(getUser({ userId: userId }))
  const status = useSelector(state => state.user.status)
  const auth = useSelector(state => state.user.auth)
-// store.subscribe(()=>{
-//   isLoading(store.getState().user.loading)
-//   console.log(store.getState().user.auth);
-//   isAuth(store.getState().user.auth)
-//   setStatus(store.getState().user.status)
-//   console.log('hello')
-// });
+
   const PageContent = useMemo(() => {
     return !auth ? (
       <div className="App flex">

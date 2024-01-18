@@ -72,6 +72,7 @@ export const authExtraReducers = (builder)=>{
       .addCase(getUser.rejected, (state, action) => {
         
         state.auth = false
+        console.log(action.payload);
         console.log('fuck you');
         state.loading = false
         state.error = action.error.message;

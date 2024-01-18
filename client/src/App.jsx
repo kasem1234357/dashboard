@@ -26,7 +26,6 @@ function App() {
   }, [pressEvent]);
 
   return (
-    <AuthProvider>
     <QueryClientProvider client={queryClient}>
     <div className='App flex'>
        <Routes>
@@ -41,7 +40,6 @@ function App() {
        <ToastContainer/>
     </div>
     </QueryClientProvider>
-    </AuthProvider>
   )
 }
 

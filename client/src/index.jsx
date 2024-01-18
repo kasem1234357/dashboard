@@ -15,8 +15,10 @@ root.render(
     
       <Router>
         <Provider store={store}>
+        <AuthProvider>
         
      <App/>
+     </AuthProvider> 
      </Provider>
     
     </Router>
