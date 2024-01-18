@@ -2,8 +2,9 @@ import { handleClick } from "../configs/notificationConfig";
 import axiosConfig from '../configs/axiosConfig'
 import { uploadDetails } from "./uploadDetails";
 export const uploadImg = (data,callbacks) => {
-  const {index, count,images,newData} = data
+  const {index, count,images,newData,galleryName} = data
   const {setNewData,setShowModel,setUploadingProgress} = callbacks
+  console.log(galleryName);
     // console.log(index);
     // console.log(count);
     // the endPoint of recursion
@@ -19,7 +20,7 @@ export const uploadImg = (data,callbacks) => {
       console.log(images);
       setShowModel(true);
       axiosConfig
-        .post(`/api/products/images`, images[index])
+        .post(`/api/products/images`, {...images[index],galleryName})
         .then((res) => {
           console.log(res.data);
           setNewData((prev) => {

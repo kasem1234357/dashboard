@@ -6,11 +6,14 @@ import store from "../../redux/store";
 import { ToastContainer } from "react-toastify";
 import '../../styles/loader_auth.css'
 import { getStatus } from "../../redux/slices/userSlice";
+import useCalender from "../../hooks/useCalender";
+import useTime from "../../hooks/useTime";
 const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
   const dispatch = useDispatch()
+
   const loading = useSelector(state => state.user.loading)
   loading &&  dispatch(getUser({ userId: userId }))
  const status = useSelector(state => state.user.status)

@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateProductNumber } from "../../../redux/slices/userSlice";
 import axiosConfig from '../../../configs/axiosConfig'
 import { uploadImg } from "../../../utils/uploadImg";
+import useCalender from "../../../hooks/useCalender";
+import useTime from "../../../hooks/useTime";
 //======================================================================//
 //*************************default product data**********************  *//
 const defaultProduct = {
@@ -43,6 +45,12 @@ function Add() {
   const [images, setImages] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [uploadingProgress, setUploadingProgress] = useState(0);
+  const {currentDay,currentMonth,currentYear} = useCalender()
+  const {getTime} = useTime()
+  
+  const createGalleryName = ()=>{
+      return `${currentYear}${currentMonth}${currentYear}${getTime().hour}${getTime().minute}${getTime().seconds}`
+  }
   //====================================================================//
   /* 
    update data 
@@ -146,7 +154,7 @@ function Add() {
     e.preventDefault();
     console.log(images);
     uploadImg(
-      {index:0,count:images.length,images,productNumber,type,newData},
+      {index:0,count:images.length,images,productNumber,type,newData,galleryName:createGalleryName()},
       {setNewData,setShowModel,setUploadingProgress,dispatch,setType}
       );
   };

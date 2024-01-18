@@ -48,6 +48,9 @@ const ProductSchema = mongooose.Schema(
       type: Array,
       default: [],
     },
+    galleryName:{
+      type:String,
+    }
   },
   { timestamp: true }
 );
