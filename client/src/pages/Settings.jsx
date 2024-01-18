@@ -9,7 +9,9 @@ import InviteCode from '../components/Boxes/InviteBox/InviteCode'
 import { handleClick } from '../configs/notificationConfig'
 import { validateUser } from '../utils/updateValidation'
 import { toggleDarkMode, toggleNotification } from '../redux/slices/userSlice'
+import {emData} from '../components/Data/employeeData'
 import axiosConfig from '../configs/axiosConfig'
+import EmployeeBox from '../components/Boxes/employeeBox/EmployeeBox'
 function Settings() {
   const dispatch = useDispatch()
   const notification = useSelector(state =>state.user.notification)
@@ -169,23 +171,32 @@ function Settings() {
              
              
            </div>
-           <div className="settings__content__others--box">
+           <div className="settings__content__others--box settings__content__others--row--controls">
              <div className="settings__content__others--row flex">
                <span >Notification</span>
                <input type="checkbox" name="Notification" id="Notification" checked={notification} onChange={()=>{
                  dispatch(toggleNotification())
                }}/>
                 <label htmlFor="Notification"> <span ><Bulb width={'20px'}/></span> </label>
+             
              </div>
-             <div className="settings__content__others--row flex">
+             <div className="settings__content__others--row  flex">
                <span >Dark mode</span>
                <input type="checkbox" name="Dark" id="Dark" checked={isDarkMode } onChange={()=>{
                 dispatch(toggleDarkMode())
                }} />
                 <label htmlFor="Dark"> <span ><Bulb width={'20px'}/></span> </label>
              </div>
-             
+             <h2 style={{paddingBlock:'15px',color:'#2472fc'}}>Employees</h2>
+             {
+              emData.map(data =>(
+                <EmployeeBox key={data.privteCode} data={data}/>
+              ))
+             }
            </div>
+           {/* <div className="settings__content__others--box">
+            
+           </div> */}
            </div>
          </div>
     </div>

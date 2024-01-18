@@ -10,6 +10,7 @@ import { handleClick } from "../../../configs/notificationConfig";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProductNumber } from "../../../redux/slices/userSlice";
 import axiosConfig from '../../../configs/axiosConfig'
+import { uploadImg } from "../../../utils/uploadImg";
 //======================================================================//
 //*************************default product data**********************  *//
 const defaultProduct = {
@@ -55,96 +56,99 @@ function Add() {
   //====================================================================//
   //====================================================================//
   // upload img function ==> recursion function thats upload img in sequence
-  const uploadImg = (index, count) => {
-    console.log(index);
-    console.log(count);
-    if (count === 0) {
-      console.log(newData);
-      console.log("image uploaded");
-      handleClick({ type: "success", msg: "img uploaded" });
-      uploadDetails(); 
-      return 0;
-    }
+  // const uploadImg = (index, count) => {
+  //   console.log(index);
+  //   console.log(count);
+  //   if (count === 0) {
+  //     console.log(newData);
+  //     console.log("image uploaded");
+  //     handleClick({ type: "success", msg: "img uploaded" });
+  //     uploadDetails(); 
+  //     return 0;
+  //   }
 
-    try {
-      console.log(images);
-      setShowModel(true);
-      axiosConfig
-        .post(`/api/products/images`, images[index])
-        .then((res) => {
-          console.log(res.data);
-          setNewData((prev) => {
-            if (res.data.type === "otherImg") {
-              // console.log(prev[res.data.type][(res.data.index) -1]);
-              prev[res.data.type][res.data.index - 1].url =
-                res.data.url.secure_url;
-            }
-            if (res.data.type === "profileImg") {
-              console.log(prev[res.data.type]);
-              prev[res.data.type].url = res.data.url.secure_url;
-            }
+  //   try {
+  //     console.log(images);
+  //     setShowModel(true);
+  //     axiosConfig
+  //       .post(`/api/products/images`, images[index])
+  //       .then((res) => {
+  //         console.log(res.data);
+  //         setNewData((prev) => {
+  //           if (res.data.type === "otherImg") {
+  //             // console.log(prev[res.data.type][(res.data.index) -1]);
+  //             prev[res.data.type][res.data.index - 1].url =
+  //               res.data.url.secure_url;
+  //           }
+  //           if (res.data.type === "profileImg") {
+  //             console.log(prev[res.data.type]);
+  //             prev[res.data.type].url = res.data.url.secure_url;
+  //           }
 
-            return prev;
-          });
+  //           return prev;
+  //         });
 
-          console.log(`image ${index} uploaded`);
-          // console.log(res.data
-          //   );
-          index++;
-          count--;
-          // console.log(count);
-          setUploadingProgress((prev) => prev + 1);
-          uploadImg(index++, count--);
-        });
-    } catch (error) {
-      console.log("tttt");
-      handleClick({ type: "error", msg: "some thing wrong" });
-      setShowModel(false);
-    }
-  };
-  const uploadDetails = () => {
-    try {
-      if (type === "New") {
-        console.log(newData);
-        axiosConfig
-          .post(`/api/products/`, newData)
-          .then((res) => {
-            setNewData((data) => ({ ...data, ...res.data }));
-            setType("update");
-            setUploadingProgress((prev) => prev + 1);
-            handleClick({ type: "success", msg: "deatails uploaded" });
-            dispatch(updateProductNumber(productNumber+1))
-            setShowModel(false);
-          }).catch(err =>{
-            setShowModel(false);
-      handleClick({ type: "error", msg: "some thing wrong" });
-          });
-        return;
-      }
-      axiosConfig
-        .put(
-          `/api/products/update/${newData._id}`,
-          newData
-        )
-        .then((res) => {
-          setNewData((data) => ({ ...data, ...res.data }));
-        }).catch(err =>{
-          setShowModel(false);
-    handleClick({ type: "error", msg: "some thing wrong" });
-        });;
-      setUploadingProgress((prev) => prev + 1);
-      handleClick({ type: "success", msg: "deatails updated" });
-      setShowModel(false);
-    } catch (error) {
-      console.log(error);
-      setShowModel(false);
-      handleClick({ type: "error", msg: "some thing wrong" });
-    }
-  };
+  //         console.log(`image ${index} uploaded`);
+  //         // console.log(res.data
+  //         //   );
+  //         index++;
+  //         count--;
+  //         // console.log(count);
+  //         setUploadingProgress((prev) => prev + 1);
+  //         uploadImg(index++, count--);
+  //       });
+  //   } catch (error) {
+  //     console.log("tttt");
+  //     handleClick({ type: "error", msg: "some thing wrong" });
+  //     setShowModel(false);
+  //   }
+  // };
+  // const uploadDetails = () => {
+  //   try {
+  //     if (type === "New") {
+  //       console.log(newData);
+  //       axiosConfig
+  //         .post(`/api/products/`, newData)
+  //         .then((res) => {
+  //           setNewData((data) => ({ ...data, ...res.data }));
+  //           setType("update");
+  //           setUploadingProgress((prev) => prev + 1);
+  //           handleClick({ type: "success", msg: "deatails uploaded" });
+  //           dispatch(updateProductNumber(productNumber+1))
+  //           setShowModel(false);
+  //         }).catch(err =>{
+  //           setShowModel(false);
+  //     handleClick({ type: "error", msg: "some thing wrong" });
+  //         });
+  //       return;
+  //     }
+  //     axiosConfig
+  //       .put(
+  //         `/api/products/update/${newData._id}`,
+  //         newData
+  //       )
+  //       .then((res) => {
+  //         setNewData((data) => ({ ...data, ...res.data }));
+  //       }).catch(err =>{
+  //         setShowModel(false);
+  //   handleClick({ type: "error", msg: "some thing wrong" });
+  //       });;
+  //     setUploadingProgress((prev) => prev + 1);
+  //     handleClick({ type: "success", msg: "deatails updated" });
+  //     setShowModel(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setShowModel(false);
+  //     handleClick({ type: "error", msg: "some thing wrong" });
+  //   }
+  // };
   const save = (e) => {
     e.preventDefault();
     console.log(images);
-    uploadImg(0, images.length);
+    uploadImg(
+      {index:0,count:images.length,images,productNumber,type,newData},
+      {setNewData,setShowModel,setUploadingProgress,dispatch,setType}
+      );
   };
   return (
     <div className="flex addProduct">

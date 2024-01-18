@@ -9,6 +9,7 @@ export const logUser = createAsyncThunk(
   "user/checkUser",
   async (initialUser) => {
     const response = await axiosConfig.post(LOG_URL, initialUser.initialUser);
+    
     console.log(response.headers);
     return {
       ...response.data._doc,
@@ -17,14 +18,22 @@ export const logUser = createAsyncThunk(
     };
   }
 );
-export const getUser = createAsyncThunk("user/getUser", async (userId) => {
-  console.log(userId);
-  const response = await axiosConfig.get(`${GET_USER}${userId.userId}`);
-  return {
-    ...response.data._doc,
-    taskNumber: response.data.taskNumber,
-    productNumber: response.data.productNumber,
-  };
+export const getUser = createAsyncThunk("user/getUser",  async(userId) => {
+
+    console.log(userId);
+    const response = await axiosConfig.get(`${GET_USER}${userId.userId}`).then(res =>{
+       console.log(res);
+    }).catch((err)=>{
+      console.log(err);
+    });
+
+    return {
+      ...response.data._doc,
+      taskNumber: response.data.taskNumber,
+      productNumber: response.data.productNumber,
+    };
+ 
+
 });
 export const authExtraReducers = (builder)=>{
     return (
@@ -48,6 +57,7 @@ export const authExtraReducers = (builder)=>{
       .addCase(getUser.pending, (state, action) => {
         state.status = "loading";
         state.loading = true
+        console.log(action);
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = "succeeded";

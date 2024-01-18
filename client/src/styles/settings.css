@@ -110,12 +110,16 @@
  flex-direction: column;
  --gap:1rem;
  height: min-content;
- overflow: auto;
+ max-height: calc(100vh - 115px);
 }
 .settings__content__others--box{
  background:#262c46;
  flex: 1;
  padding: 10px;
+}
+.settings__content__others--row--controls{
+   overflow: auto;
+   min-height: 70px;
 }
 .settings--profile{
  align-items: center;
@@ -140,7 +144,7 @@
 }
 .settings--profile--dragArea{
    margin: 10px;
-   min-height: 175px;
+   min-height: 140px;
    border: 2px dashed #7a8195;
    display: grid;
    place-items: center;
@@ -238,4 +242,20 @@
 .short--keyboards--box1{
    align-items: center;
    flex: 1;
+}
+.employeeBox-imgBox img {
+   width: 40px;
+   height: 40px;
+   object-fit: cover;
+   border-radius: 100%;
+}
+.empeloyee{
+   padding-block: 10px;
+}
+.employeeBox-controllBox {
+   display: flex;
+   gap: 7px;
+}
+.remove-btn{
+   background: #ef233c !important;
 }

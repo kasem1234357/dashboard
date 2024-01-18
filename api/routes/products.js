@@ -25,7 +25,8 @@ const cloudinaryUpload = async (file) => {
   console.log(file);
   return cloudinary.uploader.upload(
     file,
-    { timeout: 60000 },
+    { timeout: 60000,
+    quality_analysis:true },
     function (error, result) {
       if (error) {
         console.error(error);
