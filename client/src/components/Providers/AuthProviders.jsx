@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
  loading && store.dispatch(getUser({ userId: userId }))
 store.subscribe(()=>{
   isLoading(store.getState().user.loading)
+  console.log(store.getState().user.auth);
   isAuth(store.getState().user.auth)
   setStatus(store.getState().user.status)
   console.log('hello')
