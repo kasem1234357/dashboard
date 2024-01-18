@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import Account from './pages/Account'
 import "./configs/notificationConfig.js"
 import { handleKeyPress } from './utils/handleKeyPress.js'
+import AuthProvider from './components/Providers/AuthProviders.jsx'
 const queryClient = new QueryClient()
 function App() {
   const navigate = useNavigate()
@@ -25,6 +26,7 @@ function App() {
   }, [pressEvent]);
 
   return (
+    <AuthProvider>
     <QueryClientProvider client={queryClient}>
     <div className='App flex'>
        <Routes>
@@ -39,6 +41,7 @@ function App() {
        <ToastContainer/>
     </div>
     </QueryClientProvider>
+    </AuthProvider>
   )
 }
 
