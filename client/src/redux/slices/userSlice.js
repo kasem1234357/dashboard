@@ -16,7 +16,7 @@ export const userSlice = createSlice({
     authExtraReducers(builder);
   },
 });
-export const getStatus = (state) => state.users.status;
+export const getStatus = (state) => state.user.status;
 export const {
   addUser,
   toggleNotification,
