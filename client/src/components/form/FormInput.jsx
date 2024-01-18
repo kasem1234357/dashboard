@@ -16,7 +16,8 @@ function FormInput(props) {
        }
       onChange={onChange}
       onBlur={handleFocus}
-      focused={focused.toString()}  />
+      focused={focused.toString()}
+      autoComplete={true}  />
    <span className='error text-main' style={{maxWidth:'45ch'}}>{errorMessage}</span>
    </div>
   )
