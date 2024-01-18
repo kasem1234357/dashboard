@@ -12,10 +12,11 @@ const AuthProvider = ({ children }) => {
   // const [loading,isLoading] = useState(store.getState().user.loading)
   // const [auth,isAuth] = useState(store.getState().user.auth)
   // const [ status,setStatus] = useState(store.getState().user.status)
-  const loading = useSelector(state => state.loading)
+  const loading = useSelector(state => state.user.loading)
+  console.log(loading);
  loading && store.dispatch(getUser({ userId: userId }))
- const status = useSelector(state => state.status)
- const auth = useSelector(state => state.auth)
+//  const status = useSelector(state => state.user.status)
+ const auth = useSelector(state => state.user.auth)
 // store.subscribe(()=>{
 //   isLoading(store.getState().user.loading)
 //   console.log(store.getState().user.auth);
@@ -38,7 +39,7 @@ const AuthProvider = ({ children }) => {
   }, [auth]);
 
 
-  return status === 'loading' ? <div className="loading_auth"> <span className="loader_auth"></span> </div> : PageContent;
+  return loading ? <div className="loading_auth"> <span className="loader_auth"></span> </div> : PageContent;
 };
 
 export default AuthProvider;
