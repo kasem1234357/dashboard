@@ -49,7 +49,7 @@ function Add() {
   const {getTime} = useTime()
   
   const createGalleryName = ()=>{
-      return `${currentYear}${currentMonth}${currentYear}${getTime().hour}${getTime().minute}${getTime().seconds}`
+      return `${currentYear}${currentMonth.index+1}${currentDay.index}${getTime().hour}${getTime().minute}${getTime().seconds}`
   }
   //====================================================================//
   /* 
