@@ -8,15 +8,14 @@ import '../../styles/loader_auth.css'
 import { getStatus } from "../../redux/slices/userSlice";
 const AuthProvider = ({ children }) => {
   const userId = localStorage.getItem("user")
-  const dispatch = useDispatch()
   ? JSON.parse(localStorage.getItem("user"))
   : null;
+  const dispatch = useDispatch()
   // const [loading,isLoading] = useState(store.getState().user.loading)
   // const [auth,isAuth] = useState(store.getState().user.auth)
   // const [ status,setStatus] = useState(store.getState().user.status)
   const loading = useSelector(state => state.user.loading)
-  console.log(loading);
- loading && dispatch(getUser({ userId: userId }))
+  loading &&  dispatch(getUser({ userId: userId }))
  const status = useSelector(state => state.user.status)
  const auth = useSelector(state => state.user.auth)
 // store.subscribe(()=>{
