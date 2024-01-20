@@ -3,7 +3,7 @@ import axios from 'axios';
 const instance = axios.create({
 // .. where we make our configurations
     baseURL: 'https://dashbord-1-0-0.onrender.com', //http://localhost:8800
-    withCredentials:true,
+    withCredentials:false,
     
 });
 instance.defaults.timeout = 10000;
