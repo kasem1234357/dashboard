@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import Account from "../../pages/Account";
 import { getUser } from "../../redux/actions/auth";
 import { Provider, useDispatch, useSelector } from "react-redux";
@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
  const auth = useSelector(state => state.user.auth)
 
   const PageContent = useMemo(() => {
-    return !auth ? (
+    return auth ? (
       <div className="App flex">
         
         <Account />
@@ -34,7 +34,12 @@ const AuthProvider = ({ children }) => {
   }, [auth]);
 
 
-  return  status === 'loading'? <div className="loading_auth"> <span className="loader_auth"></span> </div> : PageContent;
+  return  status === 'loading'? <div className="loading_auth"> <span className="loader_auth"></span> </div> :<>
+  <Suspense >
+  {PageContent}
+  </Suspense>
+ 
+  </> 
 };
 
 export default AuthProvider;

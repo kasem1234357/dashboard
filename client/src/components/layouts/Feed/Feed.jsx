@@ -1,17 +1,30 @@
 import React from 'react'
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom'
-import Add from '../../Crud/AddProducts/Add'
-
-import Calender from '../../../pages/Calender'
-import Contact from '../../../pages/contact'
-import Crud from '../../../pages/Crud'
-import DashBoard from '../../../pages/DashBoard'
-import MassagePage from '../../../pages/Massage'
-import Settings from '../../../pages/Settings'
-import Task from '../../../pages/Task'
-import Tasks from '../../../pages/Tasks'
-
 import './feed.css'
+import '../../../styles/crud.css'
+const Add = lazy(() => import('../../Crud/AddProducts/Add.jsx'));
+// import Add from '../../Crud/AddProducts/Add'
+const Calender = lazy(() => import('../../../pages/Calender.jsx'));
+// import Calender from '../../../pages/Calender'
+const Contact = lazy(() => import('../../../pages/contact.jsx'));
+// import Contact from '../../../pages/contact'
+const DashBoard = lazy(() => import('../../../pages/DashBoard.jsx'));
+const Crud = lazy(() => import('../../../pages/Crud.jsx'));
+// import Crud from '../../../pages/Crud'
+// import DashBoard from '../../../pages/DashBoard'
+const MassagePage = lazy(() => import('../../../pages/Massage.jsx'));
+const Settings = lazy(() => import('../../../pages/Settings.jsx'));
+const Task = lazy(() => import('../../../pages/Task.jsx'));
+const Tasks = lazy(() => import('../../../pages/Tasks.jsx'));
+
+
+// import MassagePage from '../../../pages/Massage'
+// import Settings from '../../../pages/Settings'
+// import Task from '../../../pages/Task'
+// import Tasks from '../../../pages/Tasks'
+
+
 function Feed() {
   return (
     <>
