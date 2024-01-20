@@ -14,13 +14,11 @@ const userRoute = require("./routes/user");
 const app = express();
 let allowlist = ['https://dashboard-magic.vercel.app/', 'https://dashboard-magic.vercel.app']
 app.use(function(req, res, next) {
-  if (allowlist.indexOf(req.headers.origin) !== -1) {
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods','POST, GET, OPTIONS, PUT, DELETE')
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-}
     next();
   });
 app.use(express.json({ limit: "50mb" }));
