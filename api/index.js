@@ -15,7 +15,7 @@ const app = express();
 let allowlist = ['https://dashboard-magic.vercel.app/', 'https://dashboard-magic.vercel.app']
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods','POST, GET, OPTIONS, PUT, DELETE')
-    res.header('Access-Control-Allow-Credentials', true);
+    // res.header('Access-Control-Allow-Credentials', true);
     next();
   });
   app.use(cors())
