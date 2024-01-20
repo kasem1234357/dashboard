@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { useEffect } from 'react';
 import { Add } from '../components/icons/SvgIcons';
 import axiosConfig from '../configs/axiosConfig'
@@ -26,6 +26,7 @@ function Contact() {
     }
   },[])
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className='contact '>
       <div className="contact__header">
         <h2>Contact with our Team</h2>
@@ -84,6 +85,7 @@ function Contact() {
          ))}
       </div>
     </div>
+    </Suspense>
   )
 }
 

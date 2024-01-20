@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useState } from 'react';
 import CalendarBox from '../components/Boxes/calenderBox/CalendarBox'
 import '../styles/calendar.css'
@@ -9,6 +9,7 @@ function Calender() {
   })
   const months = ["January ", "February", "March", "April", "May", "June", "July", "August", "September ", "October", "November", "December"];
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className='calendar flex'>
       <div className="calendar__navbar flex">
         <h1>Calendar</h1>
@@ -23,6 +24,7 @@ function Calender() {
         <CalendarBox year={data.year} month={data.month}/>
       </div>
     </div>
+    </Suspense>
   )
 }
 

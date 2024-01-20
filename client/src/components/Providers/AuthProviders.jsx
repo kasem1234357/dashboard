@@ -34,12 +34,8 @@ const AuthProvider = ({ children }) => {
   }, [auth]);
 
 
-  return  status === 'loading'? <div className="loading_auth"> <span className="loader_auth"></span> </div> :<>
-  <Suspense >
-  {PageContent}
-  </Suspense>
- 
-  </> 
+  return  status === 'loading'? <div className="loading_auth"> <span className="loader_auth"></span> </div> 
+  :PageContent
 };
 
 export default AuthProvider;

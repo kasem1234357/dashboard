@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Add, Board } from "../components/icons/SvgIcons";
@@ -68,6 +68,7 @@ function Tasks() {
   if (error) return <h2>some thing wrong</h2>;
 
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className="Task">
       <div className="task__navbar flex">
         <h3> welcome Back 🖐</h3>
@@ -339,6 +340,7 @@ function Tasks() {
         </div>
       </div>
     </div>
+    </Suspense>
   );
 }
 

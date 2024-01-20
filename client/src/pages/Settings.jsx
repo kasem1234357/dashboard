@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import '../styles/settings.css'
 import logo from './profile.jpg'
 
@@ -46,6 +46,7 @@ function Settings() {
     }
   }
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className='settings'>
          <div className="settings__header flex">
            <div className="settings__header__text">
@@ -200,6 +201,7 @@ function Settings() {
            </div>
          </div>
     </div>
+    </Suspense>
   )
 }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import BarChart from '../components/DashBoard/BarChart/BarChart'
 import CirculerChart from '../components/DashBoard/CirculerCharts/CirculerChart'
 import { rateData } from '../components/Data/rateData'
@@ -9,6 +9,7 @@ import Table from '../components/DashBoard/Table/table'
 function DashBoard() {
   return (
     <>
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
         <div className='feed'>
    <div className="feed__text">
      <h2>Hello, Kasem Alolo</h2>
@@ -39,7 +40,7 @@ function DashBoard() {
     <Table/>
    </div>
  </div>
- 
+ </Suspense>
     </>
   
   )

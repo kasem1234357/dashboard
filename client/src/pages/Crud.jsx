@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-pascal-case */
-import React from "react";
+import React, { Suspense } from "react";
 import { AddProductIcon, Sheets, Sort } from "../components/icons/SvgIcons";
 import {utils,writeFile} from "xlsx";
 import { useNavigate } from "react-router-dom";
@@ -93,6 +93,7 @@ function Crud() {
   const navigate = useNavigate();
 
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className="Crud">
       <div className="Crud__header">
         <h2>my products data</h2>
@@ -153,6 +154,7 @@ function Crud() {
         </div>
       </div>
     </div>
+    </Suspense>
   );
 }
 

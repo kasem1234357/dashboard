@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { massageData } from "../components/Data/massageData";
 import {
   BackArrow,
@@ -38,6 +38,7 @@ useEffect(()=>{
    setFilterData(msgData)
 },[msgData])
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className="massage flex">
       <div className="massage__navbar flex">
         <div className="massage__navbar__search">
@@ -138,6 +139,7 @@ useEffect(()=>{
         </div>
       </div>
     </div>
+    </Suspense>
   );
 }
 

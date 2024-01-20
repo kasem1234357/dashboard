@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback } from "react";
+import React, { Suspense, useCallback } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import Calendar from "react-calendar";
@@ -140,6 +140,7 @@ function Task() {
   ]);
 
   return (
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <div className="single--Task">
       <div className="single--Task__navbar flex">
         <div className="flex">
@@ -334,6 +335,7 @@ function Task() {
         </div>
       </div>
     </div>
+    </Suspense>
   );
 }
 

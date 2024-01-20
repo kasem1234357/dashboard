@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import './feed.css'
@@ -28,7 +28,7 @@ const Tasks = lazy(() => import('../../../pages/Tasks.jsx'));
 function Feed() {
   return (
     <>
-    
+    <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
     <Routes>
       <Route path='/' element={<DashBoard />}/>
       <Route path='massage' element={<MassagePage />}/>
@@ -41,6 +41,7 @@ function Feed() {
       <Route path='contact' element={<Contact />}/>
       <Route path='settings' element={<Settings />}/>
     </Routes>
+    </Suspense>
       </>
     
   )
