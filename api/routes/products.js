@@ -21,12 +21,13 @@ cloudinary.config({
 //   });
 //   return url
 // }
-const cloudinaryUpload = async (file) => {
+const cloudinaryUpload = async (file,galleryName) => {
   console.log(file);
   return cloudinary.uploader.upload(
     file,
     { timeout: 60000,
-    quality_analysis:true },
+    quality_analysis:true,
+  folder:galleryName },
     function (error, result) {
       if (error) {
         console.error(error);
@@ -38,9 +39,9 @@ const cloudinaryUpload = async (file) => {
   );
 };
 router.post("/images", async (req, res) => {
-  const { imgData, type, index } = req.body;
+  const { imgData, type, index ,galleryName} = req.body;
   try {
-    let imgUrl = await cloudinaryUpload(imgData);
+    let imgUrl = await cloudinaryUpload(imgData,galleryName);
     res.status(200).json({
       type,
       index,
