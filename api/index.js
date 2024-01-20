@@ -13,12 +13,14 @@ const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const app = express();
 // let allowlist = ['https://dashboard-magic.vercel.app/', 'https://dashboard-magic.vercel.app']
-// app.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Methods','POST, GET, OPTIONS, PUT, DELETE')
-//     // res.header('Access-Control-Allow-Credentials', true);
-//     next();
-//   });
-  app.use(cors())
+app.use(cors())
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin','*')
+    res.header('Access-Control-Allow-Methods','POST, GET, OPTIONS, PUT, DELETE')
+    // res.header('Access-Control-Allow-Credentials', true);
+    next();
+  });
+  
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 dotenv.config();
