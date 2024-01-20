@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
  const auth = useSelector(state => state.user.auth)
 
   const PageContent = useMemo(() => {
-    return auth ? (
+    return !auth ? (
       <div className="App flex">
         
         <Account />
