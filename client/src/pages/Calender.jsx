@@ -1,20 +1,23 @@
 import React, { Suspense } from 'react'
 import { useState } from 'react';
 import CalendarBox from '../components/Boxes/calenderBox/CalendarBox'
+import useCalender from '../hooks/useCalender'
 import '../styles/calendar.css'
+import { motion } from "framer-motion"
+import { config_animateY } from '../configs/motionConfig';
 function Calender() {
+  const {currentYear,currentMonth,months} = useCalender()
   const [data,setData] =useState({
-    year:new Date().getFullYear(),
-    month:new Date().getMonth()
+    year:currentYear,
+    month:currentMonth.index
   })
-  const months = ["January ", "February", "March", "April", "May", "June", "July", "August", "September ", "October", "November", "December"];
   return (
     <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
-    <div className='calendar flex'>
+    <motion.div {...config_animateY} className='calendar flex'>
       <div className="calendar__navbar flex">
         <h1>Calendar</h1>
-        <h2>{new Date().getFullYear()}</h2>
-        <select onChange={(e)=>setData({...data,month:parseInt(e.target.value)})}  defaultValue={new Date().getMonth()} name="" id="">
+        <h2>{currentYear}</h2>
+        <select onChange={(e)=>setData({...data,month:parseInt(e.target.value)})}  defaultValue={`${currentMonth.index}`} name="" id="">
           {months.map((month,index)=>(
             <option value={index}>{month}</option>
           ))}
@@ -23,7 +26,7 @@ function Calender() {
       <div className="calendar__box secondary--bg flex">
         <CalendarBox year={data.year} month={data.month}/>
       </div>
-    </div>
+    </motion.div>
     </Suspense>
   )
 }

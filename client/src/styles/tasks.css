@@ -10,7 +10,7 @@
  padding-bottom: 30px;
  justify-content: space-between;
  align-items: center;
- color: #d7d7d7;
+ color: var(--text__title);
  
 }
 .task__mainBox{
@@ -21,7 +21,7 @@
 .task__mainBox__controls{
  justify-content: space-between;
  width: 100%;
- border-bottom: 2px solid #3a445e;
+ border-bottom: 2px solid var(--item__bg2);
  align-items: center;
 }
 .task__mainBox__controls ul{
@@ -36,17 +36,17 @@ display: flex;
 }
 .task__mainBox__controls ul li svg {
  margin-right: 5px;
- fill :#3a445e;
+ fill :var(--item__bg2);
 }
 .view--controls ul li{
  padding-bottom: 15px;
 }
 .view--controls ul li.active {
- color: #d7d7d7;
+ color: var(--text__title);
  position: relative;
 }
 .view--controls ul li.active svg {
- fill: #d7d7d7;
+ fill: var(--text__title);
 }
 .view--controls ul li.active::before{
  content: '';
@@ -87,11 +87,21 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
  height: 100%;
  padding: 10px 0;
 }
+.task__mainBox__Board.list-view{
+    display: grid;
+}
+.task__mainBox__Board.list-view .boardBox {
+    overflow: initial;
+}
+.task__mainBox__Board.board-view{
+    overflow: auto;
+    display: flex;
+}
 .boardBox{
  flex: 1;
  height: 100%;
  border-radius: 6px;
- background: #1e233a;
+ background: var(--task__board__bg);
  padding: 10px;
  overflow: auto;
  display: flex;
@@ -109,7 +119,7 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
 .boardBox__header div{
  align-items: center;
  --gap:0;
- color: #fff;
+ color: var(--highlight__text);
  font-size: 15px;
 }
 .boardBox__box{
@@ -128,7 +138,7 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
 .TaskCard{
  min-height: 140px;
  width: 100%;
- background: rgba(58, 68, 94,0.6);
+ background: var(--task__item__bg);
  border-radius: 6px;
  color: #d7d7d7;
  padding: 10px;
@@ -169,7 +179,7 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
     position: relative;
     height: 3px;
     border-radius: 10px;
-    background: #3a445e;
+    background: var(--item__bg2);
 }
 .TaskCard__progress__progressBar{
     content: '';
@@ -189,7 +199,7 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
 .TaskCard__footer__date{
     border-radius: 25px;
     padding: 5px 10px;
-    background: #1e233a;
+    background: var(--task__board__bg);
     color: #7a8195;
     font-size: 15px;
 
@@ -207,7 +217,7 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
 }
 .single--Task{
     margin: 20px;
-    background: #262C46;
+    background: var(--secondary);
     position: relative;
     border-radius: 4px;
     display: flex;
@@ -218,7 +228,7 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
 }
 .single--Task .titleInput {
     font-size: 60px;
-    color: #fff;
+    color: var(--highlight__text);
     background: none;
     outline: none;
     border: none;
@@ -239,20 +249,21 @@ background: linear-gradient(to right, #2472fc, #7d00fa);
 }
 .single--task--container::-webkit-scrollbar-thumb{
     width: 8px;
-    background: #171c30;
+    background: var(--primary);
     border-radius: 5px;
     border: 2px solid #3e4772;
    
    }
 .single--task--box {
     position: relative;
-    display: block;
+    display: flex;
+
     overflow: hidden;
     /* margin: 40
 px
  0; */
     padding: 20px;
-    color: #fff;
+    color: var(--highlight__text);
     margin: 7.5px 0;
     /* background: #7a8195; */
     background: rgb(58 68 94 / 60%);
@@ -312,7 +323,7 @@ width: min-content;
     
     height: 1px;
     z-index: 1000;
-    background: #fff;
+    background: var(--highlight__text);
     transform: translateY(-50%) scalex(0);
     transform-origin: right;
     transition: transform 1s;
@@ -333,9 +344,9 @@ width: min-content;
     border-bottom: 5px solid #3a445ed7;
 }
 .single--Task__navbar select{
-    background: #434f6e;
+    background: var(--popup__item__bg);
     padding: 5px 10px;
-    color: #fff;
+    color: var(--highlight__text);
     outline: none;
     border-radius: 4px;
     font-size: 17px;
@@ -346,8 +357,8 @@ width: min-content;
     gap: 10px;
 }
 .react-calendar.calendar-task-box {
-    background: #171c30;
-    color: #fff;
+    background: var(--primary);
+    color: var(--highlight__text);
     bottom: 50px;
     z-index: 1000;
     box-shadow: 0px 0px 16px rgb(0 0 0 / 50%);
@@ -359,13 +370,13 @@ width: min-content;
     font-size: 17px;
 }
 .react-calendar__navigation button:enabled:hover, .react-calendar__navigation button:enabled:focus {
-    background: #3a445e ;
+    background: var(--item__bg2);
 }
 .react-calendar__tile:enabled:hover, .react-calendar__tile:enabled:focus {
-    background: #3a445e ;
+    background: var(--item__bg2);
 }
 .react-calendar.calendar-task-box button{
-    color: #fff;
+    color: var(--highlight__text);
 }
 .react-calendar__tile--now {
     background: none;
@@ -387,7 +398,7 @@ width: min-content;
 }
 .task--save--btn{
     padding: 10px 15px;
-    color: #fff;
+    color:#fff;
     background: #7d00fa;
     border: none;
     outline: none;
@@ -447,7 +458,7 @@ div.task--save--btn.tag-btn span{
 .tag--box{
     border-radius: 4px;
     padding: 5px;
-    color: #fff;
+    color:#fff;
     font-size: 14px;
     font-weight: bold;
 }
@@ -467,6 +478,7 @@ input.tagBox__input {
     left: 5px;
     z-index: 10000;
     border: none;
+    outline: none;
     background-color: transparent;
     padding: 10px;
 }
@@ -481,4 +493,35 @@ input.tagBox__input {
     width: 25px;
     height: 25px;
     border-radius: 50%;
+}
+.board-view {
+    display: grid;
+    gap: 0.8rem;
+    overflow: auto;
+}
+.list-view {
+    display: flex;
+    gap: 0.8rem;
+    overflow: auto;
+}
+.TaskCard_container{
+    position: relative;
+}
+.drag-icon-area {
+    position: absolute;
+    right: 10px;
+    padding: 10px;
+    cursor: grab;
+    padding-right: 0;
+}
+.list-view .boardBox__box{
+    flex-direction: row;
+    padding-bottom: 10px;
+}
+.list-view .boardBox__box .TaskCard {
+    min-width: 250px;
+}
+.list-view .dragArea {
+    min-width: 250px;
+    margin-bottom: 10px;
 }

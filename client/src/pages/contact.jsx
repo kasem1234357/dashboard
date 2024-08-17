@@ -4,7 +4,9 @@ import { useEffect } from 'react';
 import { Add } from '../components/icons/SvgIcons';
 import axiosConfig from '../configs/axiosConfig'
 import ContactImage from './111.svg'
+import { motion } from "framer-motion"
 import '../styles/contact.css'
+import { config_animateY, config_scale } from '../configs/motionConfig';
 function Contact() {
   const [faq,setFaq] = useState([]);
   const [massage,setMassage] = useState({
@@ -19,15 +21,15 @@ function Contact() {
   useEffect(()=>{
     try {
        axiosConfig.get(`/api/faq`).then(res => {
-         setFaq(res.data)
+         setFaq(res.data.data)
        })
     } catch (error) {
-      
+      console.log(error)
     }
   },[])
   return (
     <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
-    <div className='contact '>
+    <motion.div {...config_scale} className='contact '>
       <div className="contact__header">
         <h2>Contact with our Team</h2>
         <span>we already 24/7 for your question and ideas</span>
@@ -84,7 +86,7 @@ function Contact() {
            </div>
          ))}
       </div>
-    </div>
+    </motion.div>
     </Suspense>
   )
 }

@@ -13,7 +13,7 @@
     width: 100px;
     height: 100px;
     margin:auto;
-    color: #fff;
+    color: var(--highlight__text)
   }
     .loader_auth:before,
     .loader_auth::after {

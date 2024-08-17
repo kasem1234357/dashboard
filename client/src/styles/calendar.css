@@ -5,7 +5,7 @@
  flex-direction: column;
 }
 .calendar__navbar{
- color:#d7d7d7;
+   color: var(--text__title);
  padding-bottom: 10px;
 }
 .calendar__box{
@@ -17,12 +17,12 @@
 .days--name{
    width: 100%;
    padding: 20px 11px;
-   background: #3a445e;
+   background: var(--item__bg2);
 }
 .days--name div{
    flex: 1;
    padding-left: 4px;
-   color: #d7d7d7;
+   color: var(--text__title);
 }
 .days--box{
    width: 100%;
@@ -34,7 +34,7 @@
     width: calc(100% / 7);
     height: calc(100% / 5);
     cursor: pointer;
-    border: 2px solid #3a445e;
+    border: 2px solid var(--item__bg2);
     border-top: none;
     border-left: none;
     padding: 10px;
@@ -42,7 +42,7 @@
     position: relative;
 }
 .days--box .days:hover,.days--box .days.active-reminder{
-   background: #3a445e ;
+   background: var(--item__bg2);
 }
 .active-reminder-day {
    background: #2f78ff;
@@ -57,7 +57,7 @@
    opacity: 0.5;
 }
 .reminder--color h4{
-    color: #d7d7d7;
+   color: var(--text__title);
 }
 .end--progress--calendar{
    position: absolute;
@@ -83,9 +83,9 @@
 .calendar  select {
    margin-top: 10px;
    width: 150px;
-   background: #434f6e;
+   background: var(--popup__item__bg);
    padding: 5px;
-   color: #d7d7d7;
+   color: var(--text__title);
    outline: none;
    font-size: 17px;
    border: none;

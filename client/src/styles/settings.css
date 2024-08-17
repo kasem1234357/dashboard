@@ -12,7 +12,7 @@
  padding-bottom: 20px;
 }
 .settings__header h2 {
-   color: #d7d7d7;
+   color: var(--text__title);
 }
 .settings__header__controls button{
    padding: 10px 20px ;
@@ -20,13 +20,13 @@
    border: none;
    border-radius: 5px;
    cursor: pointer;
-   background: #262c46;
-   color: #ffffff;
+   background: var(--secondary);
+   color: var(--highlight__text);
 
 }
 .settings__header__controls .save--btn{
    background: #2472fc;
-   color: #ffffff;
+   color: #fff;
    font-weight: bold;
 }
 .settings__content{
@@ -36,7 +36,7 @@
 }
 .settings__content__userInfo{
  flex: 2;
- background:#262c46;
+ background:var(--secondary);
  padding: 10px;
  overflow: auto;
  max-height:calc(100vh - 115px) ;
@@ -56,7 +56,7 @@
  }
  .settings__content__userInfo::-webkit-scrollbar-thumb{
    width: 8px;
-   background: #171c30;
+   background: var(--primary);
    border-radius: 5px;
    border: 2px solid #343a5c;
 
@@ -66,7 +66,7 @@
 }
 .content__userInfo__box  h3{
    padding-block: 20px 10px;
-   color: #d7d7d7;
+   color: var(--text__title);
    border-bottom: 2px solid #7a8195;
    margin-bottom: 10px;
 }
@@ -113,7 +113,7 @@
  max-height: calc(100vh - 115px);
 }
 .settings__content__others--box{
- background:#262c46;
+ background:var(--secondary);
  flex: 1;
  padding: 10px;
 }
@@ -133,7 +133,7 @@
    object-fit: cover;
 }
 .settings--profile--text{
- color: #d7d7d7;
+   color: var(--text__title);
 }
 .settings--profile--text span{
  color: #7a8195;
@@ -167,7 +167,7 @@
 .settings__content__others--row input[type=text] {
    width: 100%;
    padding: 5px 10px;
-   background: #171c30;
+   background: var(--primary);
    border: none;
    outline: none;
 }
@@ -176,15 +176,15 @@
    /* margin-left: 10px; */
    border: none;
    border-radius: 5px;
-   background: #171c30;
-   color: #d7d7d7;
+   background: var(--primary);
+   color: var(--text__title);
    font-weight:bold ;
    cursor: pointer;
 }
 .settings__content__others--row label {
    height: 27.5px;
    width: 55px;
-   background: #171c30;
+   background: var(--primary);
    border-radius: 4px;
    position: relative;
 
@@ -194,11 +194,11 @@
    top: 0;
    left: 0;
    height: 27.5px;
-   border: 2px solid #171c30;
+   border: 2px solid var(--primary);
    width: 27.5px;
    display: grid;
    place-items: center;
-   background: #262c46;
+   background: var(--secondary);
    transition: 0.5s;
 }
 .settings__content__others--row input:checked ~ label span{
@@ -250,7 +250,7 @@
    border-radius: 100%;
 }
 .empeloyee{
-   padding-block: 10px;
+   padding: 10px;
 }
 .employeeBox-controllBox {
    display: flex;
@@ -258,4 +258,5 @@
 }
 .remove-btn{
    background: #ef233c !important;
+   color: #fff !important;
 }

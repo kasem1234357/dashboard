@@ -6,23 +6,26 @@ export const uploadDetails = (data,callbacks) => {
     const {type,newData,productNumber} = data
     try {
       if (type === "New") {
-        console.log(newData);
+    
         axiosConfig
-          .post(`/api/products/`, newData)
+          .post(`/api/products/`,newData )
           .then((res) => {
+            console.log(res)
             setNewData((data) => ({ ...data, ...res.data }));
-            setType("update");
+             setType("update");
             setUploadingProgress((prev) => prev + 1);
             handleClick({ type: "success", msg: "deatails uploaded" });
             dispatch(updateProductNumber(productNumber+1))
             setShowModel(false);
+            
           }).catch(err =>{
             setShowModel(false);
       handleClick({ type: "error", msg: "some thing wrong" });
           });
         return;
       }
-      axiosConfig
+      else{
+        axiosConfig
         .put(
           `/api/products/update/${newData._id}`,
           newData
@@ -36,6 +39,8 @@ export const uploadDetails = (data,callbacks) => {
       setUploadingProgress((prev) => prev + 1);
       handleClick({ type: "success", msg: "deatails updated" });
       setShowModel(false);
+      }
+     
     } catch (error) {
       console.log(error);
       setShowModel(false);

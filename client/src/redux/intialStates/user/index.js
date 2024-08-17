@@ -1,9 +1,9 @@
 export const initialState = {
-    user: null,
+    user: {},
     status: "idle",
     id: "",
     notification: true,
-    darkMode: true,
+    darkMode: localStorage.getItem('theme') === 'dark'?true:false,
     taskNumber: 1,
     productNumber: 1,
     auth:false,

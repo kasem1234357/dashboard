@@ -1,25 +1,25 @@
 .ck.ck-toolbar{
-    background: #3a445e !important;
+    background: var(--item__bg2) !important;
     border: none;
 }
 .ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset_all {
  color: #ede7e7 !important;
 }
 .ck.ck-button:not(.ck-disabled):hover, a.ck.ck-button:not(.ck-disabled):hover {
-    background: #171c30 !important;
+    background: var(--primary) !important;
 }
 .ck.ck-editor__main>.ck-editor__editable{
-    background: #3a445e !important;
+    background: var(--item__bg2) !important;
 }
 .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
-    border-color: #171c30 !important;
+    border-color: var(--primary) !important;
     border-inline: 0px !important;
 }
 .ck.ck-media-form{
-    background: #171c30 !important;
+    background: var(--primary) !important;
 }
 .ck.ck-input{
-    background: #3a445e !important;
+    background: var(--item__bg2) !important;
 }
 .ck.ck-input:focus{
     box-shadow: none !important;
@@ -41,7 +41,7 @@ flex-direction: column;
  width: 100%;
  padding-left: 20px;
  height: 60px;
- border-left: 2px solid #3a445e;
+ border-left: 2px solid var(--item__bg2);
 }
 .massage__content {
  width: 100%;
@@ -51,7 +51,7 @@ flex-direction: column;
 .massage__list{
  width: 0;
  flex:0;
- border: 2px solid #3a445e;
+ border: 2px solid var(--item__bg2);
  border-bottom: none;
  transition: 0.5s;
  transition-property: width;
@@ -74,7 +74,7 @@ flex-direction: column;
 }
 .massage__viewBox{
  flex: 2;
- border: 2px solid #3a445e;
+ border: 2px solid var(--item__bg2);
  border-inline: none;
  flex-direction: column;
  
@@ -91,7 +91,7 @@ flex-direction: column;
 }
 .massage__list__searchBox{
  height: 60px;
- border-bottom: 2px solid #3a445e;
+ border-bottom: 2px solid var(--item__bg2);
  position: relative;
 }
 .massage__list__selectBox{
@@ -106,7 +106,7 @@ flex-direction: column;
  transform: translateY(-45%);
 }
 option{
-background: #262C46;
+background: var(--secondary);
  font: inherit;
  border: none;
 }
@@ -115,7 +115,7 @@ background: #262C46;
  outline: none;
  border: none;
  margin: 10px;
- color: #fff;
+ color: var(--highlight__text);
  font-weight: 400;
  width: 130px;
  font-size: 17px;
@@ -138,7 +138,7 @@ background: #262C46;
  margin-top: 0;
  height: 100%;
  overflow-y: auto;
- background: #171c30;
+ background: var(--primary);
 }
 .massage__box{
  width: 100%;
@@ -159,7 +159,7 @@ background: #262C46;
  margin-top: 10px;
 }
 .Massege__Area p{
- color: #c9c8c8;
+ color: var( --text__title);
 }
 .massage__navbar__search {
  height: 100%;

@@ -3,13 +3,17 @@ import React, { Suspense, useCallback } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 import Calendar from "react-calendar";
+import "../styles/tasks.css";
 import { useState } from "react";
 import { useDispatch,useSelector} from 'react-redux'
 import "react-calendar/dist/Calendar.css";
+import { motion } from "framer-motion"
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Add, Close } from "../components/icons/SvgIcons";
 import { updateTaskNumber } from "../redux/slices/userSlice";
 import axiosConfig from '../configs/axiosConfig'
+import useOutsideClick from "../hooks/useOutsideClick";
+import { config_scale } from "../configs/motionConfig";
 function Task() {
   const dispatch = useDispatch()
   const taskNumber = useSelector(state =>state.user.taskNumber)
@@ -29,17 +33,21 @@ function Task() {
   };
   const data = location?.state.dataInfo;
   // console.log(data);
+
   const [type, setType] = useState(location?.state.type);
   const [cacheData, setCacheData] = useState(defaultData);
   const [showModel, setShowModel] = useState(false);
   const [showTagBox, setShowtagBox] = useState(false);
   const [showColors, setShowColors] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [value, onChange] = useState("");
+  const [valueCalender, onChange] = useState('');
   useEffect(() => {
     if (data !== null) {
       setCacheData(data);
-      onChange(new Date(data.reminderDate.split("-").join(", ")));
+      if(data.reminderDate !== ''){
+        onChange(new Date(data.reminderDate.split("-").join(", ")));
+      }
+      
       setTasks(data.tasks);
     }
   }, []);
@@ -98,7 +106,7 @@ function Task() {
         axiosConfig
           .post(`/api/tasks/`, cacheData)
           .then((res) => {
-            setCacheData(res.data);
+            setCacheData(res.data.data);
             dispatch(updateTaskNumber(taskNumber + 1))
           });
 
@@ -117,16 +125,15 @@ function Task() {
     }
   };
   useEffect(() => {
+    
     try {
-      console.log(type);
       if (type !== "New") {
-        console.log("bug");
         save();
       }
     } catch (error) {
       console.log(error);
     }
-    if (cacheData.reminderDate !== "") {
+    if (cacheData.reminderDate !=="" ) {
       console.log(cacheData);
       onChange(new Date(cacheData.reminderDate.split("-").join(", ")));
     }
@@ -138,10 +145,14 @@ function Task() {
     type,
     tasks,
   ]);
-
+  const targetRef = useRef('')
+  const handleClickOutside = ()=>{
+     setShowtagBox(false)
+  }
+  useOutsideClick(targetRef,handleClickOutside)
   return (
     <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
-    <div className="single--Task">
+    <motion.div {...config_scale} className="single--Task">
       <div className="single--Task__navbar flex">
         <div className="flex">
           <select
@@ -250,7 +261,7 @@ function Task() {
       </div>
       <div className=" single-task-controll ">
         <div
-          className={`task--save--btn tag-btn ${showTagBox ? "active" : ""}`}
+          ref={targetRef} className={`task--save--btn tag-btn ${showTagBox ? "active" : ""}`}
         >
           {showTagBox ? (
             <div className={`tagBox flex`}>
@@ -291,7 +302,7 @@ function Task() {
                 : null}
             </div>
           ) : null}
-          <span onClick={() => setShowtagBox(!showTagBox)}>
+          <span  onClick={() => setShowtagBox(!showTagBox)}>
             Add tag{" "}
             <Add width={"30px"} color={"#d7d7d7"} viewBox={"-2 -2 28 28"} />
           </span>{" "}
@@ -299,7 +310,7 @@ function Task() {
         <div className="task--calendar flex">
           <button
             onClick={() => setShowModel(!showModel)}
-            className={`task--calendar--btn ${value !== "" && "active"}`}
+            className={`task--calendar--btn ${valueCalender !== "" && "active"}`}
           >
             <span></span>
             <svg
@@ -316,6 +327,7 @@ function Task() {
             <Calendar
               className={"calendar-task-box"}
               onChange={(value, event) => {
+                console.log(value)
                 setCacheData((prev) => ({
                   ...prev,
                   reminderDate: `${new Date(value).getFullYear()}-${
@@ -325,7 +337,7 @@ function Task() {
                 }));
                 return value;
               }}
-              value={value}
+              value={valueCalender}
             />
           )}
 
@@ -334,7 +346,7 @@ function Task() {
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
     </Suspense>
   );
 }

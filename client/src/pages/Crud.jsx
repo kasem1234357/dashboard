@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-pascal-case */
+
 import React, { Suspense } from "react";
 import { AddProductIcon, Sheets, Sort } from "../components/icons/SvgIcons";
-import {utils,writeFile} from "xlsx";
 import { useNavigate } from "react-router-dom";
 import "../styles/crud.css";
 import FilterBox from "../components/Boxes/filtrerBox/FilterBox";
@@ -11,11 +10,18 @@ import Crud_Header from "../components/Crud/crudTable/Crud_Header";
 import Crud_Table_sales from "../components/Crud/crudTable/Crud_Table_sales";
 import Crud_Table_users from "../components/Crud/crudTable/Crud_Table_users";
 import axiosConfig from '../configs/axiosConfig'
-import {dataProduct} from '../components/Data/dt'
+import useExport from "../hooks/useExport";
+import useTable from "../hooks/useTable";
+import PaginationBox from "../components/Boxes/paginationBox/PaginationBox";
+import { motion } from "framer-motion"
+import { useSelector } from "react-redux";
+import { FAKE_USER_DATA } from "../configs/FAKE_USER_DATA";
+import { config_animateY } from "../configs/motionConfig";
 const titles = (type = "products") => {
+ 
   const titles = {
     users: ["profile", "username", "budget", "amount", "waiting", "contact"],
-    sales: ["poster", "username", "product", "amount", "price", "state"],
+    sales: ["poster", "username", "amount", "price", "state"],
     products: [
       "poster",
       "Tilte",
@@ -30,31 +36,44 @@ const titles = (type = "products") => {
 };
 
 function Crud() {
+
+  const productNumbers = useSelector(state =>state.user.productNumber)
   const [itemsData, setItemsData] = useState([]);
+  const [total,setTotal]=useState(20)
+  const [loading,setLoading] = useState(false);
   const [filterProducts, setFilterProducts] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [currentTitle, setCurrentTitle] = useState({
     type: "products",
     data: titles(),
   });
-  const  generateExcelFile=(data)=>{
-    const worksheet = utils.json_to_sheet(data);
-    const workbook = utils.book_new();
-    utils.book_append_sheet(workbook, worksheet, "Sheet1");
-    writeFile(workbook, "DataSheet.xlsx");
-  }
+ 
+  const {
+    currentStep,
+    recordsLength, // number of element in single view
+    setRecordsLength,
+    toBack,
+    skipsLength, // number of steps * records length
+    toNext, 
+    steps /** number of steps */
+  } = useTable(Math.ceil(total/20) || 20)
+  
+  const {generateExcelFile} = useExport()
   const filter = (method, filterText) => {
     const data = itemsData.filter((task) => task[method].includes(filterText));
     setFilterProducts(data);
   };
   const renderEl = () => {
-    const Els = [];
+    const Els = []; 
     switch (currentTitle.type) {
       case "products":
-        // eslint-disable-next-line
-        {filterProducts?.forEach((product) => {
-            Els.push(<Crud_Table_products key={product._id} data={product}/>)
-        })}
+        {
+          if(filterProducts.length){
+            filterProducts?.slice(skipsLength(),skipsLength()+recordsLength).forEach((product) => {
+              Els.push(<Crud_Table_products key={product._id} data={product}/>)
+          })
+          }
+      }
         break;
       case "sales":
         for (let i = 0; i < 13; i++) {
@@ -62,14 +81,17 @@ function Crud() {
         }
         break;
       case "users":
-        for (let i = 0; i < 13; i++) {
-          Els.push(
-            <Crud_Table_users
-              data={{
-                url: "https://source.unsplash.com/random/200x200?person",
-              }}
-            />
-          );
+        {
+          if(FAKE_USER_DATA.length){
+            FAKE_USER_DATA?.slice(skipsLength(),skipsLength()+recordsLength).forEach((user,index) =>{
+              Els.push(
+                <Crud_Table_users
+                  key={index}
+                  data={user}
+                />
+              );
+            })
+          }
         }
         break;
       default:
@@ -78,25 +100,27 @@ function Crud() {
     return Els;
   };
   useEffect(() => {
-    //setFilterProducts(itemsData);
-    setFilterProducts(dataProduct)
-  }, [itemsData]);
-  useEffect(() => {
+    setLoading(true)
     try {
       axiosConfig.get(`/api/products/`).then((res) => {
-        setItemsData(res.data);
+        const {data } = res.data
+        setTotal(data.total)
+        setItemsData(data.productsWithStats);
+        setFilterProducts(data.productsWithStats)
+        setLoading(false)
       });
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }, []);
   const navigate = useNavigate();
 
   return (
     <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
-    <div className="Crud">
+    <motion.div {...config_animateY} className="Crud">
       <div className="Crud__header">
-        <h2>my products data</h2>
+        <h2 >my products data</h2>
         <span>show your data and customize them</span>
       </div>
       <div className="crud__table">
@@ -119,7 +143,8 @@ function Crud() {
             <div className="crud__table__header--controls flex">
               <button>
                 <Sheets width={"20px"} color={"#d7d7d7"} onClick={()=>{
-                  generateExcelFile(dataProduct)
+                
+                  generateExcelFile(itemsData,`${currentTitle.type}-sheet-1`,{limitFields:['_id','galleryName','stat',"otherImg",'colors']})
                 }}/>
               </button>
               <button>
@@ -136,7 +161,7 @@ function Crud() {
                   width={"15px"}
                   color={"#fff"}
                   onClick={() =>
-                    navigate(`product/${itemsData.length + 1}`, {
+                    navigate(`product/${productNumbers + 1}`, {
                       state: { dataInfo: null, type: "New" },
                     })
                   }
@@ -147,13 +172,15 @@ function Crud() {
           <Crud_Header titles={currentTitle.data} />
         </div>
         <div className="crud__rows">
-          {console.log(renderEl())}
-          {renderEl()}
-
+          {loading?<div className="loading_auth" style={{height:'auto'}}> <span className="loader_auth"></span> </div>:
+          renderEl()
+          }
+           
          
         </div>
+        <PaginationBox toBack={toBack} toNext={toNext} steps={steps} currentStep={currentStep}/>
       </div>
-    </div>
+    </motion.div >
     </Suspense>
   );
 }

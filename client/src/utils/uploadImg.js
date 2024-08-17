@@ -1,54 +1,59 @@
 import { handleClick } from "../configs/notificationConfig";
 import axiosConfig from '../configs/axiosConfig'
-import { uploadDetails } from "./uploadDetails";
-export const uploadImg = (data,callbacks) => {
-  const {index, count,images,newData,galleryName} = data
-  const {setNewData,setShowModel,setUploadingProgress} = callbacks
-  console.log(galleryName);
-    // console.log(index);
-    // console.log(count);
-    // the endPoint of recursion
-    if (count === 0) {
-      console.log(newData);
-      console.log("image uploaded");
-      handleClick({ type: "success", msg: "img uploaded" });
-      uploadDetails(data,callbacks); 
-      return 0;
-    }
-
-    try {
-      console.log(images);
-      setShowModel(true);
-      axiosConfig
-        .post(`/api/products/images`, {...images[index],galleryName})
-        .then((res) => {
-          console.log(res.data);
-          setNewData((prev) => {
-            if (res.data.type === "otherImg") {
-              // console.log(prev[res.data.type][(res.data.index) -1]);
-              prev[res.data.type][res.data.index - 1].url =
-                res.data.url.secure_url;
-            }
-            if (res.data.type === "profileImg") {
-              console.log(prev[res.data.type]);
-              prev[res.data.type].url = res.data.url.secure_url;
-            }
-
-            return prev;
+export const uploadImg = (sourceData,callbacks) => {
+  const {images,galleryName} = sourceData
+  let {index,count} = sourceData
+ 
+  const {setNewData,setShowModel,setUploadingProgress,setUploadImagesStates} =callbacks
+  if (count <= 0) {
+    setUploadImagesStates(true)
+  }
+    if(count > 0){
+      try {
+        setShowModel(true);
+        axiosConfig
+          .post(`/api/products/images`, {...images[index],galleryName})
+          .then((res) => {
+            setNewData((prev) => {
+              const {data} =res.data
+              prev.galleryName = data.galleryName
+              if (data.type === "otherImg") {
+                prev[data.type][data.index - 1].url =
+                  data.url;
+                  prev[data.type][data.index - 1].public_id = data.public_id
+  
+              }
+              if (data.type === "profileImg") {
+                console.log(prev[data.type]);
+                prev[data.type].url = data.url;
+                prev[data.type].public_id = data.public_id
+              }
+              if(data.type === "frontImg"){
+                prev.colors[data.index][data.type].url=data.url
+                prev.colors[data.index][data.type].public_id=data.public_id
+              }
+              if(data.type === "backImg"){
+                prev.colors[data.index][data.type].url=data.url
+                prev.colors[data.index][data.type].public_id=data.public_id
+              }
+             
+              return prev;
+            });
+  
+            console.log(`image ${index} uploaded`);
+            index++;
+            count--;
+              setUploadingProgress((prev) => prev + 1);
+            uploadImg({...sourceData,index:index++, count:count--},callbacks);
+            
           });
-
-          console.log(`image ${index} uploaded`);
-          // console.log(res.data
-          //   );
-          index++;
-          count--;
-          // console.log(count);
-          setUploadingProgress((prev) => prev + 1);
-          uploadImg(index++, count--);
-        });
-    } catch (error) {
-      console.log("tttt");
-      handleClick({ type: "error", msg: "some thing wrong" });
-      setShowModel(false);
+      } catch (error) {
+        handleClick({ type: "error", msg: "some thing wrong" });
+        callbacks.setShowModel(false);
+      
+      }
     }
+
+
+   
   };

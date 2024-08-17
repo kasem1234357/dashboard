@@ -16,8 +16,7 @@ root.render(
       <Router>
         <Provider store={store}>
         <AuthProvider>
-        
-     <App/>
+        <App/>
      </AuthProvider> 
      </Provider>
     

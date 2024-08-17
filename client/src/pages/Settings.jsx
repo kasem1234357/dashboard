@@ -4,6 +4,7 @@ import logo from './profile.jpg'
 
 import { Bulb } from '../components/icons/SvgIcons'
 import { useState } from 'react'
+import { motion } from "framer-motion"
 import { useSelector,useDispatch} from 'react-redux'
 import InviteCode from '../components/Boxes/InviteBox/InviteCode'
 import { handleClick } from '../configs/notificationConfig'
@@ -12,11 +13,13 @@ import { toggleDarkMode, toggleNotification } from '../redux/slices/userSlice'
 import {emData} from '../components/Data/employeeData'
 import axiosConfig from '../configs/axiosConfig'
 import EmployeeBox from '../components/Boxes/employeeBox/EmployeeBox'
+import { config_scale } from '../configs/motionConfig'
 function Settings() {
   const dispatch = useDispatch()
   const notification = useSelector(state =>state.user.notification)
   const isDarkMode = useSelector(state =>state.user.darkMode)
   const ID = useSelector(state => state.user?.user?._id)
+  const userRole = useSelector(state =>state.user.user.role)
   const user = useSelector(state => {
     if(state.user?.user){
       const {email,username} =state.user?.user
@@ -47,7 +50,7 @@ function Settings() {
   }
   return (
     <Suspense fallback={<div className="loading_auth"> <span className="loader_auth"></span> </div>}>
-    <div className='settings'>
+    <motion.div {...config_scale} className='settings'>
          <div className="settings__header flex">
            <div className="settings__header__text">
              <h2>General Details</h2>
@@ -148,7 +151,20 @@ function Settings() {
               </div>
               </div>
               </div>
-             
+              {userRole === 'super_admin'&&
+              <div className="content__userInfo__box  flex f-colump">
+              <h3>Employees</h3>
+              <div>
+              {
+              emData.map(data =>(
+                <EmployeeBox key={data.privteCode} data={data}/>
+              ))
+             }
+              </div>
+            
+              </div>
+              }
+              
            </div>
            <div className="settings__content__others flex">
            <div className="settings__content__others--box">
@@ -165,13 +181,16 @@ function Settings() {
                    <p><span>click to upload </span> or drag to here</p> 
                  </div>
            </div>
+           {userRole === 'super_admin'&&
            <div className="settings__content__others--box">
-             <div className="settings__content__others--row flex">
-               <InviteCode/>
-             </div>
-             
-             
+           <div className="settings__content__others--row flex">
+             <InviteCode/>
            </div>
+           
+           
+         </div>
+           }
+           
            <div className="settings__content__others--box settings__content__others--row--controls">
              <div className="settings__content__others--row flex">
                <span >Notification</span>
@@ -188,19 +207,14 @@ function Settings() {
                }} />
                 <label htmlFor="Dark"> <span ><Bulb width={'20px'}/></span> </label>
              </div>
-             <h2 style={{paddingBlock:'15px',color:'#2472fc'}}>Employees</h2>
-             {
-              emData.map(data =>(
-                <EmployeeBox key={data.privteCode} data={data}/>
-              ))
-             }
+             
            </div>
            {/* <div className="settings__content__others--box">
             
            </div> */}
            </div>
          </div>
-    </div>
+    </motion.div>
     </Suspense>
   )
 }
