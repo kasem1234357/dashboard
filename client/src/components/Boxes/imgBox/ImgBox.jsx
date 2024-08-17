@@ -2,77 +2,45 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Close } from '../../icons/SvgIcons';
+import useUpload from '../../../hooks/useUpload';
 
 function ImgBox({imgUrl,name,updateFn}) {
  const [imgData,setImgData]=useState('')
+//  console.log(imgUrl);
+ const [uploadedImg,setUploadedImg]=useState('')
  const [propertyImage, setPropertyImage] = useState({ name: "", url: "" });
- const handleImageChange = (file) => {
-   const reader = (readFile) =>
-       new Promise((resolve, reject) => {
-           const fileReader = new FileReader();
-           fileReader.onload = () => resolve(fileReader.result );
-           fileReader.readAsDataURL(readFile);
-       });
+ const {uploadData,fileData,imgName,path,reset} = useUpload()
 
-   reader(file).then((result) =>{
-       setPropertyImage({ name: file?.name, url: result })
-        setImgData(result) 
-        updateFn(prev =>{
-
-         const index = name.split("-")[1]
-         const nameRef = name.split("-")[0]
-         const data= {}
-         data.index= index
-         data.type =nameRef
-         data.imgData = result
-         prev.push(data)
-          return prev
-        })
-      //   updateFn(prev =>{
-      //    console.log(prev);
-      //    if(!name.includes("otherImg")){
-            
-      //       prev[name].url = result}
-      //    else {
-      //       const index = name.split("-")[1]
-      //       const nameAttr = name.split("-")[0]
-      //       prev[nameAttr][index].url = result}
-      //       return prev
-      //   }) 
-   });
-};
  useEffect(()=>{
+  // console.log(imgUrl);
  setImgData(imgUrl)
- 
  },[imgUrl])
- 
+ useEffect(()=>{
+   setPropertyImage({ name: imgName, url: fileData })
+  //  console.log(fileData);
+  //  console.log(imgData);
+   setUploadedImg(fileData) 
+       fileData&& updateFn(fileData,name,'add')
+ },[fileData])
+
   return (
    <div className="addImg">
-    {(imgData === '')?(
+    {(imgData === '' && uploadedImg === '' )?(
      <>
         <label className='addImg--icon' htmlFor={name}><h1>+</h1></label>
      <input className='img--file' accept="image/*" type="file"  name={name} id={name} onChange={(e)=>{
        console.warn(e.target.files)
-      //  const files = e.target.files
-	   //  const formData = new FormData()
-      //  formData.append('img', files[0])
-       handleImageChange(e.target.files[0]);
-       
-      //  console.log(formData);
-
+       uploadData(e)
       }} />
      </>
     ):<>
     <Close width={"20px"} onClick={()=>{
       setImgData("")
-      updateFn(prev =>{
-        const index = name.split("-")[1]
-         const nameRef = name.split("-")[0]
-        return prev.filter(img =>img.type !== nameRef && img.index !== index )
-      })
+      updateFn('',name,'remove')
       setPropertyImage({ name: "", url: "" })
+      reset()
     }} className="remove-img-icon" color={"#fff"}/>
-       <img src={imgData || ''} alt="" srcset="" style={{zIndex:1000}} />
+       <img src={imgData || uploadedImg} alt="" srcset="" style={{zIndex:1000}} />
     </>
     }
      

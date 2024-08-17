@@ -1,11 +1,11 @@
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import FormInput from './FormInput'
 import {schema} from '../../utils/validateSchema'
 import './form.css'
-import axiosConfig from '../../configs/axiosConfig'
+
 import { handleClick } from '../../configs/notificationConfig';
 import { logUser } from '../../redux/actions/auth';
 function Login() {
@@ -24,7 +24,7 @@ function Login() {
   const onChange=(e)=>{
     setValues({...values,[e.target.name]: e.target.value})
   }
-  useEffect(()=>{
+  useLayoutEffect(()=>{
     if(status ===  'succeeded'){handleClick({type:'success',msg:"user log in"})
       Navigate('/')
   } 

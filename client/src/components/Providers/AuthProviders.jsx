@@ -8,25 +8,36 @@ import '../../styles/loader_auth.css'
 import { getStatus } from "../../redux/slices/userSlice";
 import useCalender from "../../hooks/useCalender";
 import useTime from "../../hooks/useTime";
+import ForgetPassword from "../form/ForgetPassword";
+import { Route, Routes } from "react-router-dom";
+import axiosConfig from '../../configs/axiosConfig'
 const AuthProvider = ({ children }) => {
-  const userId = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
+  const [isFirstFetsh,setIsFirstFetsh]=useState(true)
   const dispatch = useDispatch()
 
   const loading = useSelector(state => state.user.loading)
-  loading &&  dispatch(getUser({ userId: userId }))
+  loading  &&  dispatch(getUser())
  const status = useSelector(state => state.user.status)
  const auth = useSelector(state => state.user.auth)
-
+ if((status === 'failure')&& !auth &&isFirstFetsh){
+  axiosConfig.get('api/auth/token',{withCredentials:true}).then(res =>{
+    const {accessToken}=res.data.data
+    localStorage.setItem('accessToken',accessToken)
+    dispatch(getUser())
+  }).catch(err => console.log(err))
+  setIsFirstFetsh(false)
+ }
   const PageContent = useMemo(() => {
     return !auth ? (
       <div className="App flex">
-        
-        <Account />
-        <ToastContainer/>
-        
-       
+      <Routes>
+         <Route  path='/login' element={<Account />}/>
+         <Route path='/forgetPassword/:tokenId' element={<ForgetPassword/>}/>
+         <Route path="*" element={<Account/>}/>
+         
+      
+       </Routes>
+       <ToastContainer/>
       </div>
     ) : (
       children

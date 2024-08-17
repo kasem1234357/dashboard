@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 
 const Names = {
   short: {
@@ -89,6 +90,7 @@ const useCalender = () => {
     lang= "En",
     type= "long"
   ) => {
+    console.log('test');
     return Names[type  ][lang ][name][index ];
   };
   /**
@@ -116,7 +118,7 @@ const useCalender = () => {
   ) {
     return nameFormat(index, "days", lang, type);
   }
-  function numberDaysInMonth(year, month) {
+  const numberDaysInMonth =(year, month)=> {
     let numberDaysInMonth = new Date(year, month + 1, 0).getDate();
     console.log(numberDaysInMonth);
     return numberDaysInMonth;
@@ -142,6 +144,8 @@ const useCalender = () => {
       name: days[dayOfTheMonth],
     };
   }
+  const fullDate = `${data.year}-${data.month}-${data.day}`
+  
   const globalInfo = (lang = "En", type = "short") => {
     const currentDay = {
       index: data.day,
@@ -168,6 +172,7 @@ const useCalender = () => {
     dayOfTheMonth,
     getDayName,
     getMonthName,
+    fullDate,
     months,
     days,
     Names,

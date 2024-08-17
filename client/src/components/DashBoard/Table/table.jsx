@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { memo, useCallback } from 'react'
 import { AddProductIcon, Sort } from '../../icons/SvgIcons'
 import {useNavigate} from 'react-router-dom'
 import FilterBox from '../../Boxes/filtrerBox/FilterBox'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import PaginationBox from '../../Boxes/paginationBox/PaginationBox'
+import useTable from '../../../hooks/useTable'
 function TableBox() {
   const [productsData,setProductsData]=useState([])
   const [filterProducts,setFilterProducts]=useState([])
   const [showModel,setShowModel] = useState(false)
-  const filter =(method,filterText)=>{
+  const {currentStep,recordsLength,setRecordsLength,toBack,skipsLength,toNext,steps} = useTable(10)
+  
+  const filter =useCallback((method,filterText)=>{
     const data = productsData.filter(task => task[method].includes(filterText))
     setFilterProducts(data)
-  }
+  },[productsData])
   useEffect(()=>{
     setFilterProducts(productsData)
  },[productsData])
@@ -34,7 +38,7 @@ function TableBox() {
         profile
       </div>
       <div className="products--box product--Name">
-        user Nme
+        user Name
       </div>
       <div className="products--box product--Name">product Name</div>
       <div className="products--box product--price">varient</div>
@@ -168,7 +172,7 @@ function TableBox() {
       <div className="products--box product--Name">user 1</div>
       <div className="products--box product--Name">winter jacket</div>
       <div className="products--box product--price">black</div>
-      <div className="products--box product--count">5</div>
+      <div className="products--box product--count">54</div>
       <div className="products--box product--copon">120$</div>
       <div className="products--box product--controls">
       <button >Update</button>
@@ -195,11 +199,11 @@ function TableBox() {
     </div>
         )
       })}
-    
+      
 
     </div>
         </div>
-    
+        <PaginationBox toBack={toBack} toNext={toNext} steps={steps} currentStep={currentStep}/>
     
     
   </div>
@@ -208,4 +212,4 @@ function TableBox() {
   )
 }
 
-export default TableBox
+export default memo(TableBox) 

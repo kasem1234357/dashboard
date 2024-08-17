@@ -2,14 +2,15 @@ import React from "react";
 import { useState } from "react";
 import ColorBox from "../Boxes/colorBox/ColorBox";
 import "./productInfo.css";
-function ProductInfo({ data, setNewData, save }) {
-  console.log(data);
+function ProductInfo({ data, setNewData, save,upateImgData,images,imgUrl }) {
+
+  
   const defaultColor = {
     id: data?.colors?.length,
     hex: "",
     title: "",
-    frontImg: "",
-    backImg: "",
+    frontImg: { id: data?.colors?.length, url: "",public_id:"" },
+    backImg: { id: data?.colors?.length, url: "",public_id:"" },
     size: [
       {
         name: "sm",
@@ -47,6 +48,7 @@ function ProductInfo({ data, setNewData, save }) {
   };
 
   const updateData = (subData, value) => {
+
     setNewData({ ...data, [subData]: value });
   };
   return (
@@ -54,16 +56,21 @@ function ProductInfo({ data, setNewData, save }) {
       {showModel ? (
         <ColorBox
           data={currentColorData}
+          images={images}
           count={data?.count}
           updateColorData={updateColor}
           updateData={updateData}
           close={setShowModel}
+          imgUrl={imgUrl}
+          imagesFn={upateImgData}
         />
       ) : null}
 
       <div className="ProductInfo--box ProductInfo__title flex">
         <div className="ProductInfo--label">
-          <h3>Title</h3>
+          <h3 onClick={()=>{
+            console.log(images);
+          }}>Title</h3>
         </div>
         <div className="ProductInfo--input">
           <input

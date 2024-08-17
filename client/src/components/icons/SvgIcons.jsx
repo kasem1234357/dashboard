@@ -93,9 +93,23 @@ export const Add = (props)=>{
   
 }
 export const Board = (props)=>{
+  /*
+   {
+    color:'red,
+    
+   } 
+   color = red
+  otherProps = {
+   width :24px,
+    height:20px
+   
+  }
+  {...otherProps}
+
+  */
   const {color,...otherProps}=props
   return (
-    <svg {...otherProps} viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><path fill={color || ''} d="M10 7h4v4h-4zm6 0h4v4h-4zM4 7h4v4H4zm6 6h4v4h-4zm6 0h4v4h-4zM4 13h4v4H4z"/></svg>
+    <svg  viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><path fill={color || ''} d="M10 7h4v4h-4zm6 0h4v4h-4zM4 7h4v4H4zm6 6h4v4h-4zm6 0h4v4h-4zM4 13h4v4H4z"/></svg>
   )
 }
 export const Bulb = (props)=>{

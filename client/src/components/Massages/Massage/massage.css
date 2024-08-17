@@ -1,12 +1,12 @@
 .massage--box{
  gap: 1rem ;
  padding: 15px 20px 15px 5px;
- border-bottom: 2px solid #3a445e;
+ border-bottom: 2px solid var(--item__bg2);
  line-height: 1.3rem;
  cursor: pointer;
 }
 .massage__list  .massage--box:hover{
- background: #3a445e ;
+ background: var(--item__bg2);
 }
 .Massage__image{
  min-width: 90px;
@@ -23,7 +23,7 @@
  color: #0DB8D3;
 }
 .Massage__content__title{
- color: #fff;
+ color: var(--highlight__text);
  font-weight: 400;
 }
 .Massage__content__desc{
@@ -31,7 +31,7 @@
 
 }
 .massage--active{
- background: #3a445e ;
+ background: var(--item__bg2);
 }
 .massage__viewBox__massegeBox .massage--box {
  padding: 15px 40px 15px 5px;

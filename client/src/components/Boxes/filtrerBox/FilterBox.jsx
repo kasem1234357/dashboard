@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-
+import React, {  useEffect, useState } from 'react'
 function FilterBox({filter,methods}) {
   const [filterText,setFilterText] = useState('')
-  const [filterMethod ,setFilterMethod]= useState('title')
+  const [filterMethod ,setFilterMethod]= useState(methods[0])
   useEffect(()=>{
      filter(filterMethod,filterText)
   },[filterText,filterMethod])
@@ -21,4 +20,4 @@ function FilterBox({filter,methods}) {
   )
 }
 
-export default FilterBox
+export default  FilterBox

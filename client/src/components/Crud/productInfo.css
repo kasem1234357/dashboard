@@ -31,7 +31,7 @@ form.ProductInfo .ProductInfo--box{
  border: none;
  color: #d7d7d7;
  outline: none;
- background: #262c46;
+ background: var(--secondary);
 }
 .ProductInfo__copon .ProductInfo--input input[type='text']{
  width: 70%;
@@ -39,7 +39,7 @@ form.ProductInfo .ProductInfo--box{
 .copon-percent{
   width: 27%;
   --gap:0;
-  background: #262c46;
+  background: var(--secondary);
   height: 100%;
   align-items: center;
   padding: 5px;
@@ -57,7 +57,7 @@ form.ProductInfo .ProductInfo--box{
  
 }
 .addColor{
- background: #262c46;
+ background: var(--secondary);
  display: grid;
  position: relative;
  place-items: center;
@@ -79,19 +79,19 @@ form.ProductInfo .ProductInfo--box{
  font-size: 16px;
  padding: 5px;
  outline: none;
- background: #262c46;
+ background: var(--secondary);
 }
 .controlls--save{
  width: min-content;
  padding: 5px 15px;
  border: none;
  outline: none;
- background: #171c30;
+ background: var(--primary);
 
  font-size: 18px;
  position: relative;
  overflow: hidden;
- border: 2px solid #262c46;
+ border: 2px solid var(--secondary);
  cursor: pointer;
 }
 .controlls--save::before{
@@ -102,7 +102,7 @@ form.ProductInfo .ProductInfo--box{
  left: 53%;
  right: 0;
  position: absolute;
- background: #262c46;
+ background: var(--secondary);
  transform: skewX(-15deg);
 }
 .controlls--save p {
@@ -124,7 +124,7 @@ form.ProductInfo .ProductInfo--box{
 }
 .ProductInfo--input textarea::-webkit-scrollbar-thumb{
   width: 8px;
-  background: #171c30;
+  background: var(--primary);
   border-radius: 5px;
   border: 2px solid #343a5c;
 

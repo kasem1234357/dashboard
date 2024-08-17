@@ -3,7 +3,6 @@ import { useRef } from 'react'
 import { useEffect } from 'react'
 import { Radar } from 'react-chartjs-2'
 import { radarConfig } from './radarConfig'
-
 function RadarChart() {
  const chartRef = useRef(null)
  const [chartData, setChartData] = useState({
@@ -56,7 +55,10 @@ function RadarChart() {
     }
  },[])
   return (
-    <Radar ref={chartRef} data={ chartData} options={radarConfig().RadarOptions}/>
+    <>
+<Radar ref={chartRef} data={ chartData} options={radarConfig().RadarOptions}/>
+    </>
+   
   )
 }
 

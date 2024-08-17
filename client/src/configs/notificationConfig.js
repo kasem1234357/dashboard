@@ -18,7 +18,7 @@ function toastify(data) {
     position: toast.POSITION.TOP_RIGHT,
     closeButton: true,
     autoClose: 2000,
-    theme: "dark",
+    theme: localStorage.getItem('theme'),
     className: "toast",
   });
 }

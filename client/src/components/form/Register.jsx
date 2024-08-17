@@ -26,14 +26,14 @@ function Register() {
         password: values.password,
       });
       axiosConfig
-        .post(`https://dashbord-1-0-0.onrender.com/api/auth/register`, {
+        .post(`api/auth/register`, {
           userName: values.username,
           email: values.email,
           password: values.password,
           inviteCode: values.inviteCode,
         })
         .then((responce) => {
-          dispatch(addUser(responce.data));
+          dispatch(addUser(responce.data.data.user));
           console.log(responce.data);
           Navigate("/");
         });

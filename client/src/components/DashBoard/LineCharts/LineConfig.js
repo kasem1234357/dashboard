@@ -87,6 +87,7 @@ export const data ={
     backgroundColor: '#C33ECE',
     yAxisID: 'y1',
     tension: 0.4,
+    
   },
   {
    label: 'sales',

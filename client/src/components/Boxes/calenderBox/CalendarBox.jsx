@@ -3,8 +3,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axiosConfig from '../../../configs/axiosConfig'
 import DaysBox from "../../calander/DaysBox";
+import useCalender from "../../../hooks/useCalender";
 function CalendarBox({ month, year }) {
-  const days = ["San", "Mon", "Tus", "Wed", "Thu", "Fri", "Sat"];
+  const {numberDaysInMonth,numberDaysInPreviosMonth,dayOfTheMonth,days,currentDay,currentMonth,currentYear} = useCalender()
 
   const [boxs, setBoxs] = useState([]);
   const [taskData, setTaskData] = useState([]);
@@ -34,9 +35,9 @@ function CalendarBox({ month, year }) {
   };
   useEffect(() => {
     daysNumber();
-    setPrevios(numberDaysInMonth(year, month - 1));
+    setPrevios(numberDaysInPreviosMonth(year, month));
     setLength(numberDaysInMonth(year, month));
-    setStartDays(dayOfTheMonth(year, month));
+    setStartDays(dayOfTheMonth(year, month).index +1);
   }, [year, month]);
   useEffect(() => {
     filter();
@@ -46,23 +47,12 @@ function CalendarBox({ month, year }) {
       axiosConfig
         .get(`/api/tasks/calendar/tasks`)
         .then((res) => {
-          setTaskData(res.data);
+          setTaskData(res.data.data);
         });
     } catch (error) {
       console.log(error);
     }
   }, []);
-  function numberDaysInMonth(year, month) {
-    let numberDaysInMonth = new Date(year, month + 1, 0).getDate();
-    console.log(numberDaysInMonth);
-    return numberDaysInMonth;
-  }
-  function dayOfTheMonth(year, month) {
-    let dayOfTheMonth = new Date(year, month).getDay() + 1;
-    console.log(dayOfTheMonth);
-    return dayOfTheMonth;
-  }
-
   return (
     <>
       <div className="days--name flex">
@@ -98,9 +88,9 @@ function CalendarBox({ month, year }) {
               />
             );
           if (
-            index + 1 - startDays + 1 === new Date().getDate() &&
-            year === new Date().getFullYear() &&
-            month === new Date().getMonth()
+            index + 1 - startDays + 1 === currentDay.index &&
+            year === currentYear &&
+            month === currentMonth.index
           ) {
             return (
               <DaysBox

@@ -2,7 +2,7 @@
   width: 50vw;
   height: 70vh;
   max-height: calc(1.2 * 100vw);
-  background: #171c30;
+  background: var(--primary);
   position: absolute;
   flex-direction: column;
   align-items: center;
@@ -42,7 +42,7 @@
   display: block;
   margin: -50px auto 0;
   position: relative;
-  color: #fff;
+  color: var(--highlight__text);
   transform: translateY(30px);
   box-sizing: border-box;
   animation: animloader 2s ease infinite;
@@ -56,7 +56,7 @@
   box-shadow: 0 30px, 0 -30px;
   border-radius: 4px;
   background: currentColor;
-  color: #fff;
+  color: var(--highlight__text);
   position: absolute;
   left: 30px;
   top: 0;
@@ -89,5 +89,5 @@
 }
 .progress--box {
   flex: 1;
-  background: #3a445e;
+  background: var(--item__bg2);
 }

@@ -8,7 +8,6 @@ const Crud_Table_sales = ({data}) => {
  <img src="https://source.unsplash.com/random/200x200?product" alt="" srcset="" />
 </div>
 <div className="products--box product--Name">user1</div>
-<div className="products--box product--price">product</div>
 <div className="products--box product--count">amount</div>
 <div className="products--box product--copon">2000$ </div>
 <div className="products--box product--controls">

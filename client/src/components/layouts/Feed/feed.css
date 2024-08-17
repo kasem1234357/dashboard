@@ -7,7 +7,7 @@
  overflow: auto;
  grid-template-rows: auto 1fr;
 }.feed__text{
- color: #d7d7d7;
+ color:var(--text__title);
  font-weight: 300;
 }
 .feed__text h2{
@@ -15,10 +15,10 @@
  font-weight: inherit;
 }
 .feed__text span{
- color: var(--primary__dark__text);
+ color: var(--primary__text);
 }
 .feed__content{
- /* background: var(--secondary__dark); */
+ /* background: var(--secondary); */
  width: 100%;
  /* display: grid;
  grid-template-rows: 2fr 0.75fr 2fr 3fr; */
