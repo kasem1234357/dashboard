@@ -20,11 +20,21 @@ const ProductSchema = mongooose.Schema(
       type: String,
     },
     profileImg: {
-      type: Object,
-      default: {},
+      type: {
+        url:String,
+        public_id:String,
+      },
+      default: {
+        url:'',
+        public_id:'',
+      },
     },
     otherImg: {
-      type: Array,
+      type: [ {
+        id:Number,
+        url:String,
+        public_id:String,
+      },],
       default: [],
     },
     coupon: {

@@ -1,57 +1,31 @@
 const router = require("express").Router();
-const { log } = require("console");
-const DashUser = require('../models/User')
-const crypto = require("crypto");
-const Tasks = require("../models/Tasks");
-const Product = require("../models/Product");
-const { isAuth } = require("./authMiddleware");
-function hashPassword(password) {
-  const hash = crypto.createHash('sha256');
-  hash.update(password);
-  return hash.digest('hex');
+const {isAuth} = require('../meddlewares')
+
+
+
+
+const { updateUser, getAllUser, getUser, deleteUser } = require("../controller/users");
+const { getAllMovies } = require("../controller/test");
+
+
+router.put('/:id',isAuth,updateUser)
+router.get('/all',getAllUser)
+router.get('/',isAuth,getUser)
+router.delete('/:id',isAuth,deleteUser);
+router.get('/test',getAllMovies)
+
+
+
+/*
+router:{
+    put,
+    get,
+    delete,
+    
 }
-router.put('/:id',async(req,res)=>{
-  const password = req.body?.password
-  try {
-     const user = await DashUser.findById(req.params.id)
-     
-     if(password == undefined){
-      await user.updateOne({$set:req.body})
-     }
-     else{
-      const hashedPassword = hashPassword(req.body.password);
-      const data = {...req.body,password:hashedPassword}
-      await user.updateOne({$set:data})
-     }
-     res.status(200).json('updated')
-  } catch (error) {
-    res.status(500).json(error)
-  }
-})
-router.get('/:id',async(req,res)=>{
-  try {
-    const user = await DashUser.findById(req.params.id);
-    // console.log(req.headers["cookie"].split(' '));
-    // log(req.headers)
-    // console.log(await DashUser.find());
-    // console.log(req.params.id);
-    if(user){
-      // console.log("hi");
-      const {password,...clientData} = user
-      const taskNumber = await Tasks.count()
-      const productNumber = await Product.count()
-      res.status(200).json({...clientData,taskNumber,productNumber})
-    }else{
-      res.status(404).send({msg:"user not found"})
-    }
-   
-  } catch (error) {
-     console.log(error);
-  }
-})
 
 
-
+*/
 
 
 

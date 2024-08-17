@@ -1,15 +1,7 @@
 const router = require("express").Router();
-const { getProducts } = require("../controller/client");
-const Product = require("../models/Product");
-const dotenv = require("dotenv");
-const { isAuth } = require("./authMiddleware");
-const cloudinary = require("cloudinary").v2;
-dotenv.config();
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUNDERY_API_KEY,
-  api_secret: process.env.CLOUNDERY_API_SECRET,
-});
+const { getProducts, postProductImages, createProduct, updateProduct, getProduct, deleteProduct, getProductSales, getProductInfo, getTransactions,testFn} = require("../controller/client");
+const { restrict } = require("../meddlewares");
+
 // const cloudinaryImageUploadMethod = file => {
 //   let url =""
 //   cloudinary.uploader.upload(file, { width: 500, crop: 'scale' }, function(error, result) {
@@ -21,36 +13,8 @@ cloudinary.config({
 //   });
 //   return url
 // }
-const cloudinaryUpload = async (file,galleryName) => {
-  console.log(file);
-  return cloudinary.uploader.upload(
-    file,
-    { timeout: 60000,
-    quality_analysis:true,
-  folder:galleryName },
-    function (error, result) {
-      if (error) {
-        console.error(error);
-        throw Error("Error");
-      } else {
-        return result.secure_url;
-      }
-    }
-  );
-};
-router.post("/images", async (req, res) => {
-  const { imgData, type, index ,galleryName} = req.body;
-  try {
-    let imgUrl = await cloudinaryUpload(imgData,galleryName);
-    res.status(200).json({
-      type,
-      index,
-      url: imgUrl,
-    });
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+
+router.post("/images",restrict('super_admin','admin'), postProductImages);
 // const upload = async (req, res, next) => {
 //   try {
 //     const { profileImg, otherImg, ...others } = req.body;
@@ -72,37 +36,11 @@ router.post("/images", async (req, res) => {
 //   }
 // };
 // add product
-router.post("/", async (req, res) => {
-  const newProduct = new Product(req.body);
-  console.log("the line is 33", newProduct);
-  //
-  try {
-    const savedProduct = await newProduct.save();
-    console.log(savedProduct);
-    res.status(200).json("savedProduct");
-  } catch (error) {
-    res.status(500).json({ massege: error });
-  }
-});
+router.post("/",restrict('super_admin','admin'), createProduct);
 // update product
-router.put("/update/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    await product.updateOne({ $set: req.body });
-    res.status(200).json("the product has been updated");
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+router.put("/update/:id",restrict('super_admin','admin'), updateProduct);
 // get product
-router.get("/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    res.status(200).json(product);
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+
 //get all products
 //====================================================//
 /*
@@ -117,15 +55,38 @@ router.get('/',async(req,res)=>{
 */
 //==================================================//
 router.get("/", getProducts);
+router.get('/transactions',restrict('super_admin','sales_manger'),getTransactions)
+router.get('/info/:id',getProductInfo)
 //delete products
-router.delete("/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    await product.deleteOne();
-    res.status(200).json("the product has been deleted ");
-  } catch (error) {
-    res.status(500).json(error);
-  }
-});
+router.get('/sales/:id',restrict('super_admin','sales_manger'),getProductSales)
+router.delete("/:id",restrict('super_admin','admin'),deleteProduct);
+router.get("/:id", getProduct);
 
 module.exports = router;
+/**
+ * {
+  asset_id: 'd1d8c760d557109b389cbef4a2f05f71',
+  public_id: '202412331544/h33tbvqs47s6p9daticq',        
+  version: 1706012176,
+  version_id: '346087462b4cc0356c22f3507250ccab',        
+  signature: 'dd926fb3fb4158efcaeadd363aa3edfcb85e40f6', 
+  width: 640,
+  height: 640,
+  format: 'jpg',
+  resource_type: 'image',
+  created_at: '2024-01-23T12:16:16Z',
+  tags: [],
+  pages: 1,
+  bytes: 229969,
+  type: 'upload',
+  etag: '71f158b81f631d83217dfd6a91c2e183',
+  placeholder: false,
+  url: 'http://res.cloudinary.com/doda4kgzp/image/upload/v1706012176/202412331544/h33tbvqs47s6p9daticq.jpg',      
+  secure_url: 'https://res.cloudinary.com/doda4kgzp/image/upload/v1706012176/202412331544/h33tbvqs47s6p9daticq.jpg',
+  folder: '202412331544',
+  quality_analysis: { focus: 1 },
+  api_key: '729898657389182'
+}
+ */
+//65afb37b0e3e323b093c7f00
+//202412333834

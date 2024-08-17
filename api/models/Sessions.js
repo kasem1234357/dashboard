@@ -10,6 +10,11 @@ const SessionSchema =new mongoose.Schema({
     required: true,
     unique: true,
  },
+ createdAt: {
+   type: Date,
+   default: Date.now,
+   expires: 3600 * 24 * 7
+}
  
 })
 SessionSchema.index({ "createdAt": 1 }, { expireAfterSeconds: 3600 * 24 * 7 });

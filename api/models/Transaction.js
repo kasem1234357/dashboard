@@ -2,9 +2,15 @@ const mongoose = require("mongoose");
 const TransactionSchema = new mongoose.Schema(
   {
     userId: String,
-    cost: String,
     products: {
-      type: [mongoose.Types.ObjectId],
+      type:[
+        {productID:{
+          type:mongoose.Types.ObjectId,
+          ref:'products'
+        },
+           amount:Number,
+           priceForSingle:Number
+        }],
       of: Number,
     },
   },

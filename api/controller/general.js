@@ -1,12 +1,14 @@
+import API from "../classes/Api";
 import OverallStat from "../models/OverallStat";
 import Transaction from "../models/Transaction";
-
-export const getDashboardStats = async (req, res) => {
-    try {
+const asyncErrorHandler = require("../wrapper_functions/asyncErrorHandler");
+export const getDashboardStats =asyncErrorHandler(async (req, res) => {
+  const {currentDay="2021-11-15",currentMonth="November",currentYear=2021} = req.body
+  const api = new API(req,res)
       // hardcoded values
-      const currentMonth = "November";
-      const currentYear = 2021;
-      const currentDay = "2021-11-15";
+      // const currentMonth = "November";
+      // const currentYear = 2021;
+      // const currentDay = "2021-11-15";
   
       /* Recent Transactions */
       const transactions = await Transaction.find()
@@ -31,8 +33,7 @@ export const getDashboardStats = async (req, res) => {
       const todayStats = overallStat[0].dailyData.find(({ date }) => {
         return date === currentDay;
       });
-  
-      res.status(200).json({
+      api.dataHandler('fetch',{
         totalCustomers,
         yearlyTotalSoldUnits,
         yearlySalesTotal,
@@ -41,9 +42,6 @@ export const getDashboardStats = async (req, res) => {
         thisMonthStats,
         todayStats,
         transactions,
-      });
-    } catch (error) {
-      res.status(404).json({ message: error.message });
-    }
-  };
+      })
+  })
 module.exports = {getDashboardStats}

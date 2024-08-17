@@ -10,3 +10,21 @@ const FaqSchema = mongoose.Schema({
  }
 })
 module.exports = mongoose.model('Faq',FaqSchema)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

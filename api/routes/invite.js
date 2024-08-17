@@ -1,19 +1,8 @@
 const router = require("express").Router();
-const InviteCode = require('../models/InviteCode');
+const { createInviteCode } = require("../controller/auth");
+const { restrict } = require("../meddlewares");
 // const { isAuth } = require("./authMiddleware");
 
-router.post("/",async(req,res)=>{
-try {
- const newCode = new InviteCode({
-  code:req.body.inviteCode,
-  type:true
- })
- await newCode.save();
- console.log("done");
- res.status(200).json({msg:"activate"})
-} catch (error) {
- res.status(500).json({msg:"not activate"})
-}
-})
+router.post("/",restrict('super_admin'),createInviteCode)
 
 module.exports =router
