@@ -9,7 +9,7 @@ process.on('uncaughtException', (err) => {
 })
 
 const app = require('./app');
-connectDB(true)
+connectDB()
 const port = process.env.PORT || 8800;
 const server = app.listen(port, () => {
     console.log('server has started...');
