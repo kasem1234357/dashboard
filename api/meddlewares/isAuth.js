@@ -24,7 +24,7 @@ const isAuth = asyncErrorHandler(async (req,res,next)=>{
     // 2- validate the token 
     //error
       let decodedToken = await verifyToken(token,process.env.ACCESS_TOKEN_SECRET) 
-      if(!decodedToken){
+      if(!decodedToken || !decodedToken.id){
         next(api.errorHandler('unauthorized','you are not logged in'))
       }
       //await verifyToken(token,process.env.ACCESS_TOKEN_SECRET)
@@ -32,6 +32,8 @@ const isAuth = asyncErrorHandler(async (req,res,next)=>{
     // 3- if the user exits 
       const user = await User.findById(decodedToken.id)
       if(!user){
+        console.log('test');
+        
         next(api.errorHandler('not_found'))
       }
       

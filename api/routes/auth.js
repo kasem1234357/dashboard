@@ -1,4 +1,4 @@
-const { createUser, loginUser, foregetPassword,generateAccessToken } = require("../controller/auth");
+const { createUser, loginUser, foregetPassword,generateAccessToken, logoutUser, resetPassword } = require("../controller/auth");
 
 const router = require("express").Router();
 // const isAuth = require('./authMiddleware').isAuth;
@@ -13,5 +13,7 @@ router.post("/register",createUser );
  router.post("/login",loginUser );
  router.get('/token',generateAccessToken)
  router.post('/forgetPassword',foregetPassword)
+ router.post('/resetPassword',resetPassword)
+ router.delete('/logout',logoutUser)
 
 module.exports = router;

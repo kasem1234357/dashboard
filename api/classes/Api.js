@@ -147,12 +147,23 @@ class API {
     this.query = this.query.find(queryFilter);
     return this;
   }
-  limitFields() {
-    const fieldQuery = this.getQuery().otherQuery.fields;
+  limitFields(fieldsItems) {
+ 
+    const fieldQuery =  this.getQuery().otherQuery.fields ;
     if (fieldQuery) {
+      
       const fields = fieldQuery.split(",").join(" ");
+      
+      
       this.query = this.query.select(fields);
-    } else {
+    } 
+    else if(fieldsItems){
+
+      const fields = fieldsItems.join(" ");
+      
+      this.query = this.query.select(fields);
+      
+    }else  {
       this.query = this.query.select("-__v");
     }
     return this;

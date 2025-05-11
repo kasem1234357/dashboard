@@ -4,7 +4,7 @@ const MonthlyDataSchema = new mongoose.Schema(
   {
     month: {
       type: String,
-      required: true,
+      required: false,
       enum: [
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
@@ -12,22 +12,22 @@ const MonthlyDataSchema = new mongoose.Schema(
     },
     totalSales: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     totalUnits: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     totalLikes: {
         type: Number,
-        required: true,
+        required: false,
         min: 0,
       },
       totalSubscribing: {
         type: Number,
-        required: true,
+        required: false,
         min: 0,
       },
       
@@ -37,26 +37,26 @@ const MonthlyDataSchema = new mongoose.Schema(
 const DailyDataSchema = mongoose.Schema({
   date: {
     type: Date,
-    required: true,
+    required: false,
   },
   totalSales: {
     type: Number,
-    required: true,
+    required: false,
     min: 0,
   },
   totalUnits: {
     type: Number,
-    required: true,
+    required: false,
     min: 0,
   },
   totalLikes: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     totalSubscribing: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
 },
@@ -66,32 +66,32 @@ const OverallStatSchema = new mongoose.Schema(
   {
     totalCustomers: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     yearlySalesTotal: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     yearlyTotalSoldUnits: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     yearlyTotalLikes: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     yearlyTotalSubscribing: {
       type: Number,
-      required: true,
+      required: false,
       min: 0,
     },
     year: {
       type: Number,
-      required: true,
+      required: false,
       min: 1900,  // Assuming historical data might be included
       max: new Date().getFullYear(),
     },

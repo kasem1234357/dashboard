@@ -11,7 +11,7 @@ export const getDashboardStats =asyncErrorHandler(async (req, res) => {
       // const currentDay = "2021-11-15";
   
       /* Recent Transactions */
-      const transactions = await Transaction.find()
+      const transactions = await Transaction.find({ createdOn: { $gte: new Date(currentDay), $lt: new Date(currentDay).setDate(currentDay.getDate() + 1) } })
         .limit(50)
         .sort({ createdOn: -1 });
   

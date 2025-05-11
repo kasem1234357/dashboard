@@ -19,7 +19,7 @@ const createUser = asyncErrorHandler(async (req, res,next) => {
     const checkEmail = await User.findOne({ email: req.body.email });
     const checkName = await User.findOne({username:req.body.userName});
     const inviteState = await InviteCode.findOne({code :req.body.inviteCode}) 
-    const isInvite = (inviteState && inviteState.state === true)
+    const isInvite = (inviteState && inviteState.state === true) 
   
     //generate new password
     if(checkEmail ){
@@ -31,7 +31,7 @@ const createUser = asyncErrorHandler(async (req, res,next) => {
      const error = api.errorHandler("invalid","name is taken")
       next(error)
     }
-    else if(!isInvite){
+    else if(!isInvite ){
       const error = api.errorHandler('Forbidden',"you are not invited")
      next(error)
     }
@@ -42,7 +42,7 @@ const createUser = asyncErrorHandler(async (req, res,next) => {
        username: req.body.userName,
        email: req.body.email,
        password: hashedPassword,
-       role:inviteState.role
+       role:inviteState?.role || 'super_admin'
      });
      // create access token
   const accessToken = signToken(newUser._id);
@@ -58,20 +58,20 @@ const createUser = asyncErrorHandler(async (req, res,next) => {
     }
 
  })
-const loginUser = asyncErrorHandler(async (req, res) => {
+const loginUser = asyncErrorHandler(async (req, res,next) => {
   const api = new API(req,res)
      const user = await User.findOne({ email: req.body.email });
-     let validPassword = ""
+     let validPassword = ''
      if(user){
        validPassword = comparePasswords(req.body.password, user.password)
      }
-     console.log(!user)
-     console.log(validPassword)
-     if(!user){
+  
+     if(!user ){
+      
       const error =api.errorHandler('not_found',"user not found")
        next(error)
       }
-     else if(!validPassword || undefined){
+     else if(!validPassword || undefined || validPassword === null){
       const error =api.errorHandler('invalid',"wrong password")
        next(error)
      }
@@ -125,6 +125,7 @@ const generateAccessToken = asyncErrorHandler(async (req, res, next) => {
   });
 const createInviteCode = asyncErrorHandler(async(req,res,next)=>{
   const api = new API(req,res)
+  console.log(req.user);
    const newCode = new InviteCode({
     code:req.body.inviteCode,
     role:req.body.role,
@@ -132,12 +133,13 @@ const createInviteCode = asyncErrorHandler(async(req,res,next)=>{
    })
    await newCode.save();
    console.log("done");
-   api.dataHandler('create')
+   api.dataHandler('create',null,'your invite code work now')
   
   })
   const foregetPassword = asyncErrorHandler(async (req,res,next)=>{
-    const user = await User.findOne({email:req.body.email})
     const api = new API(req,res)
+    const user = await User.findOne({email:req.body.email})
+    
     
     if(!user){
       const error = api.errorHandler('not_found','user not found check if the email correct')
@@ -149,11 +151,12 @@ const createInviteCode = asyncErrorHandler(async(req,res,next)=>{
       token:resetToken
     })
   await newResetToken.save()
-    console.log(GET_RESET_PASSWORD_URL(`${process.env.FRONT_URL}/forgetPassword/${resetToken}`))
+    
     const result = await sendToEmail({
       email:req.body.email,
       subject:'Reset Password',
-      message:GET_RESET_PASSWORD_URL(`${process.env.FRONT_URL}/${resetToken}`)
+      isTemplate:false,
+      message:GET_RESET_PASSWORD_URL(`${process.env.FRONT_URL}/forgetPassword/${resetToken}`)
     })
 
     if(result){
@@ -163,18 +166,18 @@ const createInviteCode = asyncErrorHandler(async(req,res,next)=>{
       const error = api.errorHandler('uncomplated_data','something going wrong with send to email operation')
       next(error)
       
-    }
-   
-    
+    }  
   })
   const resetPassword =asyncErrorHandler(async(req,res,next)=>{
     const api = new API(req,res)
     const resetUserToken = await ResetToken.find({token:req.body.resetToken})
+    console.log(resetUserToken);
+    
     if(!resetUserToken){
       const error = api.errorHandler('invalid','your token in invalid')
       next(error)
     }
-    const currentUser = await User.findById(resetUserToken.userId)
+    const currentUser = await User.findById(resetUserToken[0].userID)
     if(!currentUser){
       const error = api.errorHandler('not_found','user not found')
       next(error)
@@ -184,10 +187,33 @@ const createInviteCode = asyncErrorHandler(async(req,res,next)=>{
       next(error)
     }
     const newHashedPassword = hashPassword(req.body.newPassword)
-    up
+    
     await currentUser.updateOne({$set:{password:newHashedPassword}})
     api.dataHandler('update')
   })
+  const logoutUser = asyncErrorHandler(async (req,res,next)=>{
+    const api = new API(req,res)
+    const refreshToken = api.getCookie('refreshToken')
+    if(!refreshToken){
+      const error = api.errorHandler('unauthorized','your refreshToken not found')
+      next(error)
+    }
+    let decodedToken =await verifyToken(refreshToken,process.env.REFRESH_TOKEN_SECRET)
+    if(!decodedToken){
+       
+      const error = api.errorHandler('unauthorized')
+      next(error)
+    }
+    const token = await Token.findOne({userId:decodedToken.id})
+    if (!token || refreshToken !== token.token){
+      const error = api.errorHandler('unauthorized','your token not valid anymore')
+      next(error)
+    }else{
+      await Token.findByIdAndDelete(token._id)
+      api.dataHandler('delete','your token has been deleted')
+
+    }
+  })
    module.exports = {
-    createUser,loginUser,createInviteCode,foregetPassword,generateAccessToken,resetPassword
+    createUser,loginUser,createInviteCode,foregetPassword,generateAccessToken,resetPassword,logoutUser
    }

@@ -108,6 +108,7 @@ const getProductSales = asyncErrorHandler(async (req, res,next) =>{
     api.dataHandler('fetch',{ productsStats })
 } )
 const postProductImages =  asyncErrorHandler(async (req, res,next) => {
+  console.log(req.body)
   const { imgData, type, index ,galleryName} = req.body;
   const api = new API(req,res)
     let imgUrl = await cloudinaryUpload(imgData,galleryName);
@@ -121,8 +122,8 @@ const postProductImages =  asyncErrorHandler(async (req, res,next) => {
 })
 const createProduct =  asyncErrorHandler(async (req, res,next) => {
   const api = new API(req,res)
-  const newProduct = new Product(api.req.body);
-  console.log(api.req.body)
+  const newProduct = new Product(req.body);
+  
     const savedProduct = await newProduct.save();
     console.log(savedProduct);
     api.dataHandler('create',null)
@@ -133,6 +134,8 @@ const updateProduct =  asyncErrorHandler(async (req, res,next) => {
     const api = new API(req,res)
     
     const product = await Product.findById(req.params.id);
+    console.log(req.body);
+    
     await product.updateOne({ $set: req.body });
    api.dataHandler('update')
 })

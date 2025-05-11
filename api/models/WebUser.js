@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const UserSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
  username: {
   type: String,
   require: true,
@@ -16,10 +16,6 @@ email: {
 phone:{
   type:Number,
 },
-reportMasseges:{
-  type:[],
-  default: []
-},
 globalMessages: [
   { MassegeId:{
   type:mongoose.Schema.Types.ObjectId, ref: 'SystemMasseges' 
@@ -30,11 +26,6 @@ globalMessages: [
 privateMasseges:{
   type:[],
   default: []
-},
-password: {
-  type: String,
-  required: true,
-  min: 6,
 },
 profileImg: {
   type: {
@@ -48,20 +39,31 @@ profileImg: {
     galleryName:''
   },
 } ,
-role:{
+prefer:{
+   type:[],
+},
+gender:{
   type:String,
-  enum:['normal','admin','super_admin','sales_manger',"Receptionist"],
-  default:'normal'
- },
+  enum:['male','female'],
+
+},
+age:{
+  type:Number
+},
 passwordChangedAt:Date,
 resetPasswordToken:String,
-resetPasswordTokenExpires:Date
+resetPasswordTokenExpires:Date,
+password: {
+  type: String,
+  required: true,
+  min: 6,
+},
 
 },{ timestamps: true })
-UserSchema.methods.comparePasswordDB = async function(pass,passDB){
+userSchema.methods.comparePasswordDB = async function(pass,passDB){
   return await bcrypt.compare(pass,passDB)
 }
-UserSchema.methods.isPasswordChanged = async function(jwtTimestamp){
+userSchema.methods.isPasswordChanged = async function(jwtTimestamp){
   //  console.log(this.passwordChangedAt ,jwtTimestamp )
 if(this.passwordChangedAt){
    const passwordChangedTimestamp = parseInt(this.passwordChangedAt.getTime()/1000,10)
@@ -70,5 +72,4 @@ if(this.passwordChangedAt){
 return false
  
 }
-
-module.exports = mongoose.model('DashUser',UserSchema)
+module.exports = mongoose.model('user',userSchema)

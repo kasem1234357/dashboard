@@ -1,14 +1,15 @@
 
-const DashUser = require('../models/User')
+
 const crypto = require("crypto");
 const Tasks = require("../models/Tasks");
 const hashPassword = require('../utils/hashPassword')
 const Product = require("../models/Product");
-const User = require("../models/User");
+const DashUser = require("../models/User");
 const asyncErrorHandler = require("../wrapper_functions/asyncErrorHandler");
 const API = require('../classes/Api');
-const { signToken } = require('../utils');
+const { signToken, cloudinaryUpload, cloudinaryDelete } = require('../utils');
 const Token = require('../models/Token');
+const { log } = require('console');
 const getUser = asyncErrorHandler(async(req,res,next)=>{
       
       const api = new API(req, res);
@@ -59,9 +60,11 @@ const updateUser = asyncErrorHandler(async(req,res,next)=>{
   })
 const getAllUser = asyncErrorHandler(async(req,res,next)=>{
   const api = new API(req, res);
-  api.modify(User.find()).filter().sort().limitFields().paginate()
+  
+  
+  api.modify(DashUser.find()).filter().sort().limitFields(['role','profileImg','username']).paginate()
   const users = await api.query
-  const total = await User.countDocuments()
+  const total = await DashUser.countDocuments()
       api.dataHandler('fetch',{
         users,
         total,
@@ -69,10 +72,101 @@ const getAllUser = asyncErrorHandler(async(req,res,next)=>{
   })
 const deleteUser = asyncErrorHandler(async(req,res,next)=>{
   const api = new API(req, res);
-      const user = await User.findById(req.params.id);
+  
+  
+      const user = await DashUser.findById(req.params.id);
+      const error = api.errorHandler('Forbidden','cloudenary cant remove this img')
+      if(!user){
+        const error = api.errorHandler('not_found')
+        next(error)
+      }
+      
+      if(user?.profileImg?.public_id !== '' && user?.profileImg?.galleryName !== ''){
+        await cloudinaryDelete([`${user?.profileImg?.galleryName}/${user?.profileImg?.public_id}`],()=> next(error))
+      } 
       await user.deleteOne();
       api.dataHandler('delete',"the user has been deleted ")
+     
+       
+      
+      
+     
   })
+const uploadProfileImg = asyncErrorHandler(async(req,res,next)=>{
+   const api = new API(req, res);
+   console.log(req.user);
+   
+   const user = req.user
+   const {profileImg,galleryName,public_id} = req.body
+   console.log(profileImg);
+   console.log(galleryName);
+   
+   let imgUrl = await cloudinaryUpload(profileImg,galleryName,public_id);
+   console.log(imgUrl);
+   
+   if(imgUrl){
+    await user.updateOne({$set:{profileImg:{
+      url: imgUrl.secure_url,
+      public_id:imgUrl.public_id,
+      galleryName:galleryName
+    }}})
+    api.dataHandler('update',{
+       url: imgUrl.secure_url,
+       public_id:imgUrl.public_id,
+       galleryName:galleryName,
+    })
+   }
+   else{
+    const error = api.errorHandler('server_error','error in cloudinary upload')
+    next(error)
+   }
+
+})
+const removeProfileImg = asyncErrorHandler(async (req,res,next)=>{
+  
+
+   const api = new API(req, res);
+   const user = req.user
+  
+   const result = await cloudinaryDelete([`${user?.profileImg?.galleryName}/${user?.profileImg?.public_id}`],()=> next(error))
+   if(result){
+    await user.updateOne({$set:{profileImg:{
+      url:'',
+      public_id:'',
+      galleryName:''
+   }}})
+   api.dataHandler('delete',null,"the profile image has been deleted")
+   }else{
+    
+    next(error)
+   }
+   
+    
+
+})
+const changeRole = asyncErrorHandler(async(req,res,next)=>{
+  const api = new API(req, res);
+   const user = req.user
+   const employeeId = req.params.id
+   if(user._id === employeeId){
+    const error = api.errorHandler('invalid','you cant change your role')
+    next(error)
+   }
+   const employee = await DashUser.findById(employeeId)
+if(!employee){
+  const error = api.errorHandler('not_found')
+  next(error)
+}
+   if(employee.role === 'super_admin'){
+    const error = api.errorHandler('unauthorized',"you can't change role for user with super_admin role")
+    next(error)
+   }
+   await employee.updateOne({$set:{
+    role:req.body.role
+   }})
+   api.dataHandler('update')
+})
+
   module.exports = {
-    getAllUser,getUser,updateUser,deleteUser
+    getAllUser,getUser,updateUser,deleteUser,uploadProfileImg,removeProfileImg,changeRole
   }

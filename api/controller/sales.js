@@ -1,3 +1,4 @@
+const { dataOverallStat } = require("../../client/src/components/Data/dt");
 const API = require("../classes/Api");
 const OverallStat = require("../models/OverallStat"); // Assuming the schema file is named models/OverallStat.js
 const asyncErrorHandler = require("../wrapper_functions/asyncErrorHandler");
@@ -6,7 +7,7 @@ const getOverallStats =asyncErrorHandler(async(req,res,next)=> {
   const api = new API(req,res)
  const stats = await OverallStat.aggregate([
       {
-        $match: { year: 2024 }
+        $match: { year: 2021 }
       },
       {
         $project: {
@@ -35,7 +36,32 @@ const getOverallStats =asyncErrorHandler(async(req,res,next)=> {
   
   
 })
-module.exports={getOverallStats}
+const createOverallStat = asyncErrorHandler(async (req, res,next) => {
+  const api = new API(req,res)
+  const newOverallStat = new OverallStat(dataOverallStat);
+  
+    const savedOverallStat = await newOverallStat.save();
+    console.log(savedOverallStat);
+    api.dataHandler('create',null)
+
+})
+const updateOverallStat = asyncErrorHandler(async (req, res,next) => {
+  console.log('update operation')
+    const api = new API(req,res)
+    
+    const overallStat = await OverallStat.findById(req.params.id);
+    await overallStat.updateOne({ $set: req.body });
+   api.dataHandler('update')
+})
+const deleteOverallStat = asyncErrorHandler(async (req, res,next) => {
+    const api = new API(req,res)
+    const {images}= req.body
+    const test =await cloudinaryDelete(images)
+    const overallStat = await OverallStat.findById(req.params.id);
+    await overallStat.deleteOne();
+    api.dataHandler('delete')
+})
+module.exports={getOverallStats,  createOverallStat, updateOverallStat,deleteOverallStat}
 // Usage
 // getOverallStats(2021)
 //   .then((stats) => {

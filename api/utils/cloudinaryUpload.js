@@ -1,5 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 const dotenv = require("dotenv");
+const cloudinaryDelete = require("./cloudinaryDelete");
 dotenv.config();
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

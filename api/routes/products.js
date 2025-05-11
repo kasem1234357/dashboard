@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const { getProducts, postProductImages, createProduct, updateProduct, getProduct, deleteProduct, getProductSales, getProductInfo, getTransactions,testFn} = require("../controller/client");
-const { restrict } = require("../meddlewares");
+const { restrict, isAuth } = require("../meddlewares");
 
 // const cloudinaryImageUploadMethod = file => {
 //   let url =""
@@ -14,7 +14,7 @@ const { restrict } = require("../meddlewares");
 //   return url
 // }
 
-router.post("/images",restrict('super_admin','admin'), postProductImages);
+router.post("/images", postProductImages);
 // const upload = async (req, res, next) => {
 //   try {
 //     const { profileImg, otherImg, ...others } = req.body;
@@ -36,9 +36,9 @@ router.post("/images",restrict('super_admin','admin'), postProductImages);
 //   }
 // };
 // add product
-router.post("/",restrict('super_admin','admin'), createProduct);
+router.post("/", createProduct);
 // update product
-router.put("/update/:id",restrict('super_admin','admin'), updateProduct);
+router.put("/update/:id",isAuth,restrict(['super_admin','admin']), updateProduct);
 // get product
 
 //get all products
@@ -55,11 +55,11 @@ router.get('/',async(req,res)=>{
 */
 //==================================================//
 router.get("/", getProducts);
-router.get('/transactions',restrict('super_admin','sales_manger'),getTransactions)
+router.get('/transactions',isAuth,restrict(['super_admin','sales_manger']),getTransactions)
 router.get('/info/:id',getProductInfo)
 //delete products
-router.get('/sales/:id',restrict('super_admin','sales_manger'),getProductSales)
-router.delete("/:id",restrict('super_admin','admin'),deleteProduct);
+router.get('/sales/:id',isAuth,restrict(['super_admin','sales_manger']),getProductSales)
+router.delete("/:id",isAuth,restrict(['super_admin','admin']),deleteProduct);
 router.get("/:id", getProduct);
 
 module.exports = router;

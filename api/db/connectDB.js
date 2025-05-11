@@ -1,19 +1,18 @@
 const { default: mongoose } = require("mongoose");
-const connectDB = (local =false) => {
-    // mongoose.set('strictQuery', false);
+ const connectDB =  (local = false) => {
+  try {
+     mongoose.connect(local?process.env.MONGO_URL_LC :process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }).then(()=>{
+      console.log('Connected to MongoDB');
+    })
 
-    mongoose.connect(
-      local?process.env.MONGO_URL_LC :process.env.MONGO_URL,
-      { useNewUrlParser: true },
-      (error) => {
-        if (error) {
-          console.error('Failed to connect to MongoDB:', error);
-        } else {
-          console.log('Connected to MongoDB');
-        }
-      }
-    );
-  };
+  } catch (error) {
+    console.error('Failed to connect to MongoDB:', error);
+  }
+}
+
   
 module.exports ={ connectDB}
   

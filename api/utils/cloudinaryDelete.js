@@ -8,11 +8,17 @@ cloudinary.config({
 });
 
 
-const cloudinaryDelete = async (images)=>{
+const cloudinaryDelete = async (images,next)=>{
+ 
+  
     return cloudinary.api.delete_resources(images,{ type: 'upload', resource_type: 'image' },function (error, result) {
       if (error) {
-        console.error(error);
-        throw Error("Error");
+        console.log('line 16');
+        
+        console.log(error);
+        
+        next()
+        
       } else {
         console.log(result);
         return result;

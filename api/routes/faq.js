@@ -1,11 +1,12 @@
-const { createFaq, getFaq, getSingleFaq } = require("../controller/faq");
-
+const { createFaq, getFaq, getSingleFaq ,sendToSupportTeam} = require("../controller/faq");
+const {restrict,isAuth} =require('../meddlewares')
 const router = require("express").Router();
 
 
 // add Faq
 router.post('/',createFaq)
 // get all Faq
+
 router.get('/',getFaq)
 router.get('/:id',getSingleFaq)
 

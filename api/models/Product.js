@@ -17,6 +17,7 @@ const ProductSchema = mongooose.Schema(
       required: true,
     },
     barCode: {
+      required: false,
       type: String,
     },
     profileImg: {
@@ -40,11 +41,12 @@ const ProductSchema = mongooose.Schema(
     coupon: {
       type: String,
     },
-    couponPersent: {
+    coponPersent: {
       type: Number,
     },
     type: {
       type: String,
+      required:false,
     },
     tags: {
       type: Array,
@@ -52,7 +54,7 @@ const ProductSchema = mongooose.Schema(
     },
     desc: {
       type: String,
-      min: 30,
+      min: 25,
     },
     colors: {
       type: Array,

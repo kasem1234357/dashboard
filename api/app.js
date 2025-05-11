@@ -14,6 +14,7 @@ const inviteRoute = require("./routes/invite");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const salesRoute = require('./routes/sales')
+const transactionRoute = require('./routes/transaction')
 //===================================================//
 //============== meddlewares ========================//
 
@@ -44,7 +45,8 @@ app.use("/api/contact", contactRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/invite", inviteRoute);
-app.use('/api/sales',salesRoute)
+app.use('/api/sales',salesRoute);
+app.use('/api/transaction',transactionRoute)
 //==============//
 // handling routes not found error
 app.all('*',(req,res,next)=>{

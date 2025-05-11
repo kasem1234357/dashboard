@@ -12,12 +12,11 @@ const InviteSchema =new mongoose.Schema({
  state:{
   type:Boolean,
   default:true,
-  required: true,
  },
  createdAt: {
   type: Date,
   default: Date.now,
-  expires: 900 // Set to 15 minutes (15 * 60 seconds)
+  //expires: 900 // Set to 15 minutes (15 * 60 seconds)
 }
 }, {
     timestamps: true,
