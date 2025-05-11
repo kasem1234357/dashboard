@@ -1,15 +1,14 @@
 import { handleClick } from "../configs/notificationConfig";
 import axiosConfig from '../configs/axiosConfig'
 import { updateProductNumber } from "../redux/slices/userSlice";
+import { protectRoute } from "./protectRoutes";
 export const uploadDetails = (data,callbacks) => {
     const {setNewData,dispatch,setType,setShowModel,setUploadingProgress} = callbacks
     const {type,newData,productNumber} = data
     try {
       if (type === "New") {
     
-        axiosConfig
-          .post(`/api/products/`,newData )
-          .then((res) => {
+       protectRoute().handle('post',`/api/products/`,newData).then((res) => {
             console.log(res)
             setNewData((data) => ({ ...data, ...res.data }));
              setType("update");
@@ -25,12 +24,7 @@ export const uploadDetails = (data,callbacks) => {
         return;
       }
       else{
-        axiosConfig
-        .put(
-          `/api/products/update/${newData._id}`,
-          newData
-        )
-        .then((res) => {
+        protectRoute().handle('put',`/api/products/update/${newData._id}`,newData).then((res) => {
           setNewData((data) => ({ ...data, ...res.data }));
         }).catch(err =>{
           setShowModel(false);

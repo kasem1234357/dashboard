@@ -167,6 +167,15 @@ canvas {
 input:invalid[focused="true"] ~ .error{
     display: block;
    }
+   .empty-box{
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    color: #FFF;
+    text-transform: capitalize;
+    align-items: center;
+   }
 /* .feed__content select{
         margin-top: 10px;
         width: 150px;
@@ -180,4 +189,27 @@ input:invalid[focused="true"] ~ .error{
 } */
 .empeloyee:hover{
     background:var(--item__bg2);
+}
+/* fixed inset-0 flex items-center justify-center bg-black bg-opacity-20 transition-opacity backdrop-blur z-40 cursor-auto 
+bg-white dark:bg-primary rounded-xl shadow-lg w-full relative overflow-x-auto overflow-y-auto customScroll dark:customScroll-sidebar
+*/
+.model-box{
+   position: fixed;
+   inset: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   
+   transition: opacity 0.3s ease-in-out;
+   backdrop-filter: blur(10px);
+   z-index: 10000;
+   cursor: auto;
+}
+.model-box-item{
+    border-radius: 10px;
+    box-shadow: 0px 0px 30px rgb(0 0 0 / 50%);
+    max-width: 90vw;
+
+    padding: 10px;
+    z-index: 10001;
 }

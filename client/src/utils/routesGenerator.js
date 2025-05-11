@@ -85,6 +85,8 @@ const routes = [
 
 ]
 export const routesSchema = (role)=>{
+    console.log(role);
+    
     if(role === 'super_admin') return routes
     const safeRoutes = routes.filter(route =>route.role.includes(role) || route.role.includes('all'))
     return safeRoutes

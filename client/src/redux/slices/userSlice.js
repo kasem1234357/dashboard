@@ -3,7 +3,7 @@ import { initialState } from "../intialStates/user/index";
 import { notification_Actions_Layout } from "../actions/notifications";
 import { system_layout_actions } from "../actions/systemEvent";
 import { controls_layout_actions } from "../actions/controls";
-import { authExtraReducers } from "../actions/auth";
+import { auth_layout_actions, authExtraReducers } from "../actions/auth";
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -11,6 +11,7 @@ export const userSlice = createSlice({
     ...notification_Actions_Layout,
     ...controls_layout_actions,
     ...system_layout_actions,
+    ...auth_layout_actions,
   },
   extraReducers(builder) {
     authExtraReducers(builder);
@@ -23,7 +24,9 @@ export const {
   toggleDarkMode,
   updateTaskNumber,
   updateProductNumber,
+  logUser,
   updateDarkMode,
+  updateUserProfileImg
 } = userSlice.actions;
 export default userSlice.reducer;
 

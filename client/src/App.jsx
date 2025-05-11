@@ -10,6 +10,7 @@ import { handleKeyPress } from './utils/handleKeyPress.js'
 import AuthProvider from './components/Providers/AuthProviders.jsx'
 import ForgetPassword from './components/form/ForgetPassword.jsx'
 import { useSelector } from 'react-redux'
+import NotFound from './pages/NotFound.jsx'
 const queryClient = new QueryClient()
 function App() {
   const navigate = useNavigate()
@@ -32,11 +33,12 @@ function App() {
        <Routes>
          <Route  path='/login' element={<Account />}/>
          <Route path='/forgetPassword/:tokenId' element={<ForgetPassword/>}/>
+         
          <Route path ='*' element={<>
           <Navbar/>
           <Feed/>
           </>}/>
-      
+         <Route path='/notFound' element={<NotFound/>}/>
        </Routes>
        <ToastContainer/>
     </div>

@@ -4,6 +4,16 @@
  min-height: 100vh;
  flex-direction: column;
 }
+.calendar__year{
+   position: relative;
+}
+.calendar__year__select{
+   position: absolute;
+   top: 25px;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 100%;
+}
 .calendar__navbar{
    color: var(--text__title);
  padding-bottom: 10px;

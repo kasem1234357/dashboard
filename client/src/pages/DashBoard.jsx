@@ -12,9 +12,23 @@ import axiosConfig from '../configs/axiosConfig'
 import useCalender from '../hooks/useCalender'
 import { protectRoute } from '../utils/protectRoutes'
 import { config_animateY } from '../configs/motionConfig'
+import Modal from '../components/Boxes/modalBox/Modal'
+const renderModal = (openModelInfo,data,setOpenModelInfo)=>{
+  switch (openModelInfo?.type) {
+    case 'BarChart':
+      return <BarChart data={data} setOpenModelInfo={setOpenModelInfo}/>
+      break;
+    case 'LineChart':
+      return <LineCharts data={data[0]||[]} setOpenModelInfo={setOpenModelInfo}/>
+      break;
+    default: return <></>
+      break;
+  }
+}
 function DashBoard() {
   const [data,setData] = useState([])
   const [loading,setLoading]= useState(false)
+  const [openModelInfo,setOpenModelInfo]=useState(false)
   const {  currentYear,currentMonth,currentDay } = useCalender();
   const [dataControll, setDataControll] = useState({
     year: currentYear,
@@ -26,6 +40,8 @@ function DashBoard() {
     const fetchData = async()=>{
       try {
         const res = await protectRoute().handle('get',"api/sales")
+        
+        
         setData(res.data.data)
         
         setLoading(false)
@@ -60,11 +76,11 @@ function DashBoard() {
      
      <div className="feed__content__Box1 flex wrap ">
        <div className="bar--chart1 secondary--bg flex  f-colump">
-         <BarChart data={data}/>
+         <BarChart data={data} setOpenModelInfo={setOpenModelInfo}/>
        </div>
-       <div className="radear--chart1 secondary--bg flex  f-colump">
+       {/* <div className="radear--chart1 secondary--bg flex  f-colump">
          <RadarChart/>
-       </div>
+       </div> */}
      </div>
      <div className="feed__content__Box2 flex wrap ">
        {rateDataGenerator(...data,currentMonth.index).map((data,index)=>(
@@ -75,9 +91,9 @@ function DashBoard() {
      </div>
      <div className="feed__content__Box3 flex wrap">
      <div className="line--chart3 secondary--bg flex  f-colump">
-       <LineCharts/>
+       <LineCharts data={data[0]||[]}   setOpenModelInfo={setOpenModelInfo} />
      </div>
-     <CirculerChart color={'#df8c1f'} progress={80}/>
+     {/* <CirculerChart color={'#df8c1f'} progress={80}/> */}
      </div>
     <Table/>
     
@@ -85,6 +101,15 @@ function DashBoard() {
  
    </div>
  </motion.div>
+{openModelInfo.state&&<Modal
+isOpen={openModelInfo.state}
+          onClose={() => {
+            setOpenModelInfo(prev => ({ ...prev, state: false }));
+          }}
+          modalMaxWidth="90vw"
+>
+{renderModal(openModelInfo,data,setOpenModelInfo)}
+  </Modal>}
  </Suspense>
     </>
   

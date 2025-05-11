@@ -7,16 +7,32 @@ import ContactImage from './111.svg'
 import { motion } from "framer-motion"
 import '../styles/contact.css'
 import { config_animateY, config_scale } from '../configs/motionConfig';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { toastMessage } from '../utils/toastMassege';
+import { handleClick } from '../configs/notificationConfig';
 function Contact() {
   const [faq,setFaq] = useState([]);
+  const userEmail = useSelector(state => state.user.user?.email)
+  console.log(userEmail)
+  
   const [massage,setMassage] = useState({
     title:'',
     type:'1',
     text:''
   })
-  const sendEmail=(user="jan doe")=>{
-
-      axiosConfig.post(`/api/contact`,{...massage,user}).then(res =>console.log(res)).catch(error=>{}) 
+  const sendEmail=async(user="jan doe")=>{
+     try {
+     await axiosConfig.post(`/api/contact/sendToSupportTeam`,{...massage,email:userEmail,}).then(res =>{
+      console.log(res)
+    handleClick({type:"success",msg:"message has been sent"})
+    }
+    ).catch(error=>{console.log(error);
+     }) 
+     } catch (error) {
+      
+     }
+      
   }
   useEffect(()=>{
     try {
@@ -61,7 +77,7 @@ function Contact() {
           text:''
         })
        }}>reset</button>
-       <button onClick={()=>sendEmail()} className='email--btns'>send</button>
+       <button onClick={sendEmail} className='email--btns'>send</button>
        </div>
        
      </div>

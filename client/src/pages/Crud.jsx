@@ -17,35 +17,37 @@ import { motion } from "framer-motion"
 import { useSelector } from "react-redux";
 import { FAKE_USER_DATA } from "../configs/FAKE_USER_DATA";
 import { config_animateY } from "../configs/motionConfig";
-const titles = (type = "products") => {
- 
-  const titles = {
-    users: ["profile", "username", "budget", "amount", "waiting", "contact"],
-    sales: ["poster", "username", "amount", "price", "state"],
-    products: [
-      "poster",
-      "Tilte",
-      "Price",
-      "Count",
-      "barCode",
-      "Copon",
-      "Controls Btns",
-    ],
-  };
-  return titles[type];
-};
+import SalesTable from "../components/Crud/salesTable/SalesTable";
+import ProductsTable from "../components/Crud/salesTable/ProductsTable";
 
+const renderEl = (currentTitle,setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts) =>{
+  switch (currentTitle) {
+    case "products": return <ProductsTable setItemsData={setItemsData} setTotal={setTotal} setFilterProducts={setFilterProducts} itemsData={itemsData} total={total} filterProducts={filterProducts}/>
+      
+      break;
+   case 'sales':return <SalesTable setItemsData={setItemsData} setTotal={setTotal} setFilterProducts={setFilterProducts} itemsData={itemsData} total={total} filterProducts={filterProducts} />
+    default:
+      break;
+  }
+}
+const titles = (type)=>{
+  const methods = {
+    products:["title","tags"],
+    sales:["username"],
+    users:["userName"]
+  }
+  return methods[type]
+}
 function Crud() {
 
   const productNumbers = useSelector(state =>state.user.productNumber)
   const [itemsData, setItemsData] = useState([]);
   const [total,setTotal]=useState(20)
-  const [loading,setLoading] = useState(false);
+  const [methods,setMethods] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
   const [showModel, setShowModel] = useState(false);
   const [currentTitle, setCurrentTitle] = useState({
     type: "products",
-    data: titles(),
   });
  
   const {
@@ -60,60 +62,13 @@ function Crud() {
   
   const {generateExcelFile} = useExport()
   const filter = (method, filterText) => {
-    const data = itemsData.filter((task) => task[method].includes(filterText));
+    console.log(itemsData);
+    
+    const data = itemsData?.filter((task) => task[method]?.includes(filterText));
     setFilterProducts(data);
   };
-  const renderEl = () => {
-    const Els = []; 
-    switch (currentTitle.type) {
-      case "products":
-        {
-          if(filterProducts.length){
-            filterProducts?.slice(skipsLength(),skipsLength()+recordsLength).forEach((product) => {
-              Els.push(<Crud_Table_products key={product._id} data={product}/>)
-          })
-          }
-      }
-        break;
-      case "sales":
-        for (let i = 0; i < 13; i++) {
-          Els.push(<Crud_Table_sales data={null} />);
-        }
-        break;
-      case "users":
-        {
-          if(FAKE_USER_DATA.length){
-            FAKE_USER_DATA?.slice(skipsLength(),skipsLength()+recordsLength).forEach((user,index) =>{
-              Els.push(
-                <Crud_Table_users
-                  key={index}
-                  data={user}
-                />
-              );
-            })
-          }
-        }
-        break;
-      default:
-        return <h1>hi</h1>;
-    }
-    return Els;
-  };
-  useEffect(() => {
-    setLoading(true)
-    try {
-      axiosConfig.get(`/api/products/`).then((res) => {
-        const {data } = res.data
-        setTotal(data.total)
-        setItemsData(data.productsWithStats);
-        setFilterProducts(data.productsWithStats)
-        setLoading(false)
-      });
-    } catch (error) {
-      console.log(error);
-      setLoading(false)
-    }
-  }, []);
+
+
   const navigate = useNavigate();
 
   return (
@@ -129,11 +84,13 @@ function Crud() {
             <select
               name=""
               id=""
-              onChange={(e) =>
+              onChange={(e) =>{
+                setItemsData([])
+                 setFilterProducts([])
                 setCurrentTitle({
                   type: e.target.value,
-                  data: titles(e.target.value),
-                })
+                  
+                })}
               }
             >
               <option value="products">Products Data</option>
@@ -149,7 +106,7 @@ function Crud() {
               </button>
               <button>
                 {showModel && (
-                  <FilterBox filter={filter} methods={["title", " tags"]} />
+                  <FilterBox filter={filter} methods={titles(currentTitle.type)} />
                 )}
                 <span onClick={() => setShowModel(!showModel)}>Filters</span>
               </button>
@@ -169,15 +126,17 @@ function Crud() {
               </button>
             </div>
           </div>
-          <Crud_Header titles={currentTitle.data} />
+         
         </div>
+         {/* <Crud_Header titles={currentTitle.data} hasImage={currentTitle.type !== "sales"} />
         <div className="crud__rows">
           {loading?<div className="loading_auth" style={{height:'auto'}}> <span className="loader_auth"></span> </div>:
           renderEl()
           }
            
          
-        </div>
+        </div> */}
+        {renderEl(currentTitle.type,setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts)}
         <PaginationBox toBack={toBack} toNext={toNext} steps={steps} currentStep={currentStep}/>
       </div>
     </motion.div >

@@ -3,7 +3,7 @@ import axiosConfig from '../configs/axiosConfig'
 export const uploadImg = (sourceData,callbacks) => {
   const {images,galleryName} = sourceData
   let {index,count} = sourceData
- 
+ console.log(index,count)
   const {setNewData,setShowModel,setUploadingProgress,setUploadImagesStates} =callbacks
   if (count <= 0) {
     setUploadImagesStates(true)
@@ -11,6 +11,7 @@ export const uploadImg = (sourceData,callbacks) => {
     if(count > 0){
       try {
         setShowModel(true);
+        console.log(images[index]);
         axiosConfig
           .post(`/api/products/images`, {...images[index],galleryName})
           .then((res) => {

@@ -13,4 +13,7 @@ export const system_layout_actions = {
   updateProductNumber: (state, action) => {
     state.productNumber = action.payload;
   },
+  updateUserProfileImg: (state, action) => {
+    state.user.profileImg = action.payload;
+  }
 };

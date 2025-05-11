@@ -1,6 +1,6 @@
 import { useState } from "react";
 function getType(name){
-   return name.slice(name.lastIndexOf('.')+1,name.length)
+   return name?name.slice(name.lastIndexOf('.')+1,name.length):''
 }
 const useUpload = () => {
   const [path, setPath] = useState("");
@@ -18,7 +18,7 @@ const useUpload = () => {
         fileReader.readAsDataURL(readFile);
       });
     if (e.target.files) {
-        setName(e.target.files[0].name)
+        setName(e.target.files[0]?.name || null)
        reader(e.target.files[0]).then((result) => {
         console.log(e.target.files[0],result);
         console.log(typeof(result));

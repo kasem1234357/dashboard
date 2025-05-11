@@ -141,6 +141,7 @@
 }
 .settings--profile--text .update--btn{
  color: #0DB8D3;
+ cursor: pointer;
 }
 .settings--profile--dragArea{
    margin: 10px;
@@ -254,9 +255,63 @@
 }
 .employeeBox-controllBox {
    display: flex;
+   justify-content: stretch;
+   
    gap: 7px;
 }
 .remove-btn{
    background: #ef233c !important;
    color: #fff !important;
+}
+.employeeBox-infoBox{
+   color:#0DB8D3;
+}
+.change-role-btn{
+   position: relative;
+}
+.roles-list{
+   margin-top: 0px;
+   position: absolute;
+   display: flex
+;
+z-index: 2;
+   flex-direction: column;
+   background-color: var(--primary);
+   padding: 10px 5px;
+   width: 120%;
+   left: -10%;
+   flex: 1 1 0%;
+   bottom: 125%;
+   list-style: none;
+   align-items: flex-start;
+   gap: 5px;
+}
+.roles-list li {
+   display: inline-block;
+   padding: 10px 5px;
+   width: 100%;
+   text-align: left;
+}
+.roles-list li:hover {
+   background: #2472fc
+}
+.roles-list::before{
+   content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    rotate: 45deg;
+    bottom: -3px;
+    left: 41%;
+    /* translate: -50%; */
+    z-index: -1;
+    background: var(--primary);
+}
+.content__userInfo__box .not-found-employee{
+   color: #2472fc;
+   padding: 20px;
+   font-size: 20px;
+   
+   text-align: center;
+   width: 100%;
 }

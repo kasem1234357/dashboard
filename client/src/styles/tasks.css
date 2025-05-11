@@ -401,6 +401,7 @@ width: min-content;
     color:#fff;
     background: #7d00fa;
     border: none;
+    cursor: pointer;
     outline: none;
     font-size: 16px;
     font-weight: bold;

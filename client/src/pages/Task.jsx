@@ -14,6 +14,9 @@ import { updateTaskNumber } from "../redux/slices/userSlice";
 import axiosConfig from '../configs/axiosConfig'
 import useOutsideClick from "../hooks/useOutsideClick";
 import { config_scale } from "../configs/motionConfig";
+import { toast } from "react-toastify";
+import { toastMessage } from "../utils/toastMassege";
+import { handleClick, toastConfig } from "../configs/notificationConfig";
 function Task() {
   const dispatch = useDispatch()
   const taskNumber = useSelector(state =>state.user.taskNumber)
@@ -79,20 +82,22 @@ function Task() {
       setCacheData((current) => ({ ...current, desc: [""] }));
     }
   };
-  const deleteTask = () => {
+  const deleteTask = async() => {
     try {
-      
-      axiosConfig
+       if(cacheData._id === undefined) {
+        return 
+       }
+     await toast.promise(axiosConfig
         .delete(`/api/tasks/${cacheData._id}`)
         .then(() => {
           dispatch(updateTaskNumber(taskNumber - 1))
           navigate("/tasks");
-        });
+        }),()=>{},toastConfig);
     } catch (error) {
       console.log(error);
     }
   };
-  const save = () => {
+  const save = async() => {
     try {
       console.log(cacheData.progress / tasks.length);
       if (Math.floor(cacheData.progress / tasks.length) === 1) {
@@ -103,17 +108,18 @@ function Task() {
         setCacheData((prev) => ({ ...prev, state: "To do" }));
       }
       if (type === "New") {
-        axiosConfig
+       await toast.promise(axiosConfig
           .post(`/api/tasks/`, cacheData)
           .then((res) => {
             setCacheData(res.data.data);
             dispatch(updateTaskNumber(taskNumber + 1))
-          });
+            return res
+          }),toastMessage(),toastConfig);
 
         setType("update");
         
       } else {
-        axiosConfig.put(
+        await axiosConfig.put(
           `/api/tasks/update/${
             cacheData._id || location?.state.dataInfo._id
           }`,
@@ -125,7 +131,7 @@ function Task() {
     }
   };
   useEffect(() => {
-    
+     
     try {
       if (type !== "New") {
         save();
@@ -145,6 +151,7 @@ function Task() {
     type,
     tasks,
   ]);
+
   const targetRef = useRef('')
   const handleClickOutside = ()=>{
      setShowtagBox(false)
@@ -191,7 +198,7 @@ function Task() {
         </div>
 
         <div className="flex">
-          <button className="task--save--btn" onClick={() => save()}>
+          <button className="task--save--btn" onClick={save}>
             save
           </button>
           <NavLink to="/tasks" className={"task--close"}>

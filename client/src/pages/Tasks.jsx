@@ -32,7 +32,7 @@ function Tasks() {
   const [error,setError] = useState(false)
   const authNavigate = ()=>{
     
-  console.log('ggg')
+
   }
   useLayoutEffect(()=>{
     const fetchData = async()=>{
@@ -89,7 +89,7 @@ function Tasks() {
   {" "}
   <span className="loader_auth"></span>{" "}
 </div>);
-  if (error) return <h2>some thing wrong</h2>;
+ // if (error) return <h2>some thing wrong</h2>;
 
   return (
     <Suspense

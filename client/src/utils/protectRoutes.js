@@ -22,7 +22,9 @@ export const protectRoute = (callBackEvent)=>{
           responce =res
       }).catch(err =>{
         callBackEvent && callBackEvent()
-        throw new Error('invalid')
+        console.log(err);
+        throw err
+        //return err
       })
       })
        return responce
