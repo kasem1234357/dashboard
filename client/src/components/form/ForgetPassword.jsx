@@ -2,10 +2,12 @@ import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import axiosConfig from '../../configs/axiosConfig'
 import { useNavigate, useParams } from 'react-router-dom'
-import { handleClick } from '../../configs/notificationConfig';
+import { handleClick, toastConfig } from '../../configs/notificationConfig';
 import './form.css'
 import FormInput from './FormInput';
 import { schema } from '../../utils/validateSchema';
+import { toast } from 'react-toastify';
+import { toastMessage } from '../../utils/toastMassege';
 function ForgetPassword() {
     const Navigate = useNavigate()
     const status = useSelector(state =>state.user.status)
@@ -19,17 +21,21 @@ function ForgetPassword() {
       const onChange = (e) => {
         setValues({ ...values, [e.target.name]: e.target.value });
       };
-      const handleSubmit = (e)=>{
+      const handleSubmit = async(e)=>{
         e.preventDefault();
-        axiosConfig.post('api/auth/resetPassword',{
+        try {
+        await toast.promise(axiosConfig.post('api/auth/resetPassword',{
             resetToken:tokenId,
             newPassword:values.newPassword
         }).then(res =>{
             handleClick({type:'success',msg:"your new password is active now"})
             Navigate('/login')
-        }).catch(err =>{
-            handleClick({type:'error',msg:"something going wrong"})
-        })
+            return res
+        }),toastMessage(),toastConfig)
+        } catch (error) {
+          
+        }
+        
       }
     useLayoutEffect(()=>{
         if(status ===  'succeeded'){handleClick({type:'warning',msg:"you are already logged in if you want to change password you can do it from settings page"})
@@ -47,7 +53,9 @@ function ForgetPassword() {
 
 return <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange}/>
 })}
-     <input className='submit ' type="submit" value={'Reset'} />
+     <input className='submit ' type="button" value={'Reset'} onClick={handleSubmit} style={{
+      cursor:'pointer'
+     }}/>
    </form>
    </div>
     </div>

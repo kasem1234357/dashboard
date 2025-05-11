@@ -29,8 +29,12 @@
  --gap:1rem;
  margin-top: 20px;
 }
-.feed__content__Box1,.feed__content__Box3{
- min-height: 250px;
+.feed__content__Box1{
+ min-height: 200px;
+}
+.feed__content__Box3{
+  min-height: 200px;
+
 }
 .bar--chart1{
  flex: 1.75;

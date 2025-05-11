@@ -1,12 +1,14 @@
 import React from 'react'
 
-const Crud_Header = ({titles}) => {
+const Crud_Header = ({titles,hasImage =true}) => {
   return (
-   <div className="crud__table__row crud__table__titles flex">
-   <div className="products--box product--image">
+   <div className="crud__table__row crud__table__titles flex" style={{
+    height:"10vh"
+   }}>
+   {hasImage && <div className="products--box product--image">
      {titles[0]}
-   </div>
-   {titles.slice(1,titles.length).map(title =>{
+   </div>}
+   {titles.slice(hasImage ?1:0,titles.length).map(title =>{
     return(
      <div className="products--box ">{title}</div>
     )

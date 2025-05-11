@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import './feed.css'
 import '../../../styles/crud.css'
 import { routesSchema } from '../../../utils/routesGenerator.js';
@@ -30,6 +30,7 @@ const Tasks = lazy(() => import('../../../pages/Tasks.jsx'));
 
 function Feed() {
   const userRole = useSelector(state =>state.user.user.role)
+  const navigate = useNavigate()
  
   return (
     <>
@@ -38,6 +39,7 @@ function Feed() {
       {routesSchema(userRole).map(route=>(
         <Route key={route.title} path={route.path} element={<route.element />}/>
       ))}
+      <Route path="*" element={<Navigate to="/notFound" replace />} />
       {/* <Route path='/' element={<DashBoard />}/>
       <Route path='massage' element={<MassagePage />}/>
       <Route path='tasks' element={<Tasks />}/>

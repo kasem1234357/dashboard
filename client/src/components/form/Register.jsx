@@ -6,6 +6,9 @@ import FormInput from "./FormInput";
 import { schema } from "../../utils/validateSchema";
 import axiosConfig from "../../configs/axiosConfig";
 import { addUser } from "../../redux/slices/userSlice";
+import { toastMessage } from "../../utils/toastMassege";
+import { toast } from "react-toastify";
+import { toastConfig } from "../../configs/notificationConfig";
 function Register() {
   const Navigate = useNavigate();
   const dispatch = useDispatch();
@@ -17,15 +20,16 @@ function Register() {
     inviteCode: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     try {
       console.log({
         userName: values.username,
         email: values.email,
         password: values.password,
+        inviteCode: values.inviteCode,
       });
-      axiosConfig
+      const response = await toast.promise(axiosConfig
         .post(`api/auth/register`, {
           userName: values.username,
           email: values.email,
@@ -36,7 +40,8 @@ function Register() {
           dispatch(addUser(responce.data.data.user));
           console.log(responce.data);
           Navigate("/");
-        });
+          return responce
+        }),toastMessage(),toastConfig)
     } catch (error) {
       console.log(error);
     }

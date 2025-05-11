@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const Crud_Table_products = ({data}) => {
+  console.log(data);
+  
   const navigate = useNavigate();
   return (
    <div className="crud__table__row  flex" 
@@ -12,7 +14,7 @@ const Crud_Table_products = ({data}) => {
 <div className="products--box product--Name">{data.title}</div>
 <div className="products--box product--price">{data.price}</div>
 <div className="products--box product--count">{data.count}</div>
-<div className="products--box product--copon">{data.barCode} </div>
+<div className="products--box product--copon">{data.type} </div>
 <div className="products--box product--copon">{data.coupon
 } </div>
 <div className="products--box product--controls">

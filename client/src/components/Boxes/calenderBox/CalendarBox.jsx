@@ -26,6 +26,8 @@ function CalendarBox({ month, year }) {
   };
   const filter = () => {
     const data2 = taskData?.filter((task) => {
+     
+      
       return (
         parseInt(task.reminderDate.split("-")[0]) === year &&
         parseInt(task.reminderDate.split("-")[1]) - 1 === month
@@ -92,6 +94,9 @@ function CalendarBox({ month, year }) {
             year === currentYear &&
             month === currentMonth.index
           ) {
+           
+           
+           
             return (
               <DaysBox
                 active={true}
@@ -102,6 +107,7 @@ function CalendarBox({ month, year }) {
                   index + 1 - startDays + 1
                 }`}
                 dataNumber={filterTasks.length + 1}
+                data={filterTasks.find((task) => task.reminderDate.split("-")[2] === currentDay.index.toString())}
               />
             );
           }

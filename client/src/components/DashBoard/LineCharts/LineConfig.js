@@ -1,6 +1,6 @@
 import { Tooltip } from "chart.js";
 
-  const Labels = [
+  export const Labels = [
  'Jan',
  'Feb',
  'Mar',
@@ -9,7 +9,10 @@ import { Tooltip } from "chart.js";
  'Jun',
  'Jul',
  'Aug',
- 'sep'
+ 'sep',
+ 'Oct',
+ 'Nov',
+ 'Dec',
 ];
 export const options = {
  elements:{
@@ -18,7 +21,9 @@ export const options = {
    
   }
  },
- responsive: true,
+     responsive: true,
+ maintainAspectRatio:true,
+ aspectRatio:3/1,
  interaction: {
    mode: 'index',
    intersect: false,
@@ -55,6 +60,7 @@ export const options = {
     display: true,
     position: 'right',
     ticks:{
+      
      color:'#7a8195'
    },
     // grid line settings
@@ -75,10 +81,11 @@ export const data ={
    {
     tension: 0.4,
      label: 'units',
-     data: [10,50,100,50,60,70,10,40,55],
+     data: [10,50,100,50,60,70,10,40,55,50,80,100],
      borderColor: '#0DB8D3',
      backgroundColor: '#0DB8D3',
      yAxisID: 'y',
+     
    },
    {
     label: 'budget',
@@ -87,6 +94,7 @@ export const data ={
     backgroundColor: '#C33ECE',
     yAxisID: 'y1',
     tension: 0.4,
+  
     
   },
   {

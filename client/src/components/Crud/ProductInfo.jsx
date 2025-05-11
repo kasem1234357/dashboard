@@ -167,7 +167,9 @@ function ProductInfo({ data, setNewData, save,upateImgData,images,imgUrl }) {
           <h3>Type</h3>
         </div>
         <div className="ProductInfo--input">
-          <input type="text" defaultValue={data.type || ""} />
+          <input type="text" defaultValue={data.type || ""} onInput={(e) =>
+                updateData("type", e.target.value)
+              } />
         </div>
       </div>
       <div className="ProductInfo--box ProductInfo__tags flex">

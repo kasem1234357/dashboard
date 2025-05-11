@@ -4,16 +4,36 @@ import 'chart.js/auto';
 import { Bar} from 'react-chartjs-2';
 import { useEffect } from 'react';
 import {dataGenerators} from '../../Data/data'
-function BarChart({data}) {
+import { ExportImage, Extend } from '../../icons/SvgIcons';
+import { toJpeg, toPng } from "html-to-image";
+function BarChart({data, setOpenModelInfo}) {
+  const elementRef = useRef();
+   const htmlToImageConvert = () => {
+    //@ts-ignore
+    toJpeg(elementRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = `BarChart-${data[0].year}.jpg`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
   const chartRef = useRef();
-  const [part,setPart]=useState('startSemester')
+  const [part,setPart]=useState('full')
   const [customRange,setCustomRange]=useState({
     start:0,
     end:5
   })
 
   const options = {
-    responsive: true,
+    
+     responsive: true,
+ maintainAspectRatio:true,
+ aspectRatio:3/1,
     interaction: {
       mode: 'index',
       intersect: false,
@@ -105,22 +125,29 @@ function BarChart({data}) {
 ]
       });
      }
-  },[part,customRange])
+  },[part,customRange,data])
   return (
     <>
-    <div className='chart-controll'>
+    <div style={{
+      display:'flex',
+      justifyContent:'space-between',
+      alignItems:'center',
+      paddingRight:'10px'
+    }}>
+      <div className='chart-controll'>
     <select name="" id="" onChange={(e)=>{
       setPart(e.target.value)
     }}>
+      <option value="full">
+            full year
+          </option>
           <option value="startSemester">
             semester 1
           </option>
           <option value="endSemester">
             semester 2
           </option>
-          <option value="full">
-            full year
-          </option>
+          
           <option value="custom">
             custom
           </option>
@@ -139,7 +166,26 @@ function BarChart({data}) {
         }}/></>}
         
     </div>
-        {data &&  <Bar ref={chartRef} data={chartData} options={options} />}
+      <div className='flex' style={{
+        gap:'10px'
+      }}>
+
+
+        <ExportImage width={20} height={20} color={'#7a8195'} onClick={()=>{
+          htmlToImageConvert()
+        }}/>
+        <Extend width={20} height={20} color={'#7a8195'} onClick={()=>{
+        setOpenModelInfo(prev => ({  type: 'BarChart', state: !prev.state }));
+      }}/>
+      </div>
+      
+    </div>
+       <div ref={elementRef}>
+         {data &&  <Bar ref={chartRef} data={chartData} options={options} />}
+       </div>
+        
+  
+        
        
     </>
      

@@ -8,17 +8,15 @@ export const radarConfig = (ctx)=>{
  const RadarData =
   {
    labels: [
-    'Eating',
-    'Drinking',
-    'Sleeping',
-    'Designing',
-    'Coding',
-    'Cycling',
-    'Running'
-  ],
+       'totalCustomers',
+       'yearlySalesTotal',
+       'yearlyTotalLikes',
+       'yearlyTotalSoldUnits',
+       'yearlyTotalSubscribing',
+   ],
   datasets: [{
    label: 'My First Dataset',
-   data: [65, 59, 90, 81, 56, 55, 40],
+   data: [65, 59, 90, 81, 56, ],
    fill: true,
     // backgroundColor: gradient(ctx,"#00D5FF",'#01F0D1'),
    borderColor: 'rgb(255, 99, 132)',
@@ -29,7 +27,7 @@ export const radarConfig = (ctx)=>{
    pointHoverBorderColor: 'rgb(255, 99, 132)'
   },{
    label: 'My Second Dataset',
-   data: [28, 48, 40, 19, 96, 27, 90],
+   data: [28, 48, 40, 19, 96, ],
    fill: true,
    // backgroundColor: gradient(ctx,'#F699D0','#FEC2A0'),
    borderColor: 'rgb(54, 162, 235)',

@@ -70,6 +70,8 @@ export const dataGenerators = (
   customIndex,
   type = "monthly"
 ) => {
+  console.log(dataItem);
+  
   const { labels, data } = getData(
     dataItem.monthlyData,
     range,

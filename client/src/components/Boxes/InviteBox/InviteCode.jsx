@@ -1,8 +1,11 @@
 import React from 'react'
 import {useState} from "react"
 import axiosConfig from '../../../configs/axiosConfig'
-import { handleClick } from '../../../configs/notificationConfig'
+import { handleClick, toastConfig } from '../../../configs/notificationConfig'
 import useClipBoard from '../../../hooks/useClipBoard'
+import { protectRoute } from '../../../utils/protectRoutes'
+import { toast } from 'react-toastify'
+import { toastMessage } from '../../../utils/toastMassege'
 function InviteCode() {
  const [randomKey,setRandomKey] = useState("")
  const [role,setRole]=useState('normal')
@@ -19,12 +22,14 @@ function InviteCode() {
   }
   setRandomKey(randomKey)
  }
- const activation = ()=>{
+ const activation = async()=>{
   if(randomKey){
     try {
-      axiosConfig.post(`/api/invite`,{inviteCode:randomKey,role})
-      handleClick({type:"success",msg:"your invite code work now"})
+     await toast.promise(protectRoute().handle('post',`/api/invite/`,{inviteCode:randomKey,role}).then((res)=>{
       copyText(randomKey)
+      return res
+     }),toastMessage(),toastConfig)
+     
     } catch (error) {
       console.log(error);
     }

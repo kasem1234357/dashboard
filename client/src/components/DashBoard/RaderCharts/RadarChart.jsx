@@ -20,17 +20,16 @@ function RadarChart() {
      }
      const data ={
       labels: [
-       'Eating',
-       'Drinking',
-       'Sleeping',
-       'Designing',
-       'Coding',
-       'Cycling',
-       'Running'
+       'totalCustomers',
+       'yearlySalesTotal',
+       'yearlyTotalLikes',
+       'yearlyTotalSoldUnits',
+       'yearlyTotalSubscribing',
+       
      ],
      datasets: [{
       label: 'My First Dataset',
-      data: [75, 80, 95, 80, 80, 80, 80],
+      data: [75, 80, 95, 80, 80,],
       fill: true,
       backgroundColor: gradient(chart.ctx,"rgba(71, 100, 182,0.8)",'rgb(110, 186, 204)'),
       borderWidth:0,
@@ -40,7 +39,7 @@ function RadarChart() {
       pointHoverBorderColor: 'rgb(255, 99, 132)'
      },{
       label: 'My Second Dataset',
-      data: [95, 79, 90, 81, 86, 95, 60],
+      data: [900, 1000, 1100, 900, 800,],
       fill: true,
        backgroundColor: gradient(chart.ctx,'rgba(112, 79, 211,0.8)','#f0a27d'),
        borderWidth:0,

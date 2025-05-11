@@ -3,7 +3,9 @@ function FilterBox({filter,methods}) {
   const [filterText,setFilterText] = useState('')
   const [filterMethod ,setFilterMethod]= useState(methods[0])
   useEffect(()=>{
+    if(filterText){
      filter(filterMethod,filterText)
+    }
   },[filterText,filterMethod])
   return (
     <div className='filterBox '>

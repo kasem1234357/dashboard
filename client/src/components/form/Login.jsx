@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import FormInput from './FormInput'
 import {schema} from '../../utils/validateSchema'
 import './form.css'
-
-import { handleClick } from '../../configs/notificationConfig';
-import { logUser } from '../../redux/actions/auth';
+import axiosConfig from "../../configs/axiosConfig";
+import { handleClick, toastConfig } from '../../configs/notificationConfig';
+import { logUser } from '../../redux/slices/userSlice';
+import { toast } from 'react-toastify';
+import { toastMessage } from '../../utils/toastMassege';
 function Login() {
   const Navigate = useNavigate()
   const dispatch = useDispatch()
@@ -16,10 +18,27 @@ function Login() {
     email:'',
     password:''
   })
-  const handleSubmit = (e) => {
-    e.preventDefault();
-     dispatch(logUser({initialUser:values}))
-  };
+    const handleSubmit = async(e) => {
+      e.preventDefault();
+      try {
+        const response = await toast.promise(axiosConfig
+          .post(`api/auth/login`, {
+           ...values,
+          })
+          .then((responce) => {
+             dispatch(logUser(responce.data.data));
+             return responce
+           // Navigate("/");
+          }),toastMessage(),toastConfig)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //    dispatch(logUser({initialUser:values}))
+  // };
 
   const onChange=(e)=>{
     setValues({...values,[e.target.name]: e.target.value})
@@ -29,8 +48,18 @@ function Login() {
       Navigate('/')
   } 
    
-  
+
   },[status])
+  const forgetPassword = async ()=>{
+
+     try {
+      toast.promise(axiosConfig.post('/api/auth/forgetPassword',{
+        email:values.email
+      }),toastMessage(),toastConfig)
+     } catch (error) {
+      
+     }
+  }
   return (
     <div className="form-box2 bg-gray flex f-column padding">
    <form className='bg-gray flex f-column flow text-white' onSubmit={handleSubmit} >
@@ -47,7 +76,7 @@ return <FormInput key={input.id} {...input} value={values[input.name]} onChange=
        <span>Remmember me</span>
        </div>
      
-     <p className='text-main'>forget password</p>
+     <p className='text-main' onClick={forgetPassword} >forget password</p>
      </div>
      <input className='submit ' type="submit" value={'Login Now'} />
    </form>

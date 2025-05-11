@@ -204,3 +204,17 @@ export const Send = (props)=>{
   </g>
   </svg>
 }
+export const Extend = (props)=>{
+ const {color,...otherProps}=props
+  return (
+    <svg {...otherProps}  height="24" width="24"  id="Capa_1"  viewBox="0 0 304.751 304.751"  fill={color || '#f7f7f7'} stroke="#f7f7f7"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon style={{fill:color || '#f7f7f7'}} points="278.241,181.322 278.241,259.492 171.113,152.375 278.105,45.389 278.105,123.543 304.604,123.543 304.615,0.136 181.208,0.141 181.202,26.635 259.356,26.646 152.37,133.627 45.253,26.515 123.407,26.515 123.407,0 0,0 0,123.401 26.515,123.429 26.515,45.253 133.632,152.375 26.646,259.362 26.646,181.208 0.136,181.208 0.136,304.626 123.532,304.604 123.548,278.11 45.389,278.11 152.375,171.124 259.492,278.241 181.338,278.241 181.338,304.751 304.751,304.751 304.751,181.349 "></polygon> </g> </g> </g></svg>
+  )
+}
+export const ExportImage = (props)=>{
+  const {color,...otherProps}=props
+return (
+  <svg {...otherProps} fill={color || "#f7f7f7"} height="24" width="24" version="1.1" id="Layer_1"  viewBox="0 0 485 485"  stroke={color || "#f7f7f7"}><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <polygon points="30,30 106,30 106,0 0,0 0,106 30,106 "></polygon> <polygon points="379,0 379,30 455,30 455,106 485,106 485,0 "></polygon> <polygon points="455,455 379,455 379,485 485,485 485,379 455,379 "></polygon> <polygon points="30,379 0,379 0,485 106,485 106,455 30,455 "></polygon> <path d="M274.405,175c26.191,0,47.5-21.309,47.5-47.5S300.597,80,274.405,80s-47.5,21.309-47.5,47.5S248.214,175,274.405,175z"></path> <polygon points="80,405 405,405 405,308.18 346.358,246.304 275.241,287.672 176.238,216.922 80,318.465 "></polygon> </g> </g></svg>
+)
+
+
+}
