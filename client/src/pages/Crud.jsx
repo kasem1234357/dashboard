@@ -17,15 +17,15 @@ import { motion } from "framer-motion"
 import { useSelector } from "react-redux";
 import { FAKE_USER_DATA } from "../configs/FAKE_USER_DATA";
 import { config_animateY } from "../configs/motionConfig";
-import SalesTable from "../components/Crud/salesTable/SalesTable";
-import ProductsTable from "../components/Crud/salesTable/ProductsTable";
+import SalesTable from "../components/Crud/SalesTable";
+import ProductsTable from "../components/Crud/ProductsTable";
 
-const renderEl = (currentTitle,setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts) =>{
+const renderEl = (currentTitle,setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts,filters) =>{
   switch (currentTitle) {
-    case "products": return <ProductsTable setItemsData={setItemsData} setTotal={setTotal} setFilterProducts={setFilterProducts} itemsData={itemsData} total={total} filterProducts={filterProducts}/>
+    case "products": return <ProductsTable setItemsData={setItemsData} setTotal={setTotal} setFilterProducts={setFilterProducts} itemsData={itemsData} total={total} filterProducts={filterProducts} filters={filters}/>
       
       break;
-   case 'sales':return <SalesTable setItemsData={setItemsData} setTotal={setTotal} setFilterProducts={setFilterProducts} itemsData={itemsData} total={total} filterProducts={filterProducts} />
+   case 'sales':return <SalesTable setItemsData={setItemsData} setTotal={setTotal} setFilterProducts={setFilterProducts} itemsData={itemsData} total={total} filterProducts={filterProducts} filters={filters}/>
     default:
       break;
   }
@@ -34,7 +34,7 @@ const titles = (type)=>{
   const methods = {
     products:["title","tags"],
     sales:["username"],
-    users:["userName"]
+    users:["username"]
   }
   return methods[type]
 }
@@ -45,6 +45,8 @@ function Crud() {
   const [total,setTotal]=useState(20)
   const [methods,setMethods] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
+  const [filters,setFilters]=useState({})
+  
   const [showModel, setShowModel] = useState(false);
   const [currentTitle, setCurrentTitle] = useState({
     type: "products",
@@ -62,10 +64,9 @@ function Crud() {
   
   const {generateExcelFile} = useExport()
   const filter = (method, filterText) => {
-    console.log(itemsData);
-    
-    const data = itemsData?.filter((task) => task[method]?.includes(filterText));
-    setFilterProducts(data);
+    setFilters(prev =>{
+      return {...prev,[method]:filterText}
+    })
   };
 
 
@@ -85,8 +86,10 @@ function Crud() {
               name=""
               id=""
               onChange={(e) =>{
+                setFilters({})
                 setItemsData([])
                  setFilterProducts([])
+                 
                 setCurrentTitle({
                   type: e.target.value,
                   
@@ -106,7 +109,7 @@ function Crud() {
               </button>
               <button>
                 {showModel && (
-                  <FilterBox filter={filter} methods={titles(currentTitle.type)} />
+                  <FilterBox filter={filter} type={currentTitle.type} methods={titles(currentTitle.type)} />
                 )}
                 <span onClick={() => setShowModel(!showModel)}>Filters</span>
               </button>
@@ -136,7 +139,7 @@ function Crud() {
            
          
         </div> */}
-        {renderEl(currentTitle.type,setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts)}
+        {renderEl(currentTitle.type,setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts,filters)}
         <PaginationBox toBack={toBack} toNext={toNext} steps={steps} currentStep={currentStep}/>
       </div>
     </motion.div >
