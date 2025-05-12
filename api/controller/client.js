@@ -51,7 +51,7 @@ const testFn =asyncErrorHandler(async (req, res,next) =>{
 })
 const getProducts = asyncErrorHandler(async (req, res,next) => {
   const api = new API(req,res)
-api.modify(Product.find()).filter().sort().limitFields().paginate()
+api.modify(Product.find()).filter(['title']).sort().limitFields().paginate()
  const products = await api.query
  const productsWithStats = await Promise.all(
    products.map(async (product) => {

@@ -4,8 +4,51 @@ const asyncErrorHandler = require("../wrapper_functions/asyncErrorHandler");
 
 const getTransactions = asyncErrorHandler(async (req, res) => {
   const api = new API(req, res);
+  const filteringQuery =  api.modify().getQuery().filteringQuery;
+const buildSearchConditions = (searchTerm) => {
+  const conditions = [];
+    
+    
+  if (searchTerm.username) {
+    conditions.push(
+      { username: { $regex: searchTerm?.username, $options: 'i' } },
+     
+    );
+   if(searchTerm.totalBudget){
 
-  const transactions = await Transaction.aggregate([
+     conditions.push(
+       { 
+        $expr: {
+          $eq: [
+            { $toString: "$totalBudget" }, 
+            searchTerm
+          ]
+        }
+      }
+     )
+
+   }
+   if(searchTerm.deliveredDate){
+     const searchDate = new Date(searchTerm.deliveredDate);
+     conditions.push(
+       { deliveredDate: searchDate },
+     )
+
+   }
+   if(searchTerm.createdAt){
+      const searchDate = new Date(searchTerm.createdAt);
+      conditions.push(
+         { createdAt: searchDate },
+      )
+
+   }
+    // Date search if valid date
+
+  }
+
+  return conditions.length > 0 ? { $or: conditions } : {};
+};
+ const aggregation =  [
     { $sort: { createdAt: -1 } },
     { $limit: 50 },
     {
@@ -28,9 +71,17 @@ const getTransactions = asyncErrorHandler(async (req, res) => {
         createdAt: 1,
         updatedAt: 1
       }
-    }
-  ]);
-
+    },
+    
+  ]
+  if(Object.keys(filteringQuery).length!==0){
+    aggregation.push({$match:buildSearchConditions(JSON.parse(filteringQuery))})
+  }
+  const transactions = await Transaction.aggregate(
+   aggregation
+);
+  console.log(aggregation);
+  
   api.dataHandler('fetch', transactions);
 });
 

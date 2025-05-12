@@ -142,8 +142,19 @@ class API {
     }
     return this;
   }
-  filter() {
+  filter(searchableFields) {
     const queryFilter = JSON.parse(this.getQuery().filteringQuery)
+    for(let key of Object.keys(queryFilter)){
+      if(searchableFields.includes(key)){
+        queryFilter[key] ={$regex: new RegExp(queryFilter.title, "i")}
+      }else{
+        queryFilter[key] = queryFilter[key]
+      }
+        
+
+
+    }
+    
     this.query = this.query.find(queryFilter);
     return this;
   }
