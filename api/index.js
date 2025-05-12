@@ -11,7 +11,7 @@ console.log('hi');
 
 const app = require('./app');
 connectDB(false)
-const port = process.env.PORT || 8800;
+const port = process.env.PORT || 8888;
 const server = app.listen(port, () => {
     console.log('server has started...');
 })
