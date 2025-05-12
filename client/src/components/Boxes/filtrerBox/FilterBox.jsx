@@ -3,19 +3,23 @@ function FilterBox({filter,methods}) {
   const [filterText,setFilterText] = useState('')
   const [filterMethod ,setFilterMethod]= useState(methods[0])
   useEffect(()=>{
-    if(filterText){
+    
      filter(filterMethod,filterText)
-    }
+    
   },[filterText,filterMethod])
   return (
     <div className='filterBox '>
       <h3>Filter Box</h3>
-      <select name="" id="" onChange={(e)=>setFilterMethod(e.target.value)}>
+      <select name="" id="" onInput={(e)=>{
+        
+        setFilterMethod(e.target.value)
+        }}>
         {methods.map(method =>(
            <option value={method}>{method}</option>
         ))}
       </select>
-      <input type="text" onChange={(e)=>{
+      <input type="text" onInput={(e)=>{
+        
         setFilterText(e.target.value)
       }} />
     </div>

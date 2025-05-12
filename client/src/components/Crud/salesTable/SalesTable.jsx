@@ -3,16 +3,21 @@ import Crud_Table_sales from '../crudTable/Crud_Table_sales';
 import Crud_Header from '../crudTable/Crud_Header';
 import axiosConfig from '../../../configs/axiosConfig'
 import EmptyBox from '../../Boxes/emptyBox/EmptyBox';
+import useDebounce from '../../../hooks/useDebounce';
 const titles =[ "profile","username", "createdAt","DeliveredAt", "amount", "price", "state"]
-function SalesTable({setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts}) {
+function SalesTable({setItemsData,setTotal,setFilterProducts,itemsData,total,filterProducts,filters}) {
 
-  const [loading,setLoading] = useState(false);
-
-useLayoutEffect(() => {
-  const fetchSales = async () => {
+const [loading,setLoading] = useState(false);
+ const fetchSales = async (query = {}) => {
     try {
+       let searchQuery = []
+    if(Object.keys(query).length!==0){
+        searchQuery = Object.entries(query).map(([key, value]) => {
+            return `${key}=${value}`;
+        });
+    }
         setLoading(true)
-      const res = await axiosConfig.get(`/api/transaction`);
+      const res = await axiosConfig.get(`/api/transaction${searchQuery.length>0?'?'+searchQuery.join('&'):''}`);
       const { data } = res.data;
       setItemsData(data);
       setTotal(data.length)
@@ -25,6 +30,9 @@ useLayoutEffect(() => {
       // Handle error (e.g., show error message)
     }
   };
+useDebounce(()=>{fetchSales(filters)},400,[filters])
+useLayoutEffect(() => {
+ 
 
   fetchSales();
 }, []);
